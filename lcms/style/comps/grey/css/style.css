@@ -1,0 +1,173 @@
+/* 	This is an open source XHTML/CSS website template created by Manjeet Singh Sawhney (http://www.manjeetss.com)
+	You can use this template, but a reference to my website (www.manjeetss.com) would be appreciated. If you need 
+	any help or would like me to develop a website for you then please contact me via my website or e-mail me at manjeetss@gmail.com
+*/
+
+body 
+{ 
+	padding: 0; 
+	margin: 0; 
+	font-size: 12px; 
+	font-family: arial; 
+	background: #CDCDCD; 
+	color: #777; 
+}
+
+a:link, a:active, a:visited 
+{ 
+	text-decoration: none; 
+	color: #9999FF;
+}
+
+a:hover
+{
+	text-decoration: underline;
+}
+
+#main
+{ 
+	width: 730px; 
+	padding: 25px 15px; 
+	background: #FFF; 
+	margin-left: auto; 
+	margin-right: auto; 
+}
+
+#header 
+{ 
+	height: 60px;
+}
+
+#header #right 
+{ 
+	float: right; 
+	text-align: right; 
+	width: 300px; 
+}
+
+.companyname 
+{	
+	font-size: 20px;
+	float: left;
+}
+
+#banner 
+{ 
+	background: url("../images/header.jpg") 100% 0 no-repeat; 
+	height: 200px; 
+	background-color: #CDCDCD;
+}
+
+#banner h1 
+{ 
+	color: #FFF; 
+	padding: 40px 0 0 25px; 
+	line-height: 120%;
+}
+
+#maincontent 
+{ 
+	clear: both; 
+	margin: 15px 0; 	
+}
+
+div.content
+{ 
+	padding: 2px 20px 12px; 
+}
+
+div.content:hover
+{
+	background-color: #DDD;
+}
+
+p 
+{	
+	margin-bottom: 5px; 
+	line-height: 200%;
+}
+
+ul 
+{ 
+	margin-bottom: -30px; 
+	padding : 0; 
+	list-style : none; 
+}
+
+h1
+{
+	font-size: 200%;
+	color: #9999FF;	
+}
+
+h2 
+{ 
+	font-size: 170%; 
+	color: #9999FF;	
+}
+
+h3
+{
+	font-size: 140%;
+	color: #9999FF;
+}
+
+#navbar 
+{	
+	background-color: #CDCDCD; 
+	height: 30px; 
+	margin-bottom: 1px;
+}
+
+#navbar li
+{  	
+	padding: 8px 14px 2px 14px;
+	border-right: 1px solid #FFF;
+	float: left; 
+	font-weight: bold;
+	height: 20px;
+}
+
+#navbar li.active
+{ 
+	background-color: #9999FF;
+}
+
+#navbar li:hover
+{
+	background-color: #9999FF;
+}
+
+#navbar a:link, #navbar a:active, #navbar a:visited
+{ 
+	color: #FFF; 
+	text-decoration: none;	
+	padding: 8px 14px 2px 14px;
+}
+
+#footer
+{ 	
+	border-top: 1px solid #CDCDCD;
+	height: 15px;			
+	padding: 15px 25px 25px;		
+	font-size: 11px; 
+	text-align: center;
+}
+
+#sidebar {
+	float: right;
+	width: 200px;	
+}
+
+#footer p 
+{	
+	clear: both; 
+	color: #777; 
+	font-size: 11px; 
+	padding-top: 5px;
+}
+
+#footer  #bottomnavbar a
+{
+	padding-left: 15px;
+}

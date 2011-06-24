@@ -1,0 +1,19 @@
+<IfModule mod_rewrite.c>
+RewriteEngine on
+
+# This is an example for the page's URI that displays
+# news entries is "http://yoursite/path/to/index.php"
+# Adapt it to your own website
+
+RewriteBase /path/to
+
+
+
+# Replace "index.php" with the page that displays
+# news entries (if necessary)
+
+RewriteRule ^([0-9]{4})/?(/([0-9]{1,2})/?)?(/([0-9]{1,2})/?)?$	index.php?archive=$1-$3-$5 [L]
+RewriteRule ^category/(.+)/?$	index.php?cat_alias=$1 [L]
+RewriteRule ^([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/(.*)-([0-9]{1,2})/?$	index.php?post_alias=$1,$2,$3,$4,$5
+
+</IfModule>

@@ -1,0 +1,16 @@
+zone = 0
+					date = "%d %B %Y"
+					time = "%H:%M"
+					tpl = "default"
+					display = "basic"
+					flood = 120
+					comment = 1
+					filter = ""
+					list = ""
+					locale = "en_GB gbr en_GB.ISO8859-1 en_GB.ISO8859-15 en_GB.ISO_8859-1 en_GB.ISO_8859-15"
+					daylight = 1
+					alias = 0
+					uri = index.php
+					title = Blog
+					description = Blog at LotusCMS
+					

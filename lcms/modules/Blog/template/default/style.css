@@ -1,0 +1,388 @@
+/* header.tpl */
+body {
+	margin:10px 0;
+	text-align:center;
+	font: normal 11px Verdana, Arial, Helvetica, sans-serif;
+	color:#000;
+	background-color:#fff;
+}
+#container {
+	width:60em;
+	margin:0 auto;
+	padding:10px;
+	text-align:left;
+}
+#container a:hover {
+	text-decoration:none;
+}
+#header ul {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+#header li {
+	display:inline;
+}
+#header .currentTab {
+	background-color:#aaa;
+	color:#fff;
+}
+#header a {
+	margin:0 10px 0 0;
+	padding:5px;
+	border:1px solid #ddd;
+	background-color:#eee;
+	color:#000;
+	text-decoration:none;
+}
+#header a:hover {
+	color:#fff;
+	background-color:#aaa;
+}
+
+/* all contents */
+
+#content {
+	margin:20px 0;
+	padding:10px;
+	border:1px solid #ddd;
+}
+#content noscript {
+	font-weight:bold;
+	color:red;
+	background-color:inherit;
+}
+#content .help {
+	background-color:#eee;
+	cursor:help;
+	color:#000;
+}
+#content label {
+	cursor:pointer;
+}
+#content a {
+	color:#0000CD;
+	background-color:inherit;
+}
+#content blockquote {
+	margin:1em;
+	border-left:3px solid #ddd;
+	padding:0 0 0 1em;
+}
+#content pre {
+	background-color:#eee;
+	border:1px dashed #aaa;
+	color:#000;
+	margin:1em 0;
+	padding:0.3em;
+}
+#content img {
+	border-style:none;
+}
+#content ul {
+	margin:0 0 1em 2.5em;
+	padding:0;
+}
+#content object {
+	width:350px;
+	height:285px;
+}
+#content form {
+	margin:0;
+	padding:0;
+	font:normal 11px Verdana, Arial, Helvetica, sans-serif;
+}
+#content form br {
+	clear:both;
+}
+#content input, #content textarea, #content select {
+	font:normal 11px Verdana, Arial, Helvetica, sans-serif;
+	margin:0 0 0.2em 0;
+}
+#content fieldset {
+	margin:0 0 0.5em 0;
+	border:1px solid #bbb;
+	padding:0 0.5em 0.5em 0.5em;
+}
+#content legend {
+	margin:0 0 0.5em 0;
+}
+#content .wide {
+	width:56em;
+	border-style:none;
+}
+
+/* help.tpl */
+
+#content #help table {
+	width:100%;
+	margin:1em 0 2em 0;
+}
+#content #help td {
+	width:50%;
+	padding:0.3em;
+}
+#content #help th {
+	width:50%;
+	padding:0.3em;
+	text-align:right;
+}
+#content #help .header {
+	background-color:#808080;
+	color:#fff;
+	text-align:left;
+}
+#content #about ul {
+	margin:0 0 2em 0;
+	padding:0;
+	list-style-type:none;
+	line-height:1.5em;
+}
+
+
+
+
+/* login.tpl */
+#content #login {
+	margin:1em 0 0 0;
+}
+#content #login div {
+	position:relative;
+	line-height:2em;
+}
+#content #login div input {
+	position:absolute;
+	left:6.5em;
+}
+#content #login .button {
+	margin:1em 0 0 0;
+}
+
+
+
+
+/* post_comment.tpl */
+
+#content h3 {
+	font-size:1.2em;
+	margin:3em 0 2em 0;
+	padding:0.5em;
+	background-color:#ddd;
+	color:#000;
+}
+#content #comments ol {
+	margin:0 0 2em 2em;
+	padding:0;
+	line-height:1.7em;
+}
+#content #comments li {
+	margin-bottom:1em;
+	padding:0;
+	border-bottom:1px dashed #aaa;
+}
+#content #comments div {
+	text-align:right;
+}
+#content #comments .quote {
+	text-align:left;
+}
+
+
+
+
+/* post_detail.tpl  +  newpost.tpl */
+
+#content #post div {
+	margin:0.5em 0 0 0;
+}
+#content #post ul {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+#content #post li {
+	display:block;
+	float:left;
+	margin:0.1em 1em 0.1em 0;
+}
+#content #post .control {
+	padding-bottom:1em;
+	margin-bottom:1em;
+}
+
+
+/* post_list.tpl */
+
+#content #postList .header {
+	text-align:center;
+	background-color:#808080;
+	color:#fff;
+	padding:0.2em 0;
+	margin:1em 0;
+}
+#content #postList .col1{
+	float:left;
+	width:3%;
+	display:block;
+	margin:0 0.3em 0 0;
+}
+#content #postList .col2{
+	float:left;
+	width:35%;
+	display:block;
+}
+#content #postList .col3{
+	float:left;
+	width:8%;
+	display:block;
+}
+#content #postList .col4{
+	float:left;
+	width:26%;
+	display:block;
+}
+#content #postList .col5{
+	float:left;
+	width:26%;
+	display:block;
+}
+#content #postList .row {
+	line-height:1.5em;
+	margin:0 0 0.5em 0;
+}
+#content #postList .locked {
+	background-color:#eee;
+	color:#000;
+}
+#content #postList .control {
+	padding:1em 0;
+	margin:1em 0;
+}
+
+
+/* post_view.tpl */
+
+#content h1 {
+	margin:0;
+	font-size:2em;
+	font-weight:normal;
+	border-bottom:1px dashed #aaa;
+}
+#content h2 {
+	margin:0 0 2em 0;
+	font-size:1em;
+	font-weight:normal;
+	text-align:right;
+}
+#content p {
+	line-height:1.7em;
+}
+#content .submessage {
+	text-align:right;
+}
+
+/* profile.tpl */
+
+#content #profile div {
+	position:relative;
+	line-height:2em;
+}
+#content #profile div input {
+	position:absolute;
+	left:11em;
+}
+#content #profile .button {
+	margin:1em 0 0 0;
+}
+
+/* settings.tpl */
+
+#content #setting div {
+	margin:0.3em 0 0 0;
+}
+#content #setting .general {
+	margin-bottom:1em;
+}
+#content #setting .general .info {
+	position:relative;
+	line-height:1.7em;
+}
+#content #setting .general .info input {
+	position:absolute;
+	left:17em;
+	width:30em;
+	border:1px solid #ddd;
+	padding:0.2em;
+}
+
+
+/* manage.tpl */
+
+#content ul#manageList {
+	margin:0;
+	padding:0;
+	list-style-type:none;
+}
+#content #manageList li {
+	margin:0 2em 0 0;
+	display:inline;
+}
+#content #manageList a {
+	color:#000;
+	background-color:inherit;
+	text-decoration:none;
+}
+
+
+/* category_list.tpl */
+
+#content #catList .col1{
+	float:left;
+	width:3%;
+	display:block;
+	margin:0 0.3em;
+	clear:left;
+}
+#content #catList .col2{
+	float:left;
+	width:10%;
+	display:block;
+}
+#content #catList .col3{
+	float:left;
+	width:45%;
+	display:block;
+}
+#content #catList .col4{
+	float:left;
+	width:20%;
+	display:block;
+}
+#content #catList .header {
+	margin:0 0 1em 0;
+	border-bottom:1px dashed #000;
+	padding:0 0 0.3em 0;
+}
+#content #catList input.name {
+	width:20em;
+	border:1px solid #ddd;
+	padding:0.2em;
+}
+#content #catList fieldset {
+	margin:1em 0;
+}
+
+/* footer.tpl */
+
+#footer {
+	margin:0;
+	padding:5px;
+	border:1px solid #ddd;
+	background-color:#eee;
+	color:#000;
+	text-align:center;
+}
+#footer a {
+	color:#000;
+	background-color:#eee;
+}

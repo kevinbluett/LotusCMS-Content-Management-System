@@ -1,0 +1,6 @@
+
+<post>
+1281005382
+Example Post
+This is an example post to show you that all is working well inside LotusCMS blog plugin. Please login to the administration, click on \'Blog\', then \'Manage Posts\', check this post and click \'delete\' to remove it.
+</post>

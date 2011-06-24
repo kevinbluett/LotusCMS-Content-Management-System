@@ -1,0 +1,21 @@
+<form method="post" class="jNice" action="?system=GeneralSettings&page=edit" name="edit">
+        <h3>Website Title</h3>
+        <p>You may wish to clear the CMS cache after this, as cached pages will contain old title.</p>
+        <fieldset>
+        	<input name="title" class="text-long" value="%TITLE%">
+        </fieldset>
+        
+        <h3>Website Version</h3>
+        <br /> 
+        <fieldset>
+        	<p>Your Version: %CURRENTVERSION%<br />Latest Version: %LATESTVERSION%</p>
+        </fieldset>
+        
+        <h3>Disable Website</h3>
+        <p>Disabled all of the public side of the website, administration and plugins will still be available. (Unavailable in 3.0.1)</p>
+        <fieldset>
+        	<input type="button" class="text-long" value="Disable Public Website" DISABLED>
+        </fieldset>
+      
+        <input type="submit" value="Save"><br /><br />
+</form> 

@@ -1,0 +1,19 @@
+<p>This form allows you to create a new user.<br />
+<form method="post" action="?system=Users&page=edit&active=%USERNAME%" name="edit">
+                <h3>Username</h3><br /> <fieldset>'%USERNAME%'</fieldset>
+                
+                <h3>Full Name</h3><br /> <fieldset><input name="name" class="text-long" value="%FULLNAME%" /></fieldset>
+                
+                <h3>E-mail</h3><br /> <fieldset><input name="email" class="text-long" value="%EMAIL%" /></fieldset>
+        
+        		<h3>Password</h3><br /> <fieldset>New Password:&nbsp;<input name="password1" class="text-long" value="" /><br />Verify Password:&nbsp;<input name="password2" class="text-long" value="" /></fieldset>
+        		
+        		<h3>Access Level</h3>
+        		<fieldset>
+	        		<select name="access">
+						<option>%OPTION1%</option>
+						<option>%OPTION2%</option>
+					</select>
+				</fieldset>
+                
+<input type="submit" value="Save"></form><br /><br />

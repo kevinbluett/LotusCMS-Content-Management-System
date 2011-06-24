@@ -1,0 +1,17 @@
+<form method="post" class="jNice" action="?system=Editor&page=editor&active=%UNIX%" name="edit">You are editing: %TITLE% (%UNIX%)<br />
+                <h3>Title</h3><br /> <fieldset><input name="title" class="text-long" value="%TITLE%"></fieldset>
+        
+                <h3>Template</h3><br />
+		<fieldset>	<select name="template">
+                                                %CURRENT_TEMPLATE%
+						%TEMPLATE_OPTIONS%
+				</select>
+		</fieldset>
+                
+        <h3>Content</h3><br />
+                    </div><div id="textarea">
+                        <textarea cols="60" rows="18" id="pagedata" name="pagedata">%CONTENT%</textarea>
+                    </div><div id="main">
+                <br />
+                
+        <input type="submit" value="Save"><br /><br /></form>

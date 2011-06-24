@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  
+  <title>LotusCMS Administration</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="style/comps/admin/css/login.css" rel="stylesheet" type="text/css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <script type="text/javascript" src="style/comps/admin/js/jquery.corner.js"></script>
+  <script type="text/javascript">
+	<!--
+	$(document).ready(function() {
+  		// Handler for .ready() called.
+  		$('body').corner();
+  		$('#footer').corner();
+	  	$('#menu').corner("right");
+	});
+	-->
+	</script>
+</head>
+<body>
+
+  <div id="masthead">
+    <a href="index.php?page=index"><img src="style/comps/admin/img/smalllogo.png" style="text-decoration: none; border: 0;" alt="LotusCMS Adminstration"/></a>
+  </div>
+  
+  <div id="content">
+    
+    <div id="main">
+      
+      <div class="article">
+      	%MESSAGE%
+		<form method="POST" action="index.php?system=Admin&page=loginSubmit" id="contactform">
+		                <label for="name"><h4>Username:</h4></label>
+
+		                <input id="username" name="username" class="logged" /><br /><br />
+		                <label for="password"><h4>Password:</h4></label>
+		                <input id="password" name="password" type="password" class="logged" /><br /><br />
+		                <input type="submit" value="Login" class="loggedIn"/>
+		  </form>
+      </div>
+      
+    </div>
+    
+    <ul id="footer" class="clearfix">
+      
+      <li style="width: 100%;text-align: center;">Proudly Powered by: <a href="http://www.lotuscms.org">LotusCMS</a></li>
+      
+    </ul>
+    
+  </div>
+
+</body>
+</html>
