@@ -45,6 +45,9 @@ class ModuleAdmin extends Admin{
 		
 		$title = $this->getInputString("title", "", "P");
 		
+		//Gets the state of how to open the link
+		$state = $this->getInputString("state", "", "P");
+		
 		if(empty($title)){
 			$this->redirectError("Title was left empty.");
 		}
