@@ -43,7 +43,7 @@
           </div> 
         </div>
         
-        <div id="footer">&copy; <?php date_default_timezone_set("GMT");echo(date("Y")); ?> <?php print $p->getSiteTitle(); ?>. Powered by: <a href="http://www.lotuscms.org">LotusCMS</a> By <a href="http://kismet.blogsite.org">Kismet</a>. Original design <a href="http://www.nikhedonia.com/showcase/entry/one-penny/">here</a> by SimplyGold.</div>
+        <div id="footer">&copy; <?php date_default_timezone_set("GMT");echo(date("Y")); ?> <?php print $p->getSiteTitle(); ?>. Powered by: <a href="http://www.lotuscms.org">LotusCMS</a>.
         
       </div> 
       
