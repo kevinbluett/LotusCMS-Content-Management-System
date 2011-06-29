@@ -76,11 +76,6 @@ div.content
 	padding: 2px 20px 12px; 
 }
 
-div.content:hover
-{
-	background-color: #DDD;
-}
-
 p 
 {	
 	margin-bottom: 5px; 
