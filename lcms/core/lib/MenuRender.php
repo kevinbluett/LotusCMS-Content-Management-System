@@ -10,14 +10,9 @@ class MenuRender {
       	$d = $this->getMenuItems();
       }
       
-      
-      
       $out = "<ul>";
       
-      for($i = 0; $i < count($d); $i++){
-      	
-
-         
+      for($i = 0; $i < count($d); $i++){   
          //Collects link
          $link = $d[$i][1];
                
@@ -37,13 +32,20 @@ class MenuRender {
          if($d[$i][2]=="in"){
             $d[$i][1] = "index.php?page=".$link;   
          }
-            
+         
+         $target = "";
+         
+         //Only open in new window if defined to do this.
+         if($d[$i][3]=="nw"){
+         	$target = "target='_blank'";	
+         }
+         
          if($i==0){
-            $out .= "<a class='firstM' href='".$d[$i][1]."'>".$d[$i][0]."</a>";
+            $out .= "<a class='firstM' ".$target." href='".$d[$i][1]."'>".$d[$i][0]."</a>";
          }else if(($i+1)==count($d)){
-            $out .= "<a class='lastM' href='".$d[$i][1]."'>".$d[$i][0]."</a>";
+            $out .= "<a class='lastM' ".$target." href='".$d[$i][1]."'>".$d[$i][0]."</a>";
          }else{
-            $out .= "<a class='normalM' href='".$d[$i][1]."'>".$d[$i][0]."</a>";
+            $out .= "<a class='normalM' ".$target." href='".$d[$i][1]."'>".$d[$i][0]."</a>";
          }
          
          $out .= "</li>";   
@@ -61,6 +63,12 @@ class MenuRender {
 		
 		//Load File Abstraction Layer
 		$io = new InputOutput();
+		
+		//Ensure that the menu exists before loading
+		if(!file_exists("data/modules/Menu/items/menu_items.dat")){
+			print "Menu Module not loaded. Please reinstall the menu module";
+			die;	
+		}
 		
 		//Lists the pages in a directory
 		$pages = $io->openFile("data/modules/Menu/items/menu_items.dat");

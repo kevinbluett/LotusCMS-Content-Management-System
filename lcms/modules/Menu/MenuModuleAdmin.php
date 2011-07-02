@@ -45,8 +45,8 @@ class ModuleAdmin extends Admin{
 		
 		$title = $this->getInputString("title", "", "P");
 		
-		//Gets the state of how to open the link
-		$state = $this->getInputString("state", "", "P");
+		//Wether to open in same window or new window.
+		$windowState = $this->getInputString("state", "sw", "P");
 		
 		if(empty($title)){
 			$this->redirectError("Title was left empty.");
@@ -63,7 +63,8 @@ class ModuleAdmin extends Admin{
 				$d[] = array(
 							   		$title,
 							   		$ex,
-							   		"ex"
+							   		"ex",
+							   		$windowState
 							   );
 				
 				//Saves back into it's mangled form.
@@ -86,7 +87,8 @@ class ModuleAdmin extends Admin{
 					$d[] = array(
 								   		$title,
 								   		$in,
-								   		"in"
+								   		"in",
+								   		$windowState
 								   );
 					
 					//Saves back into it's mangled form.
@@ -111,7 +113,8 @@ class ModuleAdmin extends Admin{
 				$d[$id] = array(
 							   		$title,
 							   		$ex,
-							   		"ex"
+							   		"ex",
+							   		$windowState
 							   );
 				
 				//Saves back into it's mangled form.
@@ -132,7 +135,8 @@ class ModuleAdmin extends Admin{
 					$d[$id] = array(
 								   		$title,
 								   		$in,
-								   		"in"
+								   		"in",
+								   		$windowState
 								   );
 					
 					//Saves back into it's mangled form.
@@ -173,6 +177,13 @@ class ModuleAdmin extends Admin{
 			$pages = $this->getPages();	
 			
 			$out = str_replace("%EXTERNAL_LINK%", $d[$id][1], $out);
+		}
+		
+		//Logic to check the correct box for opening link in new window.
+		if($d[$id][3]=="sw"){
+			$out = str_replace("%SWCHECKED%", "CHECKED", $out);	
+		}else if($d[$id][3]=="nw"){
+			$out = str_replace("%NWCHECKED%", "CHECKED", $out);				
 		}
 		
 		$out = str_replace("%INTERNAL_PAGES%",$pages, $out);
@@ -397,13 +408,21 @@ class ModuleAdmin extends Admin{
          if($d[$i][2]=="in"){
             $d[$i][1] = "index.php?page=".$link;   
          }
+         
+         //Target, if the link should open in the same window or not
+         $target = "";
+         
+         //Only open in new window if defined to do this.
+         if($d[$i][3]=="nw"){
+         	$target = "target='_blank'";	
+         }
             
          if($i==0){
-            $out .= "<a class='firstM' href='".$d[$i][1]."'>".$d[$i][0]."</a>";
+            $out .= "<a class='firstM' ".$target." href='".$d[$i][1]."'>".$d[$i][0]."</a>";
          }else if(($i+1)==count($d)){
-            $out .= "<a class='lastM' href='".$d[$i][1]."'>".$d[$i][0]."</a>";
+            $out .= "<a class='lastM' ".$target." href='".$d[$i][1]."'>".$d[$i][0]."</a>";
          }else{
-            $out .= "<a class='normalM' href='".$d[$i][1]."'>".$d[$i][0]."</a>";
+            $out .= "<a class='normalM' ".$target." href='".$d[$i][1]."'>".$d[$i][0]."</a>";
          }
          
          $out .= "</li>";   
@@ -430,6 +449,12 @@ class ModuleAdmin extends Admin{
 		{
 			//Convert int array
 			$pages[$i] = explode("|*inter*|", $pages[$i]);	
+			
+			//Count the number of pages, and add another if non exists
+			if(count($pages[$i])==3){
+				//Open in same window.
+				$pages[$i][3] = "sw";
+			}
 		}
 		
 		return $pages;	
