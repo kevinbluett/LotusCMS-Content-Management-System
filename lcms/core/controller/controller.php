@@ -178,6 +178,9 @@ class Controller extends Observable{
 		
 		$reqy = (String)$this->request;
 		
+		//Set the Locale
+		$this->getModel()->setLocale();
+		
 		//If in wildcard mode process as wildcard override.
 		if($this->wildCard){
 			

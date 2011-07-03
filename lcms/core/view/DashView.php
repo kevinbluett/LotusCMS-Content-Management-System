@@ -33,13 +33,13 @@ class DashView extends View{
 		$content = $l->createForm();
 		
 		//Set the title of the page to Login
-		$this->setContentTitle("Login to Member's Area");
+		$this->setContentTitle($this->localize("Login to Members Area"));
 		
 		//Set the login form as content
 		$this->setContent($content);
 		
 		//Set the title of the website
-		$this->setSiteTitle("LotusCMS Administration");
+		$this->setSiteTitle($this->localize("LotusCMS Administration"));
 	}	
 	
 	/**
@@ -62,13 +62,13 @@ class DashView extends View{
 		$content = $l->createForm();
 		
 		//Set the title of the page to Login
-		$this->setContentTitle("Login to Member's Area");
+		$this->setContentTitle($this->localize("Login to Members Area"));
 		
 		//Set the login form as content
 		$this->setContent($content);
 		
 		//Set the title of the website
-		$this->setSiteTitle("LotusCMS Administration");
+		$this->setSiteTitle($this->localize("LotusCMS Administration"));
 	}
 	
 	/**

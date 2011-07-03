@@ -1,0 +1,10 @@
+{
+    "lang":"de",
+    "Login to Members Area":"Login für Mitglieder",
+    "LotusCMS Administration":"LotusCMS Website Verwaltung",
+    "You are editing":"Sie bearbeiten",
+    "Title":"Titel",
+    "Template":"Website Stil",
+    "Content":"Seiteninhalt",
+    "Save", "Speichern"
+}

@@ -50,6 +50,13 @@ class EditorView extends View{
 		//Replace Title in File
 		$out = str_replace("%TITLE%", $title, $out);
 		
+		//Locale
+		$out = str_replace("%YOU_ARE_EDITING_LOCALE%", $this->localize("You are editing"), $out);
+		$out = str_replace("%TITLE_LOCALE%", $this->localize("Title"), $out);
+		$out = str_replace("%TEMPLATE_LOCALE%", $this->localize("Template"), $out);
+		$out = str_replace("%CONTENT_LOCALE%", $this->localize("Content"), $out);
+		$out = str_replace("%SAVE_LOCALE%", $this->localize("Save"), $out);
+		
 		//Replace Unix in File
 		$out = str_replace("%UNIX%", $unix, $out);
 		

@@ -102,8 +102,34 @@ class Model extends Observable{
 	 */
 	protected function getCurrentUser()
 	{
-		
+		//TODO
 	}
+	
+	/**
+	 * Sets the session locale
+	 */
+	public function setLocale(){
+		
+		//Failsafe incase the install did not complete correctly.
+		if(file_exists("data/config/locale.dat")){
+			//Gets the saved Locale
+			$_SESSION['locale'] = $this->openFile("data/config/locale.dat");
+		}else{
+			/******* START TO BE REMOVED IN 4.0 MILESTONE *******/
+			//Create the locale file
+			include("core/lib/io.php");
+			$io = new InputOutput();
+			
+			//Create new default Locale
+			$io->saveFile("data/config/locale.dat", "EN");
+			
+			//Unset the variable.
+			unset($io);
+			
+			/******* END TO BE REMOVED IN 4.0 MILESTONE *******/
+		}
+	}
+	
 	
 	/**
 	 * Returns a global variable

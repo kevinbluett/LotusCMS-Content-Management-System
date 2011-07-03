@@ -1,0 +1,10 @@
+{
+    "lang":"en",
+    "Login to Members Area":"Login to Members Area",
+    "LotusCMS Administration":"LotusCMS Administration",
+    "You are editing":"You are editing",
+    "Title":"Title",
+    "Template":"Template",
+    "Content":"Content",
+    "Save", "Save"
+}
