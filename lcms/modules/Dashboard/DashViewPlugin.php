@@ -36,12 +36,17 @@ class DashboardView extends Observer{
      */
     private function loadDash(){
     	
+    	//Get the Locale
+    	include_once("core/lib/Locale.php");
+    	
+    	$l = new Locale();
+    	
     	//Checks for update
     	$data = $this->checkForUpdate();
     	
     	//If no update available.
     	if(empty($data)){
-    		$this->view->setErrorData("success", "Welcome to the new LotusCMS 3 Series, visit the <a href='http://forum.lotuscms.org'>LotusCMS Forum</a> for help / questions");
+    		$this->view->setErrorData("success", $l->localize("Welcome to the new LotusCMS 3 Series, visit the <a href='http://forum.lotuscms.org'>LotusCMS Forum</a> for help / questions"));
     	}else{
     		$this->view->setErrorData("error", $data);	
     	}
@@ -58,7 +63,7 @@ class DashboardView extends Observer{
     		$out .= $this->createIcon(
     									"index.php?system=Modules&page=admin&active=Blog", 
     									"modules/Blog/logo.png",
-    									"Blog"
+    									$l->localize("Blog")
     								 );
     	}
     	
@@ -68,7 +73,7 @@ class DashboardView extends Observer{
     		$out .= $this->createIcon(
     									"index.php?system=Modules&page=admin&active=Menu", 
     									"modules/Menu/logo.png",
-    									"Menu"
+    									$l->localize("Menu")
     								 );
     	}
     	
@@ -78,7 +83,7 @@ class DashboardView extends Observer{
     		$out .= $this->createIcon(
     									"index.php?system=Modules&page=admin&active=Backup", 
     									"modules/Backup/logo.png",
-    									"Backup"
+    									$l->localize("Backup")
     								 );
     	}
     	
@@ -88,7 +93,7 @@ class DashboardView extends Observer{
       		$out .= $this->createIcon(
     									"index.php?system=Template&page=change", 
     									"style/comps/admin/img/templates.png",
-    									"Styles"
+    									$l->localize("Styles")
     								 );
     	}
     	
@@ -124,7 +129,7 @@ class DashboardView extends Observer{
     	--></script>');*/
     	
     	$out .= "<fieldset>";
-    	$out .= "<p id='loadNews'><strong>Loading News...</strong></p>";
+    	$out .= "<p id='loadNews'><strong>".$l->localize("Loading News...")."</strong></p>";
     	
     	$out .= "</fieldset>";
     	

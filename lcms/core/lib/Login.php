@@ -1,19 +1,18 @@
 <?php
 
 class Login{
-
+	
 	/**
 	 * Creates Login
 	 * @param No Parameters
 	 */
 	public function Login(){
-	
 	}	
 	
 	/**
 	 * Create the login form
 	 */
-	public function createLogin($p){
+	public function createLogin($p, $v = null){
 		
 		$out = $p->openFile("style/comps/admin/login.phtml");
 		
@@ -31,34 +30,15 @@ class Login{
 			$out = str_replace("%MESSAGE%", "", $out);	
 		}
 		
+		$out = str_replace("%LOTUS_ADMIN_LOCALE%", $v->localize("LotusCMS Administration"), $out);
+		$out = str_replace("%USERNAME_LOCALE%", $v->localize("Username"), $out);
+		$out = str_replace("%PASSWORD_LOCALE%", $v->localize("Password"), $out);
+		$out = str_replace("%LOGIN_LOCALE%", $v->localize("Login"), $out);
+		
 		//This quits the normal login form,
 		$p->overridePaging($out);
 		/******* freeze_all() called ********/
 		//Never Ever gets to Here
-		
-		//Creates the login form system
-		$l = new LoginForm();
-		
-		//create the login form
-		$content = $l->createForm();
-		
-		//Setup Page
-		$p->setupPage("Administration");
-		
-		//Set the title of the page to Login
-		$p->setContentTitle("Login to Member's Area");
-		
-		//Set the login form as content
-		$p->setContent($content);
-		
-		//Set the title of the website
-		$p->setSiteTitle("LotusCMS Administration");
-		
-		//Set to 2 columns
-		$p->setTwoColumn();
-		
-		$p->setLeftTitle("");
-		$p->setLeftContent("");
 	}
 	
 	/**

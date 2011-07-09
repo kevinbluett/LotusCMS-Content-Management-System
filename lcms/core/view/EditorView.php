@@ -33,6 +33,7 @@ class EditorView extends View{
 		
 		//Print this dashboard
 		$this->setContent($content);	
+		$this->setContentTitle($this->localize("Editor"));
 	}
 	
 	/**
@@ -109,9 +110,19 @@ class EditorView extends View{
 		//Create the form
 		$out = $this->getController()->getModel()->openFile("core/fragments/editor/newPage.phtml");
 		
+		$out = str_replace("%UNIX_NAME_TEXT_GENERATED_LOCALE%", $this->localize("A unix name for this page will be generated from the title."), $out);
+		$out = str_replace("%YOU_EDITING_UNTITLED_LOCALE%", $this->localize("You are creating a new page (Untitled)"), $out);
+		$out = str_replace("%TITLE_LOCALE%", $this->localize("Title"), $out);
+		$out = str_replace("%DEFINE_UNIX_NAME_MANUALLY_LOCALE%", $this->localize("Define Unix Name Manually"), $out);
+		$out = str_replace("%UNIX_NAME_LOCALE%", $this->localize("Unix Name"), $out);
+		$out = str_replace("%TEMPLATE_LOCALE%", $this->localize("Template"), $out);
+		$out = str_replace("%CONTENT_LOCALE%", $this->localize("Content"), $out);
+		$out = str_replace("%SAVE_LOCALE%", $this->localize("Save"), $out);
+		
 		$out = str_replace("%TEMPLATE_OPTIONS%", $this->getController()->getModel()->getTemplateOptions(), $out);
 		
 		$this->setContent($out);
+		$this->setContentTitle($this->localize("Create New Page"));
 	}
 	
 	/**
@@ -126,11 +137,20 @@ class EditorView extends View{
 		//Create the form
 		$out = $this->getController()->getModel()->openFile("core/fragments/editor/deleteCheck.phtml");
 		
+		//Set Locales
+		$out = str_replace("%SURE_DELETE_LOCALE%", $this->localize("Are you sure you want to delete"), $out);
+		$out = str_replace("%YES_LOCALE%", $this->localize("Yes"),$out);
+		$out = str_replace("%NO_LOCALE%", $this->localize("No"),$out);
+		
+		//Loads the css required to have buttons yes and no.
+		$this->getMeta()->appendExtra('<link href="core/fragments/css/admin.css" rel="stylesheet" type="text/css">');
+		
 		//Set the page name inside the template
 		$out = str_replace("%PAGE_NAME%", $name, $out);
 		
 		//Set output content
 		$this->setContent($out);
+		$this->setContentTitle($this->localize("Editor"));
 	}
 	
 	/**

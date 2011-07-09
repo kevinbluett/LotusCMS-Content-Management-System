@@ -31,10 +31,10 @@ class ModuleAdmin extends Admin{
 		$data = "";
 		date_default_timezone_set("GMT");
 		if($messages){
-			$data = "<p>Please wait while the zip is being archived. If an 'PCLZIP_ERR_READ_OPEN_FAIL' error occurs, this indicates that the permissions for the backup folder are sit incorrectly - if so please chmod 'modules/Backup/zips' to 777.'</p>";
+			$data = "<p>Please wait while the zip is being archived...</p>";
 		}
 		
-		$name = 'modules/Backup/zips/archive'.date("c").'-id-'.generateRandStr($length).'.zip';
+		$name = 'modules/Backup/zips/archive'.date("c").'-id-'.$this->generateRandStr(20).'.zip';
 		
 		include_once('modules/Backup/pclzip.lib.php');
 		  
@@ -42,9 +42,9 @@ class ModuleAdmin extends Admin{
 		$v_list = $archive->add('data/');
 		
 		if ($v_list == 0) {
-			$data .= "<p><b>Error Zipping:</b> ".$archive->errorInfo(true)."</p>";
+			$data .= "<p><b>Error Zipping:</b> ".$archive->errorInfo(true)."</p><p>If an 'PCLZIP_ERR_READ_OPEN_FAIL' error has occured, this indicates that the permissions for the backup folder are sit incorrectly - if so please chmod 'modules/Backup/zips' to 777.'</p>";
 		}else if($messages){
-		  	$data .= "<p><strong>Download Zip of Backup: <a href='".$name."'>Here</a></strong></p>";
+		  	$data .= "<p class='success'><strong>Success:</strong> Your backup has been successfully prepared.</p><p><strong>Download Zip of Backup: <a href='".$name."'>Here</a></strong></p>";
 		}else{
 			$data .= "";
 		}
@@ -121,7 +121,7 @@ class ModuleAdmin extends Admin{
 			   $this->setContent("<p><strong>Error</strong> : ".$archive->errorInfo(true)."</p><p>It may help to chmod (change write permissions) the root cms directory to 777.</p>");
 			}else{
 				//Display sucess message
-				$this->setContent("<p>Successfully restored backup. Remember: <strong>User accounts and passwords created after the backup used have bee reversed to the original state.</strong></p>");	
+				$this->setContent("<p class='success'<b>Success:</b> LotusCMS has been restored to the original state of the backup.</p> <p>Remember: <strong>User accounts and passwords created after the backup was made, have been reversed to their respective original state.</strong></p>");	
 			}
 		}
 	}

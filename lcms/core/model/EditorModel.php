@@ -330,7 +330,7 @@ class EditorModel extends Model{
 		$fop = new FileOperations();
 		
 		//Let user know about the clearing cache title
-		$this->getController()->getPaging()->setContentTitle("Clearing Page Cache");
+		$this->getController()->getPaging()->setContentTitle($this->getController()->getView()->localize("Clearing Page Cache"));
 		
 		//Clear the contents of the cache - and show progress.
 		$this->getController()->getPaging()->setContent($fop->emptyDir("cache"));

@@ -17,6 +17,10 @@
   		$('body').corner();
   		$('#footer').corner();
 	  	$('#menu').corner("right");
+  		$('.yes a').corner();
+  		$('.no a').corner();
+   		$('.activetab').corner("top");
+   		$('.inactivetab a').corner("top");
 	});
 	-->
 	</script>
@@ -48,12 +52,13 @@
       
       <h2>Menu</h2>
       <ul id="menu">
-	<li <?php if($p->getInputString("system")=="Dash"){ print "id='active'";} ?>><a style="background-image: url('style/comps/admin/img/dashboard.png');background-repeat: no-repeat;background-position: 0px 2px;" href="?system=Dash&page=index">Dashboard</a></li>
-	<li <?php if($p->getInputString("system")=="PageList"){ print "id='active'";} ?>><a style="background-image: url('style/comps/admin/img/pages.png');background-repeat: no-repeat;background-position: 0px 2px;" href="?system=PageList&page=list">Pages</a></li>
-	<li <?php if($p->getInputString("system")=="UsersList"){ print "id='active'";} ?>><a style="background-image: url('style/comps/admin/img/users.png');background-repeat: no-repeat;background-position: 0px 2px;" href="?system=UsersList&page=list">Users</a></li>
-	<li <?php if($p->getInputString("system")=="Modules"){ print "id='active'";} ?>><a style="background-image: url('style/comps/admin/img/modules.png');background-repeat: no-repeat;background-position: 0px 2px;" href="?system=Modules&page=index">Modules</a></li>
-	<li <?php if($p->getInputString("system")=="Settings"){ print "id='active'";} ?>><a style="background-image: url('style/comps/admin/img/settings.png');background-repeat: no-repeat;background-position: 0px 2px;" href="?system=Settings&page=index">Settings</a></li>
-	<li <?php if($p->getInputString("system")=="Admin"){ print "id='active'";} ?>><a style="background-image: url('style/comps/admin/img/logout.png');background-repeat: no-repeat;background-position: 0px 2px;" href="?system=Admin&page=logout">Logout</a></li>
+      <?php $system = $p->getInputString("system"); ?>
+	<li <?php if($system=="Dash"){ print "id='active'";} ?>><a style="background-image: url('style/comps/admin/img/dashboard.png');background-repeat: no-repeat;background-position: 0px 2px;" href="?system=Dash&page=index"><?php print $p->getView()->localize("Dashboard"); ?></a></li>
+	<li <?php if($system=="PageList"){ print "id='active'";} ?>><a style="background-image: url('style/comps/admin/img/pages.png');background-repeat: no-repeat;background-position: 0px 2px;" href="?system=PageList&page=list"><?php print $p->getView()->localize("Pages"); ?></a></li>
+	<li <?php if($system=="UsersList"){ print "id='active'";} ?>><a style="background-image: url('style/comps/admin/img/users.png');background-repeat: no-repeat;background-position: 0px 2px;" href="?system=UsersList&page=list"><?php print $p->getView()->localize("Users"); ?></a></li>
+	<li <?php if($system=="Modules"){ print "id='active'";} ?>><a style="background-image: url('style/comps/admin/img/modules.png');background-repeat: no-repeat;background-position: 0px 2px;" href="?system=Modules&page=index"><?php print $p->getView()->localize("Modules"); ?></a></li>
+	<li <?php if($system=="Settings"||$system=="GeneralSettings"){ print "id='active'";} ?>><a style="background-image: url('style/comps/admin/img/settings.png');background-repeat: no-repeat;background-position: 0px 2px;" href="?system=Settings&page=index"><?php print $p->getView()->localize("Settings"); ?></a></li>
+	<li <?php if($system=="Admin"){ print "id='active'";} ?>><a style="background-image: url('style/comps/admin/img/logout.png');background-repeat: no-repeat;background-position: 0px 2px;" href="?system=Admin&page=logout"><?php print $p->getView()->localize("Logout"); ?></a></li>
       </ul>
       
     </div>

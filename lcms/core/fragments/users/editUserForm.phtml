@@ -1,14 +1,13 @@
-<p>This form allows you to create a new user.<br />
 <form method="post" action="?system=Users&page=edit&active=%USERNAME%" name="edit">
-                <h3>Username</h3><br /> <fieldset>'%USERNAME%'</fieldset>
+                <h4>%USERNAME_LOCALE%</h4><br /> <fieldset>'%USERNAME%'</fieldset>
                 
-                <h3>Full Name</h3><br /> <fieldset><input name="name" class="text-long" value="%FULLNAME%" /></fieldset>
+                <h4>%FULLNAME_LOCALE%</h4><br /> <fieldset><input name="name" class="text-long" value="%FULLNAME%" /></fieldset>
                 
-                <h3>E-mail</h3><br /> <fieldset><input name="email" class="text-long" value="%EMAIL%" /></fieldset>
+                <h4>%EMAIL_LOCALE%</h4><br /> <fieldset><input name="email" class="text-long" value="%EMAIL%" /></fieldset>
         
-        		<h3>Password</h3><br /> <fieldset>New Password:&nbsp;<input name="password1" class="text-long" value="" /><br />Verify Password:&nbsp;<input name="password2" class="text-long" value="" /></fieldset>
+        		<h4>%PASSWORD_LOCALE%</h4><br /> <fieldset><div class="txtblock">%NEW_PASSWORD_LOCALE%:</div><input name="password1" class="text-aligned" type="password" value="" /><br /><div class="txtblock">%VERIFY_PASSWORD_LOCALE%:</div><input name="password2" type="password" class="text-aligned" value="" /></fieldset>
         		
-        		<h3>Access Level</h3>
+        		<h4>%ACCESSLEVEL_LOCALE%</h4>
         		<fieldset>
 	        		<select name="access">
 						<option>%OPTION1%</option>
@@ -16,4 +15,4 @@
 					</select>
 				</fieldset>
                 
-<input type="submit" value="Save"></form><br /><br />
+<input type="submit" value="%SAVE_LOCALE%"></form><br /><br />

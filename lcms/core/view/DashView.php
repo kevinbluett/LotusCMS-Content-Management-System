@@ -76,6 +76,9 @@ class DashView extends View{
 	 */
 	public function showDash(){
 		
+		//Localize Dashboard text (Before Plugins hook in.)
+		$this->setContentTitle($this->localize("Dashboard"));
+		
 		// Set the state and tell plugins.
 		$this->setState('LOADING_DASH');
 		$this->notifyObservers();

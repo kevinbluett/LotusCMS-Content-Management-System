@@ -101,6 +101,9 @@ class Controller extends Observable{
 		//Set this as controller
 		$this->cv->setController($this);
 		
+		//Set View
+		$this->cv->setView($this->cv);
+		
 		//Setup the classmodel
 		eval("\$this->cm = new ".$className."Model();");
 		

@@ -29,11 +29,20 @@ class UsersListView extends View{
 		//Get Top of pagelist
 		$content = $this->openFile("core/fragments/admin_userslist.phtml");
 		
+		//Set this tab active
+		$content = $this->setTabActive(1, $content);
+		
+		$content = str_replace("%USERLIST_LOCALE%", $this->localize("Manage Users"), $content);
+		$content = str_replace("%CREATE_NEW_USER_LOCALE%", $this->localize("Create New User"), $content);
+		
 		//Creates a list from the supplied data
 		$content .= $this->createUsersList($pages);
 		
 		//Print this dashboard
 		$this->setContent($content);	
+		
+		//Localize content
+		$this->setContentTitle($this->localize("Users"));
 	}
 	
 	/**
@@ -57,9 +66,9 @@ class UsersListView extends View{
 		//Add the heading row.
 		$t->addRow(
 					array(
-						"Username",
-						"Edit Option",
-						"Delete Option"
+						$this->localize("Username"),
+						$this->localize("Edit Option"),
+						$this->localize("Delete Option")
 					)					
 				  );
 		
@@ -70,8 +79,8 @@ class UsersListView extends View{
 			$t->addRow(
 					array(
 						$data[$i],
-						"<a href='?system=Users&page=edit&active=".$data[$i]."'>Edit</a>",
-						"<a href='?system=Users&page=delete&active=".$data[$i]."'>Delete</a>",					
+						"<a href='?system=Users&page=edit&active=".$data[$i]."'>".$this->localize("Edit")."</a>",
+						"<a href='?system=Users&page=delete&active=".$data[$i]."'>".$this->localize("Delete")."</a>",					
 					)
 				  );
 		}

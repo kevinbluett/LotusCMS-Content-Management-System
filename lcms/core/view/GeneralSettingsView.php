@@ -32,6 +32,15 @@ class GeneralSettingsView extends View{
 		//Tabs above settings
 		$tabs = $this->openFile("core/fragments/settings/SettingsDash.phtml");	
 		
+		//Activate Tab
+		$tabs = $this->setTabActive(1, $tabs);
+		
+		//Localise
+		$tabs = str_replace("%GENERAL_SETTINGS_LOCALE%", $this->localize("General Settings"), $tabs);
+		$tabs = str_replace("%SEO_SETTINGS_LOCALE%", $this->localize("SEO Settings"), $tabs);
+		$tabs = str_replace("%TEMPLATE_SETTINGS_LOCALE%", $this->localize("Template Settings"), $tabs);
+		$tabs = str_replace("%CLEAR_CACHE_LOCALE%", $this->localize("Clear Cache"), $tabs);
+		
 		//Print this dashboard
 		$this->setContent($tabs.$content);	
 	}
@@ -70,6 +79,16 @@ class GeneralSettingsView extends View{
 		
 		//Replace current version in File
 		$out = str_replace("%CURRENTVERSION%", $version, $out);
+		
+		//Locale
+		$out = str_replace("%WEBSITE_TITLE_LOCALE%", $this->localize("Website Title"), $out);
+		$out = str_replace("%WEBSITE_VERSION_LOCALE%", $this->localize("Website Version"), $out);
+		$out = str_replace("%CLEAR_CACHE_MESSAGE_LOCALE%", $this->localize("You may wish to clear the CMS cache after this, as cached pages will contain old title."), $out);
+		$out = str_replace("%WEBSITE_DISABLE_LOCALE%", $this->localize("Disable Website"), $out);
+		$out = str_replace("%UNDER_CONSTRUCTION_LOCALE%", $this->localize("This feature is yet to be implemented"), $out);
+		$out = str_replace("%YOUR_VERSION_LOCALE%", $this->localize("Your Version"), $out);
+		$out = str_replace("%LATEST_VERSION_LOCALE%", $this->localize("Latest Version"), $out);
+		$out = str_replace("%SAVE_LOCALE%", $this->localize("Save"), $out);
 		
 		//Include and load the latest version
     	include("core/lib/RemoteFiles.php");

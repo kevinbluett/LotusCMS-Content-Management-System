@@ -117,7 +117,7 @@ class EditorController extends Controller{
 				
 				//Show the saved successfully yoke.
 				$this->getView()->redirectSuccess(
-									$this->getModel()->openFile("core/fragments/editor/deletePageTitle.phtml")
+									$this->getView()->localize("Page was deleted successfully.")
 								 );
 			}
 		}
@@ -170,7 +170,7 @@ class EditorController extends Controller{
 				$this->getModel()->savePage($data[0], $data[1], $data[2], $data[3]);
 				
 				//Show the saved successfully yoke.
-				$this->getView()->redirectSuccess($this->getModel()->openFile("core/fragments/editor/savePageTitle.phtml"));
+				$this->getView()->redirectSuccess($this->getView()->localize("The page was successfully saved."));
 			}
 		}
 	}

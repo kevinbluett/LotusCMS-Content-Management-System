@@ -9,7 +9,11 @@ class UsersView extends View{
 	 * Starts the controller of the classes system
 	 */
 	public function UsersView(){
-			
+		//Meta is usually not setup yet, so we manually do this before loading css file
+		$this->meta = new Meta();
+		
+		//This class requires an extra css file
+		$this->getMeta()->addExtra('<link href="core/fragments/css/admin.css" rel="stylesheet" type="text/css" />');
 	}	
 	
 	/**
@@ -22,10 +26,21 @@ class UsersView extends View{
 		$this->notifyObservers();
 		
 		//Get Create Form Title
-		$title = $this->openFile("core/fragments/users/newUserTitle.phtml");
+		$title = $this->localize("Create New User");
 		
 		//Get Create Form
 		$form = $this->openFile("core/fragments/users/newUser.phtml");
+		
+		//Localization
+		$form = str_replace("%USERNAME_LOCALE%", $this->localize("Username"), $form);
+		$form = str_replace("%USERNAME_WARNING_LOCALE%", $this->localize("one word - no spaces or special characters"), $form);
+		$form = str_replace("%FULLNAME_LOCALE%", $this->localize("Full Name"), $form);
+		$form = str_replace("%EMAIL_LOCALE%", $this->localize("E-mail"), $form);
+		$form = str_replace("%PASSWORD_LOCALE%", $this->localize("Password"), $form);
+		$form = str_replace("%NEW_PASSWORD_LOCALE%", $this->localize("New Password"), $form);
+		$form = str_replace("%VERIFY_PASSWORD_LOCALE%", $this->localize("Verify Password"), $form);
+		$form = str_replace("%ACCESSLEVEL_LOCALE%", $this->localize("Access Level"), $form);
+		$form = str_replace("%SAVE_LOCALE%", $this->localize("Save"), $form);
 
 		//Set form content to show
 		$this->setContentTitle($title);
@@ -44,13 +59,18 @@ class UsersView extends View{
 		$this->notifyObservers();
 		
 		//Get Create Form Title
-		$title = $this->openFile("core/fragments/users/deleteUserTitle.phtml");
+		$title = $this->localize("Deleting User");
 		
 		//Get Create Form
 		$form = $this->openFile("core/fragments/users/deleteUserContent.phtml");
 		
 		//Replace Username Option
 		$form = str_replace("%USERNAME%", $username, $form);
+		
+		//Localization
+		$form = str_replace("%ARE_SURE_USER_LOCALE%", $this->localize("Are You sure you want to delete the user"), $form);
+		$form = str_replace("%YES_LOCALE%", $this->localize("Yes"), $form);
+		$form = str_replace("%NO_LOCALE%", $this->localize("No"), $form);
 		
 		//Set form content to show
 		$this->setContentTitle($title);
@@ -69,10 +89,7 @@ class UsersView extends View{
 		$this->notifyObservers();
 		
 		//Get Create Form
-		$form = $this->openFile("core/fragments/users/deleteUserSuccessContent.phtml");
-		
-		//Replace Username Option
-		$form = str_replace("%USERNAME%", $username, $form);
+		$form = $this->localize("The user account has been deleted successfully.");
 	
 		//Set form content to show
 		$this->redirectSuccess($form);		
@@ -91,7 +108,7 @@ class UsersView extends View{
 		if($saved)
 		{
 			//Get Create Form
-			$content = $this->openFile("core/fragments/users/savedUserContent.phtml");
+			$content = $this->localize("The user's details was successfully saved.");
 	
 			//Redirect to user list
 			$this->redirectSuccess($content);
@@ -100,7 +117,7 @@ class UsersView extends View{
 		else
 		{
 			//Get Create Form Title
-			$title = $this->openFile("core/fragments/users/failedUserTitle.phtml");
+			$title = $this->localize("Sorry - You left a field empty or the passwords entered didn't match.");
 				
 			//Redirect back to the form showing the error
 			$this->redirectError($title, "?system=Users&page=edit&active=".$this->getController()->getModel()->getInputString("active"));
@@ -117,10 +134,21 @@ class UsersView extends View{
 		$this->notifyObservers();
 		
 		//Get Create Form Title
-		$title = $this->openFile("core/fragments/users/editUserTitle.phtml");
+		$title = $this->localize("Edit User");
 		
 		//Get Create Form
 		$form = $this->openFile("core/fragments/users/editUserForm.phtml");
+		
+		//Localization
+		$form = str_replace("%USERNAME_LOCALE%", $this->localize("Username"), $form);
+		$form = str_replace("%USERNAME_WARNING_LOCALE%", $this->localize("one word - no spaces or special characters"), $form);
+		$form = str_replace("%FULLNAME_LOCALE%", $this->localize("Full Name"), $form);
+		$form = str_replace("%EMAIL_LOCALE%", $this->localize("E-mail"), $form);
+		$form = str_replace("%PASSWORD_LOCALE%", $this->localize("Password"), $form);
+		$form = str_replace("%NEW_PASSWORD_LOCALE%", $this->localize("New Password"), $form);
+		$form = str_replace("%VERIFY_PASSWORD_LOCALE%", $this->localize("Verify Password"), $form);
+		$form = str_replace("%ACCESSLEVEL_LOCALE%", $this->localize("Access Level"), $form);
+		$form = str_replace("%SAVE_LOCALE%", $this->localize("Save"), $form);
 		
 		//Replace Username Option
 		$form = str_replace("%USERNAME%", $username, $form);

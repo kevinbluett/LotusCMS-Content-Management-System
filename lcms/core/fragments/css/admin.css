@@ -27,13 +27,13 @@
 }
 
 .yes a{
-	display:block;float: left;text-decoration: none;padding-top: 10px;height: 30px;margin-right: 40px;padding-left: 10px;padding-right: 10px;border: 1px solid #333333;-moz-border-radius: 6px;
+	display:block;float: left;text-decoration: none;padding-top: 11px;height: 30px;margin-right: 40px;padding-left: 10px;padding-right: 10px;border: 1px solid #333333;-moz-border-radius: 6px;
 }
 .yes a:hover{
  	background-color: #E8FFE8;
 }
 .no a{
-	display:block;float: left;text-decoration: none;padding-top: 10px;height: 30px;margin-right: 30px;padding-left: 10px;padding-right: 10px;border: 1px solid #333333;-moz-border-radius: 6px;
+	display:block;float: left;text-decoration: none;padding-top: 11px;height: 30px;margin-right: 30px;padding-left: 10px;padding-right: 10px;border: 1px solid #333333;-moz-border-radius: 6px;
 }
 .no a:hover {
 	background-color: #FFEBE8;
@@ -59,4 +59,33 @@
 
 fieldset legend {
 	font-size: 13px;	
+}
+
+.article h4 {
+	font-size: 22px;
+}
+
+.article {
+	font-size: 12px;
+}
+
+.text-long {
+	width: 200px;	
+	height: 18px;
+	font-size: 15px;
+}
+
+.text-aligned {
+	width: 140px;
+	height: 18px;
+	font-size: 15px;	
+}
+
+.txtblock {
+	display: inline-block;
+	width: 150px;	
+}
+
+.article .success {
+	font-size: 1.2em;
 }

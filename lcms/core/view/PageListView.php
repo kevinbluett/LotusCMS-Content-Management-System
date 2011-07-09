@@ -29,14 +29,21 @@ class PageListView extends View{
 		//Get Top of pagelist
 		$content = $this->openFile("core/fragments/admin_pagelist.phtml");
 		
+		//Set this tab active
+		$content = $this->setTabActive(1, $content);
+		
+		$content = str_replace("%PAGELIST_LOCALE%", $this->localize("Existing Pages"), $content);
+		$content = str_replace("%CREATE_NEW_PAGE_LOCALE%", $this->localize("Create New Page"), $content);
+		
 		//Creates a list from the supplied data
 		$content .= $this->createPageList($pages);
 		
-		//Get Bottom of page list
-		$content .= $this->openFile("core/fragments/admin_pagelist_bottom.phtml");
+		//Ends the divider
+		$content .= "</div>";
 		
 		//Print this dashboard
 		$this->setContent($content);	
+		$this->setContentTitle($this->localize("Pages"));
 	}
 	
 	/**
@@ -60,10 +67,10 @@ class PageListView extends View{
 		//Add the heading row.
 		$t->addRow(
 				array(
-					"Page Title",
-					"Edit Option",
-					"View Option",
-					"Delete Option"
+					$this->localize("Page Title"),
+					$this->localize("Edit Option"),
+					$this->localize("View Option"),
+					$this->localize("Delete Option")
 				)					
 			  );
 		
@@ -74,9 +81,9 @@ class PageListView extends View{
 			$t->addRow(
 					array(
 						$data[$i],
-						"<a href='?system=Editor&page=editor&active=".$data[$i]."'>Edit</a>",
-						"<a href='?page=".$data[$i]."'>View</a>",
-						"<a href='?system=Editor&page=delete&active=".$data[$i]."'>Delete</a>",					
+						"<a href='?system=Editor&page=editor&active=".$data[$i]."'>".$this->localize("Edit")."</a>",
+						"<a href='?page=".$data[$i]."'>".$this->localize("View")."</a>",
+						"<a href='?system=Editor&page=delete&active=".$data[$i]."'>".$this->localize("Delete")."</a>",					
 					)
 				  );
 		}

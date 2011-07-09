@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   
-  <title>LotusCMS Administration</title>
+  <title>%LOTUS_ADMIN_LOCALE%</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <link href="style/comps/admin/css/login.css" rel="stylesheet" type="text/css" />
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
@@ -32,12 +32,12 @@
       <div class="article">
       	%MESSAGE%
 		<form method="POST" action="index.php?system=Admin&page=loginSubmit" id="contactform">
-		                <label for="name"><h4>Username:</h4></label>
+		                <label for="name"><h4>%USERNAME_LOCALE%:</h4></label>
 
 		                <input id="username" name="username" class="logged" /><br /><br />
-		                <label for="password"><h4>Password:</h4></label>
+		                <label for="password"><h4>%PASSWORD_LOCALE%:</h4></label>
 		                <input id="password" name="password" type="password" class="logged" /><br /><br />
-		                <input type="submit" value="Login" class="loggedIn"/>
+		                <input type="submit" value="%LOGIN_LOCALE%" class="loggedIn"/>
 		  </form>
       </div>
       

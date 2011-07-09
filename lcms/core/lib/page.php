@@ -58,6 +58,8 @@ class Page extends Observable{
 	//Template overriding
 	protected $tempOverride;
 	
+	protected $view;
+	
 	/**
 	 * Intially sets up the page
 	 */
@@ -98,6 +100,20 @@ class Page extends Observable{
 		//Check if any error messages are to be displayed
 		$this->checkError();
 	}	
+	
+	/**
+	 * Sets view
+	 */
+	public function setView($view){
+		$this->view = $view;	
+	}
+	
+	/**
+	 * Gets view
+	 */
+	public function getView(){
+		return $this->view;	
+	}
 	
 	/**
 	 * Generates and displays the page

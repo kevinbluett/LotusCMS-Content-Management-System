@@ -49,7 +49,7 @@ class Model extends Observable{
 				$l = new Login();
 				
 				//Create a login form for this anonymous user
-				$l->createLogin($p);
+				$l->createLogin($p, $this->getController()->getView());
 				
 				//Display the page.
 				$p->displayPage();

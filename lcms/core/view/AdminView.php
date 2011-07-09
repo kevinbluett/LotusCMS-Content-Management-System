@@ -23,9 +23,12 @@ class AdminView extends View{
 
 		//Login
 		$out = $this->openFile("style/comps/admin/login.phtml");
-		
 			
 		$out = str_replace("%MESSAGE%", "<p class='msg error'>".$this->openFile("core/fragments/missing_details.phtml")."</p>", $out);
+		$out = str_replace("%LOTUS_ADMIN_LOCALE%", $this->localize("LotusCMS Administration"), $out);
+		$out = str_replace("%USERNAME_LOCALE%", $this->localize("Username"), $out);
+		$out = str_replace("%PASSWORD_LOCALE%", $this->localize("Password"), $out);
+		$out = str_replace("%LOGIN_LOCALE%", $this->localize("Login"), $out);
 
 		//This quits the normal login form,
 		$this->overridePaging($out);
@@ -44,6 +47,10 @@ class AdminView extends View{
 		$out = $this->openFile("style/comps/admin/login.phtml");
 		
 		$out = str_replace("%MESSAGE%", "<p class='msg error'>".$this->getController()->getModel()->openFile("core/fragments/wrong_details.phtml")."</p>", $out);
+		$out = str_replace("%LOTUS_ADMIN_LOCALE%", $this->localize("LotusCMS Administration"), $out);
+		$out = str_replace("%USERNAME_LOCALE%", $this->localize("Username"), $out);
+		$out = str_replace("%PASSWORD_LOCALE%", $this->localize("Password"), $out);
+		$out = str_replace("%LOGIN_LOCALE%", $this->localize("Login"), $out);
 
 		//This quits the normal login form,
 		$this->overridePaging($out);

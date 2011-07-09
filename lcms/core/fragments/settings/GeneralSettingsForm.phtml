@@ -1,21 +1,27 @@
 <form method="post" class="jNice" action="?system=GeneralSettings&page=edit" name="edit">
-        <h3>Website Title</h3>
-        <p>You may wish to clear the CMS cache after this, as cached pages will contain old title.</p>
+        <h4>%WEBSITE_TITLE_LOCALE%</h4>
+        %CLEAR_CACHE_MESSAGE_LOCALE%
         <fieldset>
         	<input name="title" class="text-long" value="%TITLE%">
         </fieldset>
         
-        <h3>Website Version</h3>
+        <h4>%WEBSITE_VERSION_LOCALE%</h4>
         <br /> 
         <fieldset>
-        	<p>Your Version: %CURRENTVERSION%<br />Latest Version: %LATESTVERSION%</p>
+        	%YOUR_VERSION_LOCALE%: %CURRENTVERSION%<br />%LATEST_VERSION_LOCALE%: %LATESTVERSION%
         </fieldset>
         
-        <h3>Disable Website</h3>
-        <p>Disabled all of the public side of the website, administration and plugins will still be available. (Unavailable in 3.0.1)</p>
+        <h4>%WEBSITE_LOCALE_LOCALE%</h4>
         <fieldset>
-        	<input type="button" class="text-long" value="Disable Public Website" DISABLED>
+        	<select name="locale">
+        		%LOCALE_LIST%
+        	</select>
+        </fieldset>        
+        <h4>%WEBSITE_DISABLE_LOCALE%</h4>
+        %UNDER_CONSTRUCTION_LOCALE%.
+        <fieldset>
+        	<input type="button" class="text-long" value="%WEBSITE_DISABLE_LOCALE%" DISABLED>
         </fieldset>
       
-        <input type="submit" value="Save"><br /><br />
+        <input type="submit" value="%SAVE_LOCALE%"><br /><br />
 </form> 
