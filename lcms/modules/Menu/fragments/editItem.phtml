@@ -1,16 +1,16 @@
-<form method="post" class="jNice" action="index.php?system=Modules&page=admin&active=Menu&req=save&id=%MENU_ID%" name="edit">You are editing a menu item.<br />
-                <h3>Title</h3><br /> <fieldset><input name="title" class="text-long" value="%TITLE%"></fieldset>
+<form method="post" class="jNice" action="index.php?system=Modules&page=admin&active=Menu&req=save&id=%MENU_ID%" name="edit">
+                <h4>%TITLE_LOCALE%</h4><br /> <fieldset><input name="title" class="text-long" value="%TITLE%"></fieldset>
                
-       			<h3>External Link</h3>Not Required if Internal page is selected.
+       			<h4>%EXTERNAL_LINK_LOCALE%</h4>%EX_LINK_MESS_LOCALE%
        			<br /> 
        			<fieldset><input name="external" class="text-long" value="%EXTERNAL_LINK%"></fieldset>
        			
-       			<h3>Internal Page</h3>Not required if external link is entered.
+       			<h4>%INTERNAL_PAGE_LOCALE%</h4>%INTERNAL_PAGE_MSG_LOCALE%
        			<br /> <fieldset><p>%INTERNAL_PAGES%</p></fieldset>
                 
-                <h3>How to Open Link</h3>
+                <h4>%OPEN_WINDOW_LOCALE%</h4>
                 <fieldset>
-                <input type="radio" name="state" value="sw" %SWCHECKED%> Open in same window<br />
-                <input type="radio" name="state" value="nw" %NWCHECKED%> Open in new window
+                <input type="radio" name="state" value="sw" %SWCHECKED%> %OPEN_IN_SAME_WINDOW_LOCALE%<br />
+                <input type="radio" name="state" value="nw" %NWCHECKED%> %OPEN_IN_NEW_WINDOW_LOCALE%
                 </fieldset>
-                <input type="submit" value="Save"><br /><br /></form>
+                <input type="submit" value="%SAVE_LOCALE%"><br /><br /></form>

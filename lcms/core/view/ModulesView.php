@@ -109,6 +109,8 @@ class ModulesView extends View{
 		
 		//Put in the unix name
 		$out = str_replace("%UNIX%", $data[0], $out);
+		$out = str_replace("%ADMINISTRATION_LOCALE%", $this->localize("Module Administration"), $out);
+		$out = str_replace("%MODULE_INFORMATION_LOCALE%", $this->localize("Module Information"), $out);
 		
 		//Place the content
 		$out .= $data[1];
@@ -117,7 +119,7 @@ class ModulesView extends View{
 		$this->setContent($out);
 		
 		//Set Title
-		$this->setContentTitle("Module: ".$data[0]);
+		$this->setContentTitle($this->localize("Module:")." ".$data[0]);
 	}
 	
 	/**

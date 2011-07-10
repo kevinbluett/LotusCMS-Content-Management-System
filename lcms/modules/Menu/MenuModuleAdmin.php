@@ -30,9 +30,22 @@ class ModuleAdmin extends Admin{
 		
 		$pages = $this->getPages();
 		
+		$out = str_replace("%INTERNAL_PAGES%",$pages, $this->getFragment("newItem"));
+		
+		//Localization
+		$out  = str_replace("%TITLE_LOCALE%", $this->localize("Title"), $out);
+		$out  = str_replace("%EXTERNAL_LINK_LOCALE%", $this->localize("External Link"), $out);
+		$out  = str_replace("%EX_LINK_MESS_LOCALE%", $this->localize("Not Required if Internal page is selected."), $out);
+		$out  = str_replace("%INTERNAL_PAGE_LOCALE%", $this->localize("Internal Page"), $out);
+		$out  = str_replace("%INTERNAL_PAGE_MSG_LOCALE%", $this->localize("Not required if external link is entered."), $out);
+		$out  = str_replace("%OPEN_WINDOW_LOCALE%", $this->localize("How to Open Link"), $out);
+		$out  = str_replace("%OPEN_IN_SAME_WINDOW_LOCALE%", $this->localize("Open in same window"), $out);
+		$out  = str_replace("%OPEN_IN_NEW_WINDOW_LOCALE%", $this->localize("Open in new window"), $out);
+		$out  = str_replace("%SAVE_LOCALE%", $this->localize("Save"), $out);
+		
 		//Gets a fragment and sets it as content
 		$this->setContent(
-							str_replace("%INTERNAL_PAGES%",$pages, $this->getFragment("newItem"))
+							$out
 						 );
 	}
 	
@@ -49,7 +62,7 @@ class ModuleAdmin extends Admin{
 		$windowState = $this->getInputString("state", "sw", "P");
 		
 		if(empty($title)){
-			$this->redirectError("Title was left empty.");
+			$this->redirectError($this->localize("Title was left empty."));
 		}
 		
 		if($id=="-1")//This equates to a new link
@@ -73,13 +86,13 @@ class ModuleAdmin extends Admin{
 				//Make Menu available to templates
 				$this->compileMenu($d);
 				
-				$this->redirectSuccess("Successfully changed menu.");
+				$this->redirectSuccess($this->localize("Successfully changed menu."));
 				
 			}else{
 				$in = $this->getInputString("group1", "", "P");
 				
 				if(empty($in)){
-					$this->redirectError("No internal or external link entered.");
+					$this->redirectError($this->localize("No internal or external link entered."));
 				}else{
 					
 					$d = $this->getMenuItems();	
@@ -97,7 +110,7 @@ class ModuleAdmin extends Admin{
 					//Make Menu available to templates
 					$this->compileMenu($d);
 					
-					$this->redirectSuccess("Successfully changed menu.");
+					$this->redirectSuccess($this->localize("Successfully changed menu."));
 				}
 			}
 		}
@@ -123,13 +136,13 @@ class ModuleAdmin extends Admin{
 				//Make Menu available to templates
 				$this->compileMenu();
 				
-				$this->redirectSuccess("Successfully changed menu.");
+				$this->redirectSuccess($this->localize("Successfully changed menu."));
 				
 			}else{
 				$in = $this->getInputString("group1", "", "P");
 				
 				if(empty($in)){
-					$this->redirectError("No internal or external link entered.");
+					$this->redirectError($this->localize("No internal or external link entered."));
 				}else{
 				
 					$d[$id] = array(
@@ -145,7 +158,7 @@ class ModuleAdmin extends Admin{
 					//Make Menu available to templates
 					$this->compileMenu();
 					
-					$this->redirectSuccess("Successfully changed menu.");
+					$this->redirectSuccess($this->localize("Successfully changed menu."));
 				}
 			}
 
@@ -191,6 +204,17 @@ class ModuleAdmin extends Admin{
 		$out = str_replace("%MENU_ID%", $id, $out);
 		
 		$out = str_replace("%TITLE%", $d[$id][0], $out);
+		
+		//Localization
+		$out  = str_replace("%TITLE_LOCALE%", $this->localize("Title"), $out);
+		$out  = str_replace("%EXTERNAL_LINK_LOCALE%", $this->localize("External Link"), $out);
+		$out  = str_replace("%EX_LINK_MESS_LOCALE%", $this->localize("Not Required if Internal page is selected."), $out);
+		$out  = str_replace("%INTERNAL_PAGE_LOCALE%", $this->localize("Internal Page"), $out);
+		$out  = str_replace("%INTERNAL_PAGE_MSG_LOCALE%", $this->localize("Not required if external link is entered."), $out);
+		$out  = str_replace("%OPEN_WINDOW_LOCALE%", $this->localize("How to Open Link"), $out);
+		$out  = str_replace("%OPEN_IN_SAME_WINDOW_LOCALE%", $this->localize("Open in same window"), $out);
+		$out  = str_replace("%OPEN_IN_NEW_WINDOW_LOCALE%", $this->localize("Open in new window"), $out);
+		$out  = str_replace("%SAVE_LOCALE%", $this->localize("Save"), $out);
 				
 		//Gets a fragment and sets it as content
 		$this->setContent(
@@ -223,7 +247,7 @@ class ModuleAdmin extends Admin{
 			//Make Menu available to templates
 			$this->compileMenu();
 			
-			$this->redirectSuccess("Successfully changed menu order.");
+			$this->redirectSuccess($this->localize("Successfully changed menu order."));
 		}
 	}
 	
@@ -253,7 +277,7 @@ class ModuleAdmin extends Admin{
 			//Make Menu available to templates
 			$this->compileMenu();
 			
-			$this->redirectSuccess("Successfully changed menu order.");
+			$this->redirectSuccess($this->localize("Successfully changed menu order."));
 		}
 	}
 	
@@ -267,6 +291,10 @@ class ModuleAdmin extends Admin{
 		$d = $this->getMenuItems();
 		
 		$out = $this->getFragment("deleteSure");
+		
+		$out = str_replace("%SURE_DELETE_LOCALE%", $this->localize("Are you sure you wish to delete"), $out);
+		$out = str_replace("%YES_LOCALE%", $this->localize("Yes"), $out);
+		$out = str_replace("%NO_LOCALE%", $this->localize("No"), $out);
 		
 		$out = str_replace("%MENU_ITEM%", $d[$id][0], $out);
 		$out = str_replace("%MENU_ID%", $id, $out);
@@ -298,7 +326,7 @@ class ModuleAdmin extends Admin{
 		//Make Menu available to templates
 		$this->compileMenu();
 		
-		$this->redirectSuccess("The item was successfully removed from the menu.");
+		$this->redirectSuccess($this->localize("The item was successfully removed from the menu."));
 	}
 
 	/**
@@ -344,6 +372,12 @@ class ModuleAdmin extends Admin{
 		
 		$out = $this->getFragment("topMainPage");
 		
+		//Localize
+		$out .= '<tr><th style="width: 30px;text-align: left;">'.$this->localize("Sort").'</th><th style="width: 150px;text-align: left;">'.$this->localize("Link Title").'</th><th style="width: 60px;text-align: left;">'.$this->localize("Edit").'</th><th style="text-align: left;width: 50px;">'.$this->localize("Delete").'</th></tr>';
+		
+		//Localize
+		$out = str_replace("%ADD_ITEM_LOCALE%", $this->localize("Click here to add a new menu item"), $out);
+		
 		for($i = 0; $i < count($d); $i++){
 			$out .= "<tr>";
 			
@@ -367,14 +401,14 @@ class ModuleAdmin extends Admin{
 		
 			$out .= "<td>";
 			//Edit
-			$out .= "<a href='index.php?system=Modules&page=admin&active=Menu&req=edit&id=".$i."'>Edit</a>";
+			$out .= "<a href='index.php?system=Modules&page=admin&active=Menu&req=edit&id=".$i."'>".$this->localize("Edit")."</a>";
 			
 			$out .= "</td>";
 			
 			$out .= "<td>";
 			//Delete
 			//Edit
-			$out .= "<a href='index.php?system=Modules&page=admin&active=Menu&req=delete&id=".$i."'>Delete</a>";
+			$out .= "<a href='index.php?system=Modules&page=admin&active=Menu&req=delete&id=".$i."'>".$this->localize("Delete")."</a>";
 			$out .= "</td>";
 			
 			$out .= "</tr>";	

@@ -10,7 +10,11 @@ class EditorView extends View{
 	 * Starts the controller of the classes system
 	 */
 	public function EditorView(){
-			
+		//Meta is usually not setup yet, so we manually do this before loading css file
+		$this->meta = new Meta();
+		
+		//This class requires an extra css file
+		$this->getMeta()->addExtra('<link href="core/fragments/css/admin.css" rel="stylesheet" type="text/css" />');	
 	}	
 	
 	/**

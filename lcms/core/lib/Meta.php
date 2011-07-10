@@ -28,14 +28,14 @@ class Meta{
 	 * Adds Extra Meta Data (Depriciated but may be in use)
 	 */
 	public function addExtra($ex){
-		$this->ex = $ex;	
+		$this->ex .= $ex;	
 	}
 	
 	/**
 	 * Adds Extra Meta Data (Formal Name)
 	 */
 	public function appendExtra($ex){
-		$this->ex = $ex;	
+		$this->ex .= $ex;	
 	}
 	
 	/**

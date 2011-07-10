@@ -18,7 +18,7 @@ class ModuleAdmin extends Admin{
 	 */
 	public function defaultRequest(){
 		
-		$data = "<p>This plugin will only function if the libraries for zipping and unzipping are installed on your server. If it fails just download the contents of the '/data/' directory in the root folder.</p><div class='yes'><a href='".$this->toRequest("zip")."'>Backup Now</a></div><div class='yes'><a href='".$this->toRequest("restore")."'>Restore Backup</a></div>";
+		$data = "<p style='line-height:18px;'>".$this->localize("This plugin will only function if the libraries for zipping and unzipping are installed on your server. If it fails just download the contents of the '/data/' directory in the root folder.")."</p><div class='yes'><a href='".$this->toRequest("zip")."'>".$this->localize("Backup Now")."</a></div><div class='yes'><a href='".$this->toRequest("restore")."'>".$this->localize("Restore Backup")."</a></div>";
 		
 		$this->setContent($data);
 	}
@@ -31,7 +31,7 @@ class ModuleAdmin extends Admin{
 		$data = "";
 		date_default_timezone_set("GMT");
 		if($messages){
-			$data = "<p>Please wait while the zip is being archived...</p>";
+			$data = "<p>".$this->localize("Please wait while the zip is being archived...")."</p>";
 		}
 		
 		$name = 'modules/Backup/zips/archive'.date("c").'-id-'.$this->generateRandStr(20).'.zip';
@@ -42,11 +42,11 @@ class ModuleAdmin extends Admin{
 		$v_list = $archive->add('data/');
 		
 		if ($v_list == 0) {
-			$data .= "<p><b>Error Zipping:</b> ".$archive->errorInfo(true)."</p><p>If an 'PCLZIP_ERR_READ_OPEN_FAIL' error has occured, this indicates that the permissions for the backup folder are sit incorrectly - if so please chmod 'modules/Backup/zips' to 777.'</p>";
+			$data .= "<p><b>".$this->localize("Error")." Zipping:</b> ".$archive->errorInfo(true)."</p>";
 		}else if($messages){
-		  	$data .= "<p class='success'><strong>Success:</strong> Your backup has been successfully prepared.</p><p><strong>Download Zip of Backup: <a href='".$name."'>Here</a></strong></p>";
+		  	$data .= "<p class='success'><strong>".$this->localize("Success").":</strong> ".$this->localize("Your backup has been successfully prepared").".</p><p><strong>".$this->localize("Download Zip of Backup").": <a href='".$name."'>".$this->localize("Here")."</a></strong></p>";
 		}else{
-			$data .= "";
+			$data .= "<p class='error msg'>".$this->localize("If an 'PCLZIP_ERR_READ_OPEN_FAIL' error has occured, this indicates that the permissions for the backup folder are sit incorrectly - if so please chmod 'modules/Backup/zips' to 777.")."</p>";
 		}
 
 		
@@ -61,7 +61,7 @@ class ModuleAdmin extends Admin{
 	 * Restore
 	 */
 	public function restoreRequest(){
-		$data = "<p>Would you like to choose to upload a backup, or would you like to backup from available online backups.</p><p><form action='".$this->toRequest("upload")."' method='post' enctype='multipart/form-data'><strong>Upload Backup</strong><br /><input type='file' name='datafile'/><input type='submit' value='Upload' /></form></p><br /><strong style='font-size: 13px;text-decoration: underline;'>OR</strong><br /><br /><div class='yes'><a href='".$this->toRequest("choose")."'>Choose an Existing Restore Point</a></div>";
+		$data = "<p>".$this->localize("Would you like to choose to upload a backup, or would you like to restore from available online backups?")."</p><p><form action='".$this->toRequest("upload")."' method='post' enctype='multipart/form-data'><h4>".$this->localize("Upload Backup")."</h4><br /><input type='file' name='datafile'/><input type='submit' value='".$this->localize("Upload")."' /></form></p><br /><strong style='font-size: 13px;text-decoration: underline;'>".$this->localize("OR")."</strong><br /><br /><h4>".$this->localize("Choose Backup")."</h4><br /><div class='yes'><a href='".$this->toRequest("choose")."'>".$this->localize("Choose an Existing Restore Point")."</a></div>";
 		
 		$this->setContent($data);
 	}
@@ -82,10 +82,10 @@ class ModuleAdmin extends Admin{
 			if(move_uploaded_file($file['tmp_name'], $target_path)) {
 			    $this->extractFile(basename( $file['name']));
 			}else{
-			    $this->setContent("<p>There was an error uploading the file, please try again after chmod of 'modules/Backup/zips' to 777.</p>");
+			    $this->setContent("<p>".$this->localize("There was an error uploading the file, please try again after chmod of 'modules/Backup/zips' to 777.")."</p>");
 			}
 		}else{
-		    $this->setContent("<p>There was an error uploading the file, no file selected.</p>");
+		    $this->setContent("<p>".$this->localize("There was an error uploading the file, no file selected.")."</p>");
 		}
 	}
 	
@@ -98,7 +98,7 @@ class ModuleAdmin extends Admin{
 		$output = $this->zipRequest(false);
 		
 		if(!empty($output)){
-			$this->setContent("<p>Sorry, restore cannot continue as an error occur while LCMS was backing up the current state of the data directory. Please chmod 'modules/Backup/zips' to 777.</p>");
+			$this->setContent("<p>".$this->localize("Sorry, restore cannot continue as an error occurred while LCMS was backing up the current state of the data directory. Please chmod 'modules/Backup/zips' to 777.")."</p>");
 		}else{
 			include_once('modules/Backup/pclzip.lib.php');
 			
@@ -118,10 +118,10 @@ class ModuleAdmin extends Admin{
 			
 			if ($archive->extract() == 0) {
 				//Display Error Message
-			   $this->setContent("<p><strong>Error</strong> : ".$archive->errorInfo(true)."</p><p>It may help to chmod (change write permissions) the root cms directory to 777.</p>");
+			   $this->setContent("<p><strong>".$this->localize("Error")."</strong> : ".$archive->errorInfo(true)."</p><p>It may help to chmod (change write permissions) the root cms directory to 777.</p>");
 			}else{
 				//Display sucess message
-				$this->setContent("<p class='success'<b>Success:</b> LotusCMS has been restored to the original state of the backup.</p> <p>Remember: <strong>User accounts and passwords created after the backup was made, have been reversed to their respective original state.</strong></p>");	
+				$this->setContent("<p class='success'<b>".$this->localize("Success").":</b> ".$this->localize("LotusCMS has been restored to the original state of the backup.")."</p> ".$this->localize("<p>Remember: <strong>User accounts and passwords created after the backup was made, have been reversed to their respective original state.</strong>")."</p>");	
 			}
 		}
 	}
@@ -133,14 +133,14 @@ class ModuleAdmin extends Admin{
 		//Get Available backups.
 		$data = $this->listFiles("modules/Backup/zips");
 		
-		$out = "<p>Choose a restore point from below, in each filename is the date in the ISO standard. They are located in 'modules/Backup/zips' incase you would like to remove backup points via FTP. Click on one to use it.</p>";
+		$out = "<p>".$this->localize("Choose a restore point from below, in each filename is the date in the ISO standard. They are located in 'modules/Backup/zips' incase you would like to remove backup points via FTP. Click on one to use it.")."</p>";
 		
 		for($i = 0; $i < count($data); $i++){
 			$out .= "<p><a href='".$this->toRequest("choosing")."&file=".$data[$i]."'>".$data[$i]."</a></p>";
 		}
 		
 		if(empty($data)){
-			$out .= "<p><strong>No restore points available.</strong></p>";	
+			$out .= "<p><strong>".$this->localize("No restore points available.")."</strong></p>";	
 		}
 		
 		$this->setContent($out);
