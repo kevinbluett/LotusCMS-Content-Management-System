@@ -86,7 +86,36 @@ if($id==1){
 	//Put Step number in
 	$out = str_replace("%STEP%", "2", $out);
 	
-	$content = "<form action='install.php?step=3' method='post'><strong style='font-size: 12px;'>New Username:</strong><br /><input style='height: 25px;width: 99%;float: left;' name='username' value='' /><br /><br /><br /><strong style='font-size: 12px;'>Email:</strong><br /><input style='height: 25px;width: 99%;float: left;' name='email' value='' /><br /><br /><br /><strong style='font-size: 12px;'>Full Name:</strong><br /><input style='height: 25px;width: 99%;float: left;'   name='fullname' value='' /><br /><br /><br /><br /><strong style='font-size: 12px;'>New Password:</strong><br /><input style='height: 25px;width: 99%;float: left;'  type='password' name='password' value='' /><br /><br /><strong style='font-size: 12px;'>Confirm Password:</strong><br /><input style='height: 25px;width: 99%;float: left;'  type='password' name='password1' value='' /><br /><br /><br /><br /><br /><strong style='font-size: 12px;'>Website Title:</strong><br /><input style='height: 25px;width: 99%;float: left;' name='title' value='' /><br /><br /><br /><input style='height: 40px;width: 90px;float: right;' type='submit' value='Save' /></form>";
+	include_once("core/lib/Locale.php");
+	$locale = new Locale();
+	$listLocale = $locale->getListOfLocale();
+	
+	$localeOptions = "";
+	
+	$fID = 0;
+	
+	//Ensures the english one is first.
+	for($i = 0; $i < count($listLocale[0]); $i++){
+		if("en"==str_replace(".txt", "", $listLocale[0][$i])){
+			$fID = $i;
+			break;
+		}
+	}
+		
+	$localeOptions .= "<option>";
+	$localeOptions .= $listLocale[1][$fID]." [".str_replace(".txt", "", $listLocale[0][$fID])."]";
+	$localeOptions .= "</option>";
+	
+	//Create the list
+	for($i = 0; $i < count($listLocale[0]); $i++){
+		if($fID!=$i){
+			$localeOptions .= "<option>";
+			$localeOptions .= $listLocale[1][$i]." [".str_replace(".txt", "", $listLocale[0][$i])."]";
+			$localeOptions .= "</option>";
+		}
+	}
+	
+	$content = "<form action='install.php?step=3' method='post'><strong style='font-size: 12px;'>New Username:</strong><br /><input style='height: 25px;width: 99%;float: left;' name='username' value='' /><br /><br /><br /><strong style='font-size: 12px;'>Email:</strong><br /><input style='height: 25px;width: 99%;float: left;' name='email' value='' /><br /><br /><br /><strong style='font-size: 12px;'>Full Name:</strong><br /><input style='height: 25px;width: 99%;float: left;'   name='fullname' value='' /><br /><br /><br /><br /><strong style='font-size: 12px;'>New Password:</strong><br /><input style='height: 25px;width: 99%;float: left;'  type='password' name='password' value='' /><br /><br /><strong style='font-size: 12px;'>Confirm Password:</strong><br /><input style='height: 25px;width: 99%;float: left;'  type='password' name='password1' value='' /><br /><br /><br /><strong style='font-size: 12px;'>Language:</strong><br /><select name='locale'>".$localeOptions."</select><br /><br /><strong style='font-size: 12px;'>Website Title:</strong><br /><input style='height: 25px;width: 99%;float: left;' name='title' value='' /><br /><br /><br /><input style='height: 40px;width: 90px;float: right;' type='submit' value='Save' /></form>";
 	
 	$out = str_replace("%MESSAGE%", $content, $out);
 	
@@ -117,6 +146,10 @@ if($id==1){
 	$name = $_POST['fullname'];
 	$email = $_POST['email'];
 	
+	//Get Locale text
+	$loc = explode("[", $_POST['locale']);
+	$locale = str_replace("]", "", $loc[1]);
+	
 	if((!empty($username))&&(!empty($password))&&(!empty($password1))&&(!empty($title))&&(!empty($name))&&(!empty($email))){
 		
 		//Passwords don't match
@@ -130,6 +163,9 @@ if($id==1){
 		//Saves site title
 		$io->saveFile("data/config/site_title.dat", $title);
 		$io->saveFile("data/config/salt.dat", $salt);
+		
+		//Save the site Locale
+		$io->saveFile("data/config/locale.dat", $locale);
 		
 		//Include user libraries
 		include("core/lib/User.php");

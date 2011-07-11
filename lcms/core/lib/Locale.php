@@ -30,6 +30,38 @@ class Locale extends InputOutput{
 	}
 	
 	/**
+	 * Returns the active locale
+	 * Kevin Bluett July 2011
+	 */
+	public function getListOfLocale(){
+		include_once("core/lib/io.php");
+		
+		//Setup the Input Output system
+		$io = new InputOutput();
+		
+		$locales = $io->listFiles("core/lang/");
+		
+		$fullText = $locales;
+		
+		for($i = 0; $i < count($locales); $i++){
+		    /* Static keyword is used to ensure the file is loaded only once */
+		    $translations = NULL;
+		    
+		    $lang_file =  'core/lang/' . $locales[$i];
+		    $lang_file_content = file_get_contents($lang_file);
+		        
+		    /* Load the language file as a JSON object and transform it into an associative array */
+		    include_once("core/lib/JSON.php");
+		    
+		    $js = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
+		    $translations = $js->decode($lang_file_content );
+		    $fullText[$i] = $translations['full_lang'];
+		}
+		
+		return array($locales, $fullText);
+	}
+	
+	/**
 	 *
 	 */
 	public function setCustomLocaleFile($custom){
