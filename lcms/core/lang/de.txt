@@ -152,5 +152,6 @@
 	"Create New Post": "Erstelle eine neuen Beitrag",
 	"Manage Posts": "Beiträge verwalten",
 	"Manage Categories": "Kategorien verwalten",
-	"Change Blog Settings": "Blog-Einstellungen verwalten"
+	"Change Blog Settings": "Blog-Einstellungen verwalten",
+	"Change Website Locale": "Bevorzugte Sprache"
 }

@@ -35,7 +35,6 @@
     "Module Manager": "Module Manager",
     "Pages": "Pages",
     "Editor": "Editor",
-    "Users": "Users"
     "Username": "Username",
 	"Edit Option": "Edit Option",
 	"Delete Option": "Delete Option",
@@ -43,7 +42,7 @@
 	"Delete": "Delete",
 	"Page Title":"Page Title",
 	"View Option":"View Option",
-	"View": "View"
+	"View": "View",
 	"Existing Pages": "Existing Pages",
 	"Create New Page": "Create New Page",
 	"Manage Users": "Manage Users",
@@ -154,5 +153,6 @@
 	"Create New Post": "Create New Post",
 	"Manage Posts": "Manage Posts",
 	"Manage Categories": "Manage Categories",
-	"Change Blog Settings": "Change Blog Settings"
+	"Change Blog Settings": "Change Blog Settings",
+	"Change Website Locale": "Change Website Locale"
 }

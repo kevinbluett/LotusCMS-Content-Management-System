@@ -71,6 +71,11 @@ class GeneralSettingsView extends View{
 		$this->setState('CREATING_SINGLE_FORM');
 		$this->notifyObservers();
 		
+		//
+		$listLocale = $this->getController()->getModel()->getListOfLocale();
+		$activeLocale = $this->getLocale();
+		
+		
 		//Get the form
 		$out = $this->openFile("core/fragments/settings/GeneralSettingsForm.phtml");
 		
@@ -79,6 +84,33 @@ class GeneralSettingsView extends View{
 		
 		//Replace current version in File
 		$out = str_replace("%CURRENTVERSION%", $version, $out);
+		
+		$localeOptions = "";
+		$fID = 0;
+		
+		//Find the ID of the active locale
+		for($i = 0; $i < count($listLocale[0]); $i++){
+			if($activeLocale==str_replace(".txt", "", $listLocale[0][$i])){
+				$fID = $i;
+				break;
+			}
+		}
+		
+		$localeOptions .= "<option>";
+		$localeOptions .= $listLocale[1][$fID]." [".str_replace(".txt", "", $listLocale[0][$fID])."]";
+		$localeOptions .= "</option>";
+		
+		//Create the list
+		for($i = 0; $i < count($listLocale[0]); $i++){
+			if($i!=$fID){
+				$localeOptions .= "<option>";
+				$localeOptions .= $listLocale[1][$i]." [".str_replace(".txt", "", $listLocale[0][$i])."]";
+				$localeOptions .= "</option>";
+			}
+		}
+		
+		//Enter Locale List
+		$out = str_replace("%LOCALE_LIST%", $localeOptions, $out);
 		
 		//Locale
 		$out = str_replace("%WEBSITE_TITLE_LOCALE%", $this->localize("Website Title"), $out);
@@ -89,6 +121,7 @@ class GeneralSettingsView extends View{
 		$out = str_replace("%YOUR_VERSION_LOCALE%", $this->localize("Your Version"), $out);
 		$out = str_replace("%LATEST_VERSION_LOCALE%", $this->localize("Latest Version"), $out);
 		$out = str_replace("%SAVE_LOCALE%", $this->localize("Save"), $out);
+		$out = str_replace("%WEBSITE_LOCALE_LOCALE%", $this->localize("Change Website Locale"), $out);
 		
 		//Include and load the latest version
     	include("core/lib/RemoteFiles.php");

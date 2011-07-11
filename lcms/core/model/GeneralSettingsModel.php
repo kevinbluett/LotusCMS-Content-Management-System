@@ -57,6 +57,9 @@ class GeneralSettingsModel extends Model{
 		
 		//Save Site Description
 		$this->saveFile("data/config/site_title.dat", $data[0]);
+		
+		//Save the locale details
+		$this->saveFile("data/config/locale.dat", $data[1]);
 	}	
 	
 	/**
@@ -74,8 +77,54 @@ class GeneralSettingsModel extends Model{
 		//Get website title
 		$data[] = $this->getInputString("title", null, "P");
 		
+		//Get Locale text
+		$loc = explode("[", $this->getInputString("locale", null, "P"));
+		
+		//G
+		$data[] = str_replace("]", "", $loc[1]);
+		
 		//Return this data
 		return $data;
+	}
+	
+	/**
+	 * Returns the active locale
+	 * Kevin Bluett July 2011
+	 */
+	public function getListOfLocale(){
+		include_once("core/lib/io.php");
+		
+		//Setup the Input Output system
+		$io = new InputOutput();
+		
+		$locales = $io->listFiles("core/lang/");
+		
+		$fullText = $locales;
+		
+		for($i = 0; $i < count($locales); $i++){
+		    /* Static keyword is used to ensure the file is loaded only once */
+		    $translations = NULL;
+		    
+		    $lang_file =  'core/lang/' . $locales[$i];
+		    $lang_file_content = file_get_contents($lang_file);
+		        
+		    /* Load the language file as a JSON object and transform it into an associative array */
+		    include_once("core/lib/JSON.php");
+		    
+		    $js = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
+		    $translations = $js->decode($lang_file_content );
+		    $fullText[$i] = $translations['full_lang'];
+		}
+		
+		return array($locales, $fullText);
+	}
+	
+	/**
+	 * Returns the active locale
+	 * Kevin Bluett July 2011
+	 */
+	public function getActiveLocale(){
+		return $this->getController()->getView()->getLocale();	
 	}
 	
 	/**
