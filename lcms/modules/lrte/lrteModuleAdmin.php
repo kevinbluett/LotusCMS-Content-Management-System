@@ -35,10 +35,10 @@ class ModuleAdmin extends Admin{
 		}
 		
 		$data = '<form method="post" action="'.$this->toRequest("save").'">
-		<p>Would you like to enable the lrte editor as page editor?</p>
+		<p>'.$this->localize("Would you like to enable this page editor").' (lrte editor)?</p>
 		
-		<p><input type="RADIO" name="enabled" value="on" '.$a.'>&nbsp;&nbsp;Enabled<br />
-		<input type="RADIO" name="enabled" value="off" '.$b.'>&nbsp;&nbsp;Disabled<br /></p>
+		<p><input type="RADIO" name="enabled" value="on" '.$a.'>&nbsp;&nbsp;'.$this->localize("Enabled").'<br />
+		<input type="RADIO" name="enabled" value="off" '.$b.'>&nbsp;&nbsp;'.$this->localize("Disabled").'<br /></p>
 		
 		<input type="submit" value="submit">
 		</form>';

@@ -21,6 +21,8 @@ class ModulesInstallView extends View{
 	 * Shows the find information downloaded from LotusCMS.org
 	 */
 	public function showFindInfo($data){
+		$this->setContentTitle($this->localize("Find More Plugins"));
+		
 		$this->setContent($data);	
 	}
 	
@@ -44,6 +46,34 @@ class ModulesInstallView extends View{
 		
 			//Go Redirect
 			$this->setRedirect("index.php?system=ModulesInstall&page=activate&active=".$plugin);	
+	}
+	
+	/**
+	 * A function for the settings file that sets which tab is active + Localization of Tabs
+	 */ 
+	public function setTabActive($active = 1, $tabs){
+		
+		//Localization
+		$tabs = str_replace("%CURRENTLY_ACTIVE_MODULES_LOCALE%", $this->localize("Currently Active Modules"), $tabs);
+		$tabs = str_replace("%ALL_INSTALLED_MODULES_LOCALE%", $this->localize("All Installed Modules"), $tabs);
+		$tabs = str_replace("%FIND_MORE_PLUGINS_LOCALE%", $this->localize("Find More Plugins"), $tabs);
+		
+		if($active==1){
+			$tabs = str_replace("%ONE%", "active", $tabs);
+		}else{
+			$tabs = str_replace("%ONE%", "inactive", $tabs);
+		}
+		if($active==2){
+			$tabs = str_replace("%TWO%", "active", $tabs);
+		}else{
+			$tabs = str_replace("%TWO%", "inactive", $tabs);
+		}
+		if($active==3){
+			$tabs = str_replace("%THREE%", "active", $tabs);
+		}else{
+			$tabs = str_replace("%THREE%", "inactive", $tabs);
+		}
+		return $tabs;
 	}
 }
 

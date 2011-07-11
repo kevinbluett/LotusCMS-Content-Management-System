@@ -143,5 +143,14 @@
 	"Link Title": "Link Titel",
 	"Edit": "Bearbeiten",
 	"Delete": "Löschen",
-	"Click here to add a new menu item": "Klicken Sie hier, um einen neuen Menüelement hinzufügen"
+	"Click here to add a new menu item": "Klicken Sie hier, um einen neuen Menüelement hinzufügen",
+	"Menu": "Menü",
+	"Would you like to enable this page editor": "Möchten Sie dieser Seite Editor für LotusCMS aktivieren",
+	"Enabled": "Aktiviert",
+	"Disabled": "Deaktiviert",
+	"Successfully changed setting to": "Anderung war erfolgreich -",
+	"Create New Post": "Erstelle eine neuen Beitrag",
+	"Manage Posts": "Beiträge verwalten",
+	"Manage Categories": "Kategorien verwalten",
+	"Change Blog Settings": "Blog-Einstellungen verwalten"
 }

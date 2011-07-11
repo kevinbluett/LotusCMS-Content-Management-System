@@ -89,3 +89,7 @@ fieldset legend {
 .article .success {
 	font-size: 1.2em;
 }
+
+.menuBar:hover {
+	background-color: #F0F0F0;
+}

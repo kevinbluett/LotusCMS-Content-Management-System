@@ -35,10 +35,10 @@ class ModuleAdmin extends Admin{
 		}
 		
 		$data = '<form method="post" action="'.$this->toRequest("save").'">
-		<p>Would you like to enable the Nicedit editor as page editor?</p>
+		<p>'.$this->localize("Would you like to enable this page editor").' (Nicedit editor)?</p>
 		
-		<p><input type="RADIO" name="enabled" value="on" '.$a.'>&nbsp;&nbsp;Enabled<br />
-		<input type="RADIO" name="enabled" value="off" '.$b.'>&nbsp;&nbsp;Disabled<br /></p>
+		<p><input type="RADIO" name="enabled" value="on" '.$a.'>&nbsp;&nbsp;'.$this->localize("Enabled").'<br />
+		<input type="RADIO" name="enabled" value="off" '.$b.'>&nbsp;&nbsp;'.$this->localize("Disabled").'<br /></p>
 		
 		<input type="submit" value="submit">
 		</form>';
@@ -77,7 +77,7 @@ class ModuleAdmin extends Admin{
 		
 		//Show success message on redirected to page
 		$_SESSION['ERROR_TYPE'] = "success";
-		$_SESSION['ERROR_MESSAGE'] = "Successfully changed setting to '$act'.";
+		$_SESSION['ERROR_MESSAGE'] = $this->localize("Successfully changed setting to")." '$act'.";
 		
 		//Create a request to the default
 		$this->getController()->getView()->setRedirect($this->toRequest(""));

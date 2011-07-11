@@ -50,7 +50,7 @@
     
     <div id="secondary">
       
-      <h2>Menu</h2>
+      <h2><?php print $p->getView()->localize("Menu"); ?></h2>
       <ul id="menu">
       <?php $system = $p->getInputString("system"); ?>
 	<li <?php if($system=="Dash"){ print "id='active'";} ?>><a style="background-image: url('style/comps/admin/img/dashboard.png');background-repeat: no-repeat;background-position: 0px 2px;" href="?system=Dash&page=index"><?php print $p->getView()->localize("Dashboard"); ?></a></li>

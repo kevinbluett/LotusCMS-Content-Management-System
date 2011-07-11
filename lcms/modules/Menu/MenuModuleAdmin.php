@@ -379,7 +379,7 @@ class ModuleAdmin extends Admin{
 		$out = str_replace("%ADD_ITEM_LOCALE%", $this->localize("Click here to add a new menu item"), $out);
 		
 		for($i = 0; $i < count($d); $i++){
-			$out .= "<tr>";
+			$out .= "<tr class='menuBar'>";
 			
 			$out .= "<td>";
 			

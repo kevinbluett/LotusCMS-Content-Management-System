@@ -145,5 +145,14 @@
 	"Link Title": "Link Title",
 	"Edit": "Edit",
 	"Delete": "Delete",
-	"Click here to add a new menu item": "Click here to add a new menu item"
+	"Click here to add a new menu item": "Click here to add a new menu item",
+	"Menu": "Menu",
+	"Would you like to enable this page editor": "Would you like to enable this page editor",
+	"Enabled": "Enabled",
+	"Disabled": "Disabled",
+	"Successfully changed setting to": "Successfully changed setting to",
+	"Create New Post": "Create New Post",
+	"Manage Posts": "Manage Posts",
+	"Manage Categories": "Manage Categories",
+	"Change Blog Settings": "Change Blog Settings"
 }

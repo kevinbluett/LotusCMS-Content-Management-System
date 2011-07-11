@@ -111,7 +111,7 @@ class TemplateModel extends Model{
 		
 		$id = $this->getInputString("id", "1", "G");
 		
-		$out1 = $rf->getURL("http://styles.lotuscms.org/lcms-3-styles/infoloader.php?id=".$id);
+		$out1 = $rf->getURL("http://styles.lotuscms.org/lcms-3-styles/infoloader.php?id=".$id."&lang=".$this->getController()->getView()->getLocale());
 		
 		if(empty($out1)){
 			exit("<br /><br /><strong>Data retrieval failed</strong> - LotusCMS probably unavailable, please try again later.");	

@@ -23,7 +23,7 @@ class ModuleAdmin extends Admin{
 	 * Default Requestion
 	 */
 	public function defaultRequest(){
-		$data = "<ul style='font-size: 12px;'><li style='padding-bottom: 10px;'><a href='".$this->toRequest("createPost")."'>Create New Post</a></li><li style='padding-bottom: 10px;'><a href='".$this->toRequest("managePosts")."'>Manage Posts</a></li><li style='padding-bottom: 10px;'><a href='".$this->toRequest("manageCategories")."'>Manage Categories</a></li><li style='padding-bottom: 10px;'><a href='".$this->toRequest("settings")."'>Change Blog Settings</a></li></ul>";
+		$data = "<ul style='font-size: 12px;'><li style='padding-bottom: 10px;'><a href='".$this->toRequest("createPost")."'>".$this->localize("Create New Post")."</a></li><li style='padding-bottom: 10px;'><a href='".$this->toRequest("managePosts")."'>".$this->localize("Manage Posts")."</a></li><li style='padding-bottom: 10px;'><a href='".$this->toRequest("manageCategories")."'>".$this->localize("Manage Categories")."</a></li><li style='padding-bottom: 10px;'><a href='".$this->toRequest("settings")."'>".$this->localize("Change Blog Settings")."</a></li></ul>";
 		
 		$this->setContent($data);
 	}
