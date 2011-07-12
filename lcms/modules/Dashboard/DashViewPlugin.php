@@ -162,7 +162,7 @@ class DashboardView extends Observer{
 	    	//Get version of CMS
 	    	$v = $this->getView()->getController()->getVersion();
 	    	
-	    	$data = $rf->getURL("http://update.lotuscms.org/lcms-3-series/updateCheck.php?v=".$v);
+	    	$data = $rf->getURL("http://update.lotuscms.org/lcms-3-series/updateCheck.php?v=".$v."&lang=".$this->getView()->getLocale());
 	    	
 	    	$_SESSION['versionCheck'] = $data;
     	}else{
