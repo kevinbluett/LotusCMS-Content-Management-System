@@ -15,6 +15,7 @@ class PageListView extends View{
 		
 		//This class requires an extra css file
 		$this->getMeta()->addExtra('<link href="core/fragments/css/admin.css" rel="stylesheet" type="text/css" />');
+		$this->getMeta()->addExtra('<script type="text/javascript" src="core/fragments/js/application.js"></script>');
 	}	
 	
 	/**
@@ -61,18 +62,8 @@ class PageListView extends View{
 		//Create new Table
 		$t->createTable("Pagelist");
 		
-		//Sets intial row as headings
-		$t->setHead(true);
-		
-		//Add the heading row.
-		$t->addRow(
-				array(
-					$this->localize("Page Title"),
-					$this->localize("Edit Option"),
-					$this->localize("View Option"),
-					$this->localize("Delete Option")
-				)					
-			  );
+		//Sets that there is no heading row.
+		$t->setHead(false);
 		
 		//Loop Through each page
 		for($i = 0; $i < count($data); $i++)

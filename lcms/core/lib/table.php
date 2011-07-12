@@ -63,7 +63,14 @@ class Table{
 		
 		for($i = 0; $i < count($this->rows); $i++)
 		{
-			$final .= "<tr>";
+			if($i==0&&$this->head){
+				$final .= "<thead>";
+				$final .= "<tr>";
+			}else if($i==1&&$this->head){
+				$final .= "<tbody><tr>";
+			}else{
+				$final .= "<tr>";	
+			}
 				
 				for($y = 0;$y < count($this->rows[$i]);$y++)
 				{
@@ -74,7 +81,7 @@ class Table{
 							
 						$final .= "</th>";
 					}else{
-						$final .= "<td>";
+						$final .= "<td class='col".$y."'>";
 						
 							$final .= $this->rows[$i][$y];
 							
@@ -82,7 +89,16 @@ class Table{
 					}
 				}
 				
-			$final .= "</tr>";
+			if($i==0&&$this->head){
+				$final .= "</tr>";
+				$final .= "</thead>";
+			}else{
+				$final .= "</tr>";	
+			}
+		}
+		
+		if($this->head){
+			$final .= "</tbody>";	
 		}
 		
 		$final .= "</table>";
