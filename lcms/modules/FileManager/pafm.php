@@ -602,7 +602,7 @@ function getFiles($path){
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title><?php echo str_replace('www.', null, $_SERVER['HTTP_HOST']); ?> | pafm</title>
   <style type="text/css">@import "pafm/style.css";</style>
-  <script src="pafm/js.js" type="text/javascript"></script><!--when debugging replace with js.js-->
+  <script src="pafm/js-min.js" type="text/javascript"></script><!--when debugging replace with js.js-->
 </head>
 <body>
 

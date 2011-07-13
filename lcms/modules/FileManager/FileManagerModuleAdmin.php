@@ -23,6 +23,8 @@ class ModuleAdmin extends Admin{
 		
 		ob_start(); // start trapping output
 		
+		print $this->localize("The directory that this file manager defaults to is located at: /data/files.")."<br />";
+		
 		include "modules/FileManager/filemanagerbox.php"; // produce output
 		$output = ob_get_contents(); // get contents of trapped output
 		

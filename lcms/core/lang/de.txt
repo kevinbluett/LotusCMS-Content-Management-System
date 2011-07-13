@@ -157,5 +157,6 @@
 	"LotusCMS Pages": "LotusCMS Seiten",
 	"LotusCMS Users": "LotusCMS Nutzer",
 	"Type here to filter results...": "Ergebnisse filtern...",
-	"No Results": "Keine Ergebnisse"
+	"No Results": "Keine Ergebnisse",
+	"The directory that this file manager defaults to is located at: /data/files.": "Das Verzeichnis, wo die Datien standardmäßig befinden, ist: /data/files."
 }
