@@ -22,7 +22,7 @@ class ModuleInfo extends Info{
 		$this->support = "http://forum.lotuscms.org";
 		
 		//Version
-		$this->version = "1.1";
+		$this->version = "1.2";
 		
 		//Administration Area Exists
 		$this->admin = true;
@@ -31,7 +31,7 @@ class ModuleInfo extends Info{
 		$this->overrider = false;
 		
 		//Organisation Committing Development
-		$this->organisation = "LotusCMS Core Development Team";
+		$this->organisation = 'Based on <a href="http://mus.tafa.us/projects/pafm" title="PHP AJAX File Manager">pafm</a> by <a href="http://mus.tafa.us" title="mus.tafa.us">mustafa</a>';
 	}
 }
 

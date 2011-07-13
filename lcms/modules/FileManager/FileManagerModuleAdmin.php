@@ -23,7 +23,7 @@ class ModuleAdmin extends Admin{
 		
 		ob_start(); // start trapping output
 		
-		include "modules/FileManager/filemanager.php"; // produce output
+		include "modules/FileManager/filemanagerbox.php"; // produce output
 		$output = ob_get_contents(); // get contents of trapped output
 		
 		ob_end_clean(); // discard trapped output and stop trapping

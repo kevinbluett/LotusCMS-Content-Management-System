@@ -121,9 +121,9 @@ function filter(selector, query) {
   });
   
   if(anyVis){
-  	$('#noresults').html("");
+  	$('#noresults').css("display","none");
   }else{
-  	$('#noresults').html("No Results");
+  	$('#noresults').css("display","block");
   }
 }
 

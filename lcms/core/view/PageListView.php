@@ -35,6 +35,9 @@ class PageListView extends View{
 		
 		$content = str_replace("%PAGELIST_LOCALE%", $this->localize("Existing Pages"), $content);
 		$content = str_replace("%CREATE_NEW_PAGE_LOCALE%", $this->localize("Create New Page"), $content);
+		$content = str_replace("%PAGE_TITLE_LOCALE%", $this->localize("LotusCMS Pages"), $content);
+		$content = str_replace("%TYPE_FILTER_LOCALE%", $this->localize("Type here to filter results..."), $content);
+		$content = str_replace("%NO_RESULTS_LOCALE%", $this->localize("No Results"), $content);
 		
 		//Creates a list from the supplied data
 		$content .= $this->createPageList($pages);

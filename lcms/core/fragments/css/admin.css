@@ -111,3 +111,15 @@ fieldset legend {
 	height: 1px;
 	clear: both;	
 }
+
+table {
+	width: 100%;	
+}
+
+.visible {
+	font-size:12px;	
+}
+
+.odd {
+	/* background-color: #e3e3e3; */
+}

@@ -154,5 +154,9 @@
 	"Manage Posts": "Manage Posts",
 	"Manage Categories": "Manage Categories",
 	"Change Blog Settings": "Change Blog Settings",
-	"Change Website Locale": "Change Website Locale"
+	"Change Website Locale": "Change Website Locale",
+	"LotusCMS Pages": "LotusCMS Pages",
+	"LotusCMS Users": "LotusCMS Users",
+	"Type here to filter results...": "Type here to filter results...",
+	"No Results": "No Results"
 }

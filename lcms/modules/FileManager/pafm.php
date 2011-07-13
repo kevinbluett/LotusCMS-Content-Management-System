@@ -25,7 +25,7 @@
 /*** CONFIG ***/
 define('AUTHORIZE', true); //Require authorization?
 //@bool : true
-define('PASSWORD', 'auth'); //Authorization password
+//define('PASSWORD', 'auth'); //Authorization password
 //@string : auth
 define('AllowPathInjection', false); //Allow path injection? e.g. ../, /, etc.
 //@bool : false
@@ -47,7 +47,7 @@ $redir = $pafm . '?path=' . $pathURL; //$pafm is prefixed for safari
 $maxUpload = min(return_bytes(ini_get('post_max_size')), return_bytes(ini_get('upload_max_filesize')), MaxUploadSize*1048576);
 $dirContents;
 $cpExts = array('asp', 'css', 'htm', 'html', 'js', 'java', 'pl', 'php', 'rb', 'sql', 'xsl'); //For CP Editing
-$footer = '<a href="http://mus.tafa.us/projects/pafm" title="PHP AJAX File Manager">pafm</a> by <a href="http://mus.tafa.us" title="mus.tafa.us">mustafa</a>';
+$footer = '';
 if (AUTHORIZE) {
 	session_start();
 	if(!$_SESSION['login']){ 
@@ -258,11 +258,8 @@ function doAuth(){
 </html>');
 }
 function doLogin($pwd){
-	if ($pwd == PASSWORD)
-		$_SESSION['pwd'] = PASSWORD;
-	else
-		return refresh('Password is incorrect');
-	redirect();
+	//No Login available.
+	exit();
 }
 function doLogout(){
 	session_destroy();
@@ -613,7 +610,6 @@ function getFiles($path){
   <?php
 	if (AUTHORIZE):
   ?>
-  <a href="?do=logout&amp;path=<?php echo $pathURL; ?>" title="logout" id="logout">logout</a>
   <?php
 	endif;
   ?>

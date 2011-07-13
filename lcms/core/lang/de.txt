@@ -153,5 +153,9 @@
 	"Manage Posts": "Beiträge verwalten",
 	"Manage Categories": "Kategorien verwalten",
 	"Change Blog Settings": "Blog-Einstellungen verwalten",
-	"Change Website Locale": "Bevorzugte Sprache"
+	"Change Website Locale": "Bevorzugte Sprache",
+	"LotusCMS Pages": "LotusCMS Seiten",
+	"LotusCMS Users": "LotusCMS Nutzer",
+	"Type here to filter results...": "Ergebnisse filtern...",
+	"No Results": "Keine Ergebnisse"
 }
