@@ -2,7 +2,7 @@
 /**
  * Menu Module Information
  */
-class ModuleInfo extends Info{
+class MenuModuleInfo extends Info{
 	
 	/**
 	 * Setup system

@@ -100,7 +100,7 @@ class DashboardView extends Observer{
     	$out .= "</tr></table></fieldset>";
     	
     	//Working module update check. Takes Aggeeess to load - due to up to 8 HTTP requests sent to LotusCMS.org.
-    	/*$extra = '<script type="text/javascript">
+    	 $extra = '<script type="text/javascript">
     		<!--
     		$(document).ready(function() {
     			$("#loadNews").load("index.php?system=Modules&page=admin&active=Dashboard&req=news");
@@ -110,23 +110,24 @@ class DashboardView extends Observer{
     	$plugs = $this->getPlugins();
     	
     	if(!file_exists("data/modules/Dashboard/stopmodulecheck.dat")){
+    		
+    		$requests = "";
+    		
 	    	for($k = 0;$k < count($plugs);$k++){
-		    	$extra .= '$("#checkModules'.$k.'").load("index.php?system=Modules&page=admin&active=Dashboard&req=checkModules&id='.$k.'");
-		    	';
 		    	
-		    	$more = "";
-		    	
-		    	if($k==(count($plugs)-1)){
-		    		$more = "<p style='border: 1px solid #e3e3e3; font-size:11px;'><img style='float:left;padding-top:3px;padding-left:4px;' src='modules/Dashboard/loading.gif' height='15px' width='15px'/>&nbsp;<span style='display:block;float:left;width: 400px;height:20px;margin-left:20px;'>Checking for module updates (Takes up to 30 seconds)…</span><span style='display:block;width:60px;height:20px;margin-right:6px;text-align:right;float:right'><a style='color:#b2b2b2;text-decoration:none;' href='index.php?system=Modules&page=admin&active=Dashboard&req=disableModCheck'>Disable</a></span></p>";
+		    	if($k!=0){
+		    		$requests .= "|";	
 		    	}
-		    			
-		    	$out .= "<div id='checkModules".$k."'>".$more."</div>";
+		    	
+		    	$requests .= $plugs[$k];
 	    	}
+	    	
+	    	$extra .= '$("#checkModules").load("index.php?system=Modules&page=admin&active=Dashboard&req=checkModules&id='.$requests.'");';
+	    	$out .= "<div id='checkModules'><p style='border: 1px solid #e3e3e3; font-size:11px;'><img style='float:left;padding-top:3px;padding-left:4px;' src='modules/Dashboard/loading.gif' height='15px' width='15px'/>&nbsp;<span style='display:block;float:left;width: 400px;height:20px;margin-left:20px;'>".$l->localize("Checking for module updates")."…</span><span style='display:block;width:60px;height:20px;margin-right:6px;text-align:right;float:right'><a style='color:#b2b2b2;text-decoration:none;' href='index.php?system=Modules&page=admin&active=Dashboard&req=disableModCheck'><!--Disable--></a></span></p></div>";
     	}
     			
-    	$this->getView()->getMeta()->appendExtra($extra.'    }
-);});
-    	--></script>');*/
+    	$this->getView()->getMeta()->appendExtra($extra.'    } );});
+    	--></script>');
     	
     	$out .= "<fieldset>";
     	$out .= "<p id='loadNews'><strong>".$l->localize("Loading News...")."</strong></p>";

@@ -43,8 +43,13 @@ class ModulesModel extends Model{
 		//Include Module Information
 		include_once("modules/".$module."/".$module."ModuleInfo.php");
 		
+		$mod = $module.ModuleInfo;
+		
 		//Create Module Information
-		$m = new ModuleInfo();
+		$m = new $mod();
+		
+		//Loading Module information
+		$m->ModuleInfo();
 		
 		//Return Module Info
 		return $m;

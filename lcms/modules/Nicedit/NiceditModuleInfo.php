@@ -2,7 +2,7 @@
 /**
  * Menu Module Information
  */
-class ModuleInfo extends Info{
+class NiceditModuleInfo extends Info{
 	
 	/**
 	 * Setup system

@@ -4,7 +4,7 @@ include_once("core/lib/ModuleInfo.php");
 /**
  * Menu Module Information
  */
-class ModuleInfo extends Info{
+class DashboardModuleInfo extends Info{
 	
 	/**
 	 * Setup system

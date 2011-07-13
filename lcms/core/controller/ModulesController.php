@@ -49,6 +49,7 @@ class ModulesController extends Controller{
 					"load",
 					"list",
 					"updateCheck",
+					"checkAllModules",
 					"uninstall",
 					"deactivate"
 				);
@@ -138,6 +139,21 @@ class ModulesController extends Controller{
 		{
 			//Plugin.
 			$data = $this->getModel()->checkForUpdate();
+			
+			//Shows all the installed and activated plugins.
+			$this->getView()->updateMessage($data);
+		}
+	}
+	
+	/**
+	 * Checks for updates for every plugin
+	 */
+	protected function checkAllModulesRequest(){
+		//If the user is logged in
+		if($this->getModel()->checkLogin(true))
+		{
+			//Plugin.
+			$data = $this->getModel()->checkAllModules();
 			
 			//Shows all the installed and activated plugins.
 			$this->getView()->updateMessage($data);

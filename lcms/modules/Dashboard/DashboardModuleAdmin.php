@@ -58,24 +58,9 @@ class ModuleAdmin extends Admin{
 	
 		include_once("modules/Dashboard/Abstraction.php");
 				
-			$abs = new Abstraction();
-			$status = false;
-			
-			if(!isset($_SESSION['module'.$id])){
-				$status = $abs->checkForUpdate($plugins[$id]);
-			}else{
-				$out = $_SESSION['module'.$id];	
-			}
-				
-			if($status!=false){
-				$out = '<p class="msg error">Module: '.$plugins[$id].' is out of date [version: '.$status.']. <a href="index.php?system=Modules&page=updateCheck&req='.$plugins[$id].'">Update</a></p>';	
-			}
-			
-			if(!isset($_SESSION['module'.$id]))
-				$_SESSION['module'.$id] = $out;
-			
-			print $out;
+		$abs = new Abstraction();
 		
+		print $abs->checkForModuleUpdate($id);
 	}
 	
 	/**

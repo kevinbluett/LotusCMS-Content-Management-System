@@ -12,7 +12,7 @@ class Install extends InputOutput{
 	 * Returns the module Title
 	 */
 	public function createStarter(){
-		
+		unset($_SESSION['MODUPDATE']);
 		//Creates an external starting point for a module
 		$this->saveFile("data/modules/".$this->getUnix()."/starter.dat", " ");
 	}

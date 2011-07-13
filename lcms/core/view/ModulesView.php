@@ -338,6 +338,13 @@ class ModulesView extends View{
 	}
 	
 	/**
+	 * Check All Mods
+	 */
+	public function showCheckAllMods($data){
+		$this->setContent($data);
+	}
+	
+	/**
 	 * Shows uninstall success or fail message
 	 */
 	public function showUninstallMessage($out){
