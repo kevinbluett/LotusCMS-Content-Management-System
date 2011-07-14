@@ -8,9 +8,7 @@
   <meta name="description" content="<?php print $p->getMetaDescription(); ?>" />
   <meta name="keywords" content="<?php print $p->getMetaKeywords(); ?>" />
   <link href="style/comps/admin/css/global.css" rel="stylesheet" type="text/css" />
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
   <script src="style/comps/admin/js/jquery.js"></script>
-  <script src="style/comps/admin/js/jquery-ui.js"></script>
   <script type="text/javascript" src="style/comps/admin/js/jquery.corner.js"></script>
   <script type="text/javascript">
 	<!--

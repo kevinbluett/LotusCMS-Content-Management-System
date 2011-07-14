@@ -85,9 +85,6 @@ class GeneralSettingsView extends View{
 		//Replace current version in File
 		$out = str_replace("%CURRENTVERSION%", $version, $out);
 		
-		//Put in update notice
-		$out = str_replace("%UPDATE_NOTICE%", "<p class='msg error'>".$this->getInputString('versionCheck', "", "S")."</p>", $out);
-		
 		$localeOptions = "";
 		$fID = 0;
 		
@@ -125,20 +122,14 @@ class GeneralSettingsView extends View{
 		$out = str_replace("%LATEST_VERSION_LOCALE%", $this->localize("Latest Version"), $out);
 		$out = str_replace("%SAVE_LOCALE%", $this->localize("Save"), $out);
 		$out = str_replace("%WEBSITE_LOCALE_LOCALE%", $this->localize("Change Website Locale"), $out);
-			
-		$data = $this->getController()->getModel()->getInputString("vnumber", "", "S");
-		//Include and load the latest version
-		if(empty($data)){
-			include("core/lib/RemoteFiles.php");
-			$rf = new RemoteFiles();
-
-			$data = $rf->getURL("http://update.lotuscms.org/lcms-3-series/latestVersion.dat");
-		}else{
-			$data = $this->getController()->getModel()->getInputString("vnumber", "", "S");
-		}
 		
-		//Reduce load by dumping the retrieval system.
-		unset($rf);
+		//Include and load the latest version
+    	include("core/lib/RemoteFiles.php");
+		$rf = new RemoteFiles();
+    	$data = $rf->getURL("http://update.lotuscms.org/lcms-3-series/latestVersion.dat");
+    	
+    	//Reduce load by dumping the retrieval system.
+    	unset($rf);
 		
 		//Replace Unix in File
 		$out = str_replace("%LATESTVERSION%", $data, $out);

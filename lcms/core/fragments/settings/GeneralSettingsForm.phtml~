@@ -7,28 +7,21 @@
         
         <h4>%WEBSITE_VERSION_LOCALE%</h4>
         <br /> 
-        %UPDATE_NOTICE%
         <fieldset>
         	%YOUR_VERSION_LOCALE%: %CURRENTVERSION%<br />%LATEST_VERSION_LOCALE%: %LATESTVERSION%
         </fieldset>
         
         <h4>%WEBSITE_LOCALE_LOCALE%</h4>
         <fieldset>
-        	<select name="locale" id="locale">
+        	<select name="locale">
         		%LOCALE_LIST%
         	</select>
         </fieldset>        
         <h4>%WEBSITE_DISABLE_LOCALE%</h4>
         %UNDER_CONSTRUCTION_LOCALE%.
         <fieldset>
-        	<input type="button" class="buttonBit" value="%WEBSITE_DISABLE_LOCALE%" DISABLED>
+        	<input type="button" class="text-long" value="%WEBSITE_DISABLE_LOCALE%" DISABLED>
         </fieldset>
       
-        <input type="submit" value="%SAVE_LOCALE%" id="savebutton" /><br /><br />
+        <input type="submit" value="%SAVE_LOCALE%"><br /><br />
 </form> 
-<script>
-	$(function() {
-		$( "input:submit" ).button();
-		$( ".buttonBit" ).button();
-	});
-</script>

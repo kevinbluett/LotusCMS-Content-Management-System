@@ -47,8 +47,7 @@ class TemplateController extends Controller{
 		$requests = array(
 					"change",
 					"install",
-					"getTemplates",
-					"preview"
+					"getTemplates"
 				);
 		
 		//Set all the request
@@ -99,22 +98,6 @@ class TemplateController extends Controller{
 			
 			//Show data
 			$this->getView()->showMessage($data);
-		}
-	}
-	
-	/** 
-	 * Downloads and installs a template.
-	 */
-	protected function previewRequest(){
-		//If the user is logged in
-		if($this->getModel()->checkLogin(true))
-		{
-			// Set the state and tell plugins.
-			$this->setState('PREVIEWING_TEMPLATE');
-			$this->notifyObservers();
-			
-			//Show data
-			$this->getView()->previewRequest($this->getModel()->getInputString("template", null, "G"));
 		}
 	}
 	

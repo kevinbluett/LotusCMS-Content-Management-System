@@ -111,9 +111,7 @@ class TemplateModel extends Model{
 		
 		$id = $this->getInputString("id", "1", "G");
 		
-		$version = $this->openFile("data/config/site_version.dat");
-		
-		$out1 = $rf->getURL("http://styles.lotuscms.org/lcms-3-styles/infoloader.php?id=".$id."&lang=".$this->getController()->getView()->getLocale()."&t=".$this->getAllTemplatesAsString()."&v=$version");
+		$out1 = $rf->getURL("http://styles.lotuscms.org/lcms-3-styles/infoloader.php?id=".$id."&lang=".$this->getController()->getView()->getLocale());
 		
 		if(empty($out1)){
 			exit("<br /><br /><strong>Data retrieval failed</strong> - LotusCMS probably unavailable, please try again later.");	
@@ -136,25 +134,6 @@ class TemplateModel extends Model{
 
 		//Return the collected data
 		return $data;
-	}
-	
-	/**
-	 * Returns installed templates as string.
-	 */
-	public function getAllTemplatesAsString(){
-		$temps = $this->getAllTemplates(); 
-		
-		$req = "";
-			
-		for($i = 0;$i < count($ap); $i++){
-			
-			if($i!=0)
-				$req .= "|";
-				
-			$req . $ap[$i];
-		}
-		
-		return $req;
 	}
 	
 	/**
@@ -205,21 +184,6 @@ class TemplateModel extends Model{
 		
 		//Save Keywords
 		$this->saveFile("data/config/active_design.dat", $data);
-	}
-	
-	/**
-	 * Update Array
-	 */
-	public function getUpdateArray(){
-	 	
-		$a = $this->listFiles("style");
-		
-		include_once("core/lib/TemplateUpdateCheck.php");
-		
-		$t = new TemplateUpdateCheck();
-		
-		//Get version array
-		return $t->getVersionArray($a);
 	}
 	
 	/**
@@ -307,7 +271,7 @@ class TemplateModel extends Model{
 		$dir = opendir($start_dir);
 		while(($myfile = readdir($dir)) !== false)
 			{
-			if($myfile != '.' && $myfile != '..' && !is_file($myfile) && $myfile != 'resource.frk' && $myfile != 'comps' && $myfile != 'index.php' && !eregi('^Icon',$myfile) )
+			if($myfile != '.' && $myfile != '..' && !is_file($myfile) && $myfile != 'resource.frk' && $myfile != 'comps' && $myfile != 'index.php' && $myfile != 'admin.php' && !eregi('^Icon',$myfile) )
 				{
 				$files[] = $myfile;
 				}
