@@ -172,7 +172,7 @@ class DashboardView extends Observer{
 	    	
 	    	
     	}else{
-    		$data = $_SESSION['versionCheck'];
+    		$data = array("",$_SESSION['versionCheck']);
     	}
     	return $data[1];
     }
