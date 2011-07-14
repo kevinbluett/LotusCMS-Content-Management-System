@@ -163,5 +163,7 @@
 	"Checking for module updates": "Checking for module updates",
 	"is out of date": "is out of date",
 	"version": "version",
-	"Update": "Update"
+	"Update": "Update",
+	"Updates Available": "Updates Available",
+	"Up to Date": "Up to Date"
 }

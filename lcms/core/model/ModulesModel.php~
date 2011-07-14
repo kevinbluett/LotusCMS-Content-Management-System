@@ -264,9 +264,7 @@ class ModulesModel extends Model{
 		include_once("core/lib/ModuleInfo.php");
 		include("modules/".$req."/".$req."ModuleInfo.php");
 		
-		$classname = $req."ModuleInfo";
-		
-		$mod = new $classname();
+		$mod = new ModuleInfo();
 	    	
 	    $rf = new RemoteFiles();
 	    	
@@ -361,25 +359,6 @@ class ModulesModel extends Model{
 			
 			//Failed
 			return false;
-		}
-	}
-	
-	/**
-	 * Checks an individual update exists
-	 */
-	public function checkModForUpdates($mod){
-	 	
-		include_once("core/lib/ModuleUpdateCheck.php");
-		
-		$muc = new ModuleUpdateCheck();
-		
-		//Get array of version information
-		$vA = $muc->getVersionArray($this->listFiles("modules"));
-		
-		if(!empty($vA[$mod])){
-			return $vA[$mod];
-		}else{
-			return false;	
 		}
 	}
 	

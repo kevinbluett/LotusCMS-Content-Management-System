@@ -429,3 +429,12 @@ fieldset {
 /*#main table tr:hover{ 
 	background-color: #dddddd;
 }*/
+
+#filter {
+	border: 1px solid #e2e2e2;
+	height: 23px;
+	font-size: 14px;
+	color: #a1a1a1;
+	width: 250px;
+	padding-left: 4px;	
+}

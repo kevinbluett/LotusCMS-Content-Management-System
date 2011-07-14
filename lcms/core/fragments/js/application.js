@@ -4,6 +4,7 @@ $(document).ready(function() {
 	    if($("#filter").value == $("#filter").defaultValue){
 	        $("#filter").val("");
 	        $('tbody tr').removeClass('visible').show().addClass('visible');
+	        $("#filter").css("color", "#333333");
 	    }
 	});
 	

@@ -19,6 +19,7 @@
 	  	$('#menu').corner("right");
   		$('.yes a').corner();
   		$('.no a').corner();
+  		$('#filter').corner();
    		$('.activetab').corner("top");
    		$('.inactivetab a').corner("top");
 	});

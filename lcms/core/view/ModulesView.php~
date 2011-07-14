@@ -300,11 +300,7 @@ class ModulesView extends View{
 				$link = "<a href='index.php?system=ModulesInstall&page=activate&active=".$data[$i][0]."'>".$this->localize("Activate")."</a>";
 			}
 			
-			if($this->getController()->getModel()->checkModForUpdates($data[$i][0])){
-				$update = "<a style='color: red;' href='index.php?system=Modules&page=updateCheck&req=".$data[$i][0]."'>".$this->localize("Updates Available")."</a>";
-			}else{
-				$update =  "<a style='color: green;' href='index.php?system=Modules&page=updateCheck&req=".$data[$i][0]."'>".$this->localize("Up to Date")."</a>";
-			}
+			$update = "<a href='index.php?system=Modules&page=updateCheck&req=".$data[$i][0]."'>".$this->localize("Check")."</a>";
 			
 			if(!($data[$i][2])){
 				$uninstall = "<a href='index.php?system=Modules&page=uninstall&req=".$data[$i][0]."'>".$this->localize("Uninstall")."</a>";

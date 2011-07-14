@@ -162,5 +162,7 @@
 	"Checking for module updates": "LotusCMS Überprüft für Modul-Updates...",
 	"is out of date": "ist veraltet",
 	"version": "Version",
-	"Update": "Updaten"
+	"Update": "Updaten",
+	"Updates Available": "Updates verfügbar",
+	"Up to Date": "Aktuell"
 }

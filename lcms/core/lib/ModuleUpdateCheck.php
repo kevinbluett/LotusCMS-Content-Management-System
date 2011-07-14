@@ -1,17 +1,31 @@
 <?php
-include_once("core/lib/Locale.php");
 /**
- * Dashboard Abs
+ * This class tests if any updates exist for the requested module.
  */
-class Abstraction{
+class ModuleUpdateCheck{
+	
+	
+	public function getVersionArray($ap){
+		$req = "";
+			
+		for($i = 0;$i < count($ap); $i++){
+			
+			if($i!=0)
+				$req .= "|";
+				
+			$req .= $ap[$i];
+		}
+		
+		//Return the module update
+		return $this->checkForModuleUpdate($req);
+	}
 	
 	/**
 	 * This function checks for an update for a particular module at the lotuscms website.
 	 */
-	public function checkForModuleUpdate($req){
-		if(isset($_SESSION['MODUPDATE'])){
-			print $_SESSION['MODUPDATE'];
-			exit;
+	protected function checkForModuleUpdate($req){
+		if(isset($_SESSION['MOD_LCMS_ORG_RESPONSE'])){
+			return $_SESSION['MOD_LCMS_ORG_RESPONSE'];
 		}else{
 		    include_once("core/lib/RemoteFiles.php");
 		    include_once("core/lib/ModuleInfo.php");
@@ -24,20 +38,27 @@ class Abstraction{
 		    //Get site version
 		    $version = file_get_contents("data/config/site_version.dat");
 		    
-		    //Collect information on module updates.
-		    $data = $rf->getURL("http://cdn.modules.lotuscms.org/lcms-3-series/versioncontrol/allversioncheck.php?m=$req&v=$version");
+		    $data = "";
 		    
-		    //Save response in session in case it is required later
-		    $_SESSION['MOD_LCMS_ORG_RESPONSE_URL'] = $data;
+		    if(isset($_SESSION['MOD_LCMS_ORG_RESPONSE_URL'])){	  
+		    	    if(!empty($_SESSION['MOD_LCMS_ORG_RESPONSE_URL'])){
+		    	    	    $data = $_SESSION['MOD_LCMS_ORG_RESPONSE_URL'];
+		    	    }
+		    }
 		    
+		    if(empty($data))
+		    {
+		    	    //Collect information on module updates.
+		    	    $data = $rf->getURL("http://cdn.modules.lotuscms.org/lcms-3-series/versioncontrol/allversioncheck.php?m=$req&v=$version");
+		    }
+		    	    
 		    //Output
 		    $out = "";
 		    
+		    $modArray = array();
+		    
 		    //Get list of plugins
 		    $m = explode("|", $data);
-		    
-		    $l = new Locale();
-		    
 		    
 		    //Loop through each update response.
 		    for($i = 0;$i < count($m); $i++)
@@ -64,13 +85,16 @@ class Abstraction{
 		    	
 		    	//If new version is actually newer than installed.
 		    	if($cv<$nv){
-		    		$out .= '<p class="msg error">'.$l->localize("Module").': '.$getFull[0].' '.$l->localize("is out of date").' ['.$l->localize("version").': '.$getFull[1].']. <a href="index.php?system=Modules&page=updateCheck&req='.$getFull[0].'">'.$l->localize("Update").'</a></p>';
+		    		$modArray[$getFull[0]] = true; 
+		    	}else{
+		    		$modArray[$getFull[0]] = false; 
 		    	}
 		    }
-			
-			print $out;
-			$_SESSION['MODUPDATE'] = $out;
-			exit;
+		    
+		    //Response
+		    $_SESSION['MOD_LCMS_ORG_RESPONSE'] = $modArray;
+		    
+		    return $modArray;
 		}
 	}
 }
