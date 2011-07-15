@@ -13,17 +13,22 @@ class Abstraction{
 			print $_SESSION['MODUPDATE'];
 			exit;
 		}else{
-			include_once("core/lib/RemoteFiles.php");
-			include_once("core/lib/ModuleInfo.php");
-			//include_once("modules/".$req."/".$req."ModuleInfo.php");
+		    include_once("core/lib/RemoteFiles.php");
+		    include_once("core/lib/ModuleInfo.php");
 		    
 		    //Get information on update status of each plugin.
 		    
 		    //Setup remote file requestor
 		    $rf = new RemoteFiles();
 		    
+		    //Get site version
+		    $version = file_get_contents("data/config/site_version.dat");
+		    
 		    //Collect information on module updates.
-		    $data = $rf->getURL("http://cdn.modules.lotuscms.org/lcms-3-series/versioncontrol/allversioncheck.php?m=".$req);
+		    $data = $rf->getURL("http://cdn.modules.lotuscms.org/lcms-3-series/versioncontrol/allversioncheck.php?m=$req&v=$version");
+		    
+		    //Save response in session in case it is required later
+		    $_SESSION['MOD_LCMS_ORG_RESPONSE_URL'] = $data;
 		    
 		    //Output
 		    $out = "";

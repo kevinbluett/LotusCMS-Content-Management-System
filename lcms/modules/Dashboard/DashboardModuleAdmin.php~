@@ -82,29 +82,21 @@ class ModuleAdmin extends Admin{
      * Gets html formatted news from LotusCMS.org
      */
     private function getNews(){
-    	
     	$data = "";
-
-    	
-    	if(file_exists("data/lcmscache/news.dat") )
-    		$data = $this->openFile("data/lcmscache/news.dat");
-    	
-    	if(empty($data)){
-		if(!isset($_SESSION['newsCheck'])){
-			include("core/lib/RemoteFiles.php");
-			
-			$rf = new RemoteFiles();
-			
-			//Get version of CMS
-			$v = $this->con->getVersion();
-			
-			$data = $rf->getURL("http://news.lotuscms.org/lcms-3-series/getDashboardNews.php?v=".$v);
-			
-			$_SESSION['newsCheck'] = $data;
-		}else{
-			$data = $_SESSION['newsCheck'];
-		}
-	}
+    	if(!isset($_SESSION['newsCheck'])){
+	    	include("core/lib/RemoteFiles.php");
+	    	
+	    	$rf = new RemoteFiles();
+	    	
+	    	//Get version of CMS
+	    	$v = $this->con->getVersion();
+	    	
+	    	$data = $rf->getURL("http://news.lotuscms.org/lcms-3-series/getDashboardNews.php?v=".$v);
+	    	
+	    	$_SESSION['newsCheck'] = $data;
+    	}else{
+    		$data = $_SESSION['newsCheck'];
+    	}
     	print $data;
     }
 	

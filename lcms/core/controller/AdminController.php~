@@ -50,7 +50,7 @@ class AdminController extends Controller{
 	protected function defaultRequest(){
 		
 		//If the user is logged in
-		if($this->getModel()->checkLogin(true, true))
+		if($this->getModel()->checkLogin(true))
 		{
 			//Redirect to Dashboard
 			$this->getPaging()->setRedirect('?system=Dash&page=index');	
@@ -68,7 +68,7 @@ class AdminController extends Controller{
 	protected function loginRequest(){
 		
 		//If the user is logged in
-		if($this->getModel()->checkLogin(true, true))
+		if($this->getModel()->checkLogin(true))
 		{
 			//Redirect to Dashboard
 			$this->getPaging()->setRedirect('?system=Dash&page=index');	

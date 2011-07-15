@@ -34,7 +34,7 @@ class Model extends Observable{
 	 * Check login and create login page if requested otherwise say access deinied.
 	 * param $login boolean, true - display login form if not logged in, otherwise display access denied message.
 	 */
-	public function checkLogin($login, $infoLoad = false){
+	public function checkLogin($login){
 
 		//if not logged in
 		if(!$this->loggedIn())
@@ -49,13 +49,11 @@ class Model extends Observable{
 				$l = new Login();
 				
 				//Create a login form for this anonymous user
-				$l->createLogin($p, $this->getController()->getView(), true);
-				
-				//NEVER GETS HERE LOGIN CLASS EXITS
+				$l->createLogin($p, $this->getController()->getView());
 				
 				//Display the page.
 				$p->displayPage();
-				
+
 				//Quit the system
 				$this->getController()->freeze_all();	
 			}

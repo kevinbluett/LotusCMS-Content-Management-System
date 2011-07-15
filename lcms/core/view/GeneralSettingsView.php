@@ -133,8 +133,6 @@ class GeneralSettingsView extends View{
 			$rf = new RemoteFiles();
 
 			$data = $rf->getURL("http://update.lotuscms.org/lcms-3-series/latestVersion.dat");
-		}else{
-			$data = $this->getController()->getModel()->getInputString("vnumber", "", "S");
 		}
 		
 		//Reduce load by dumping the retrieval system.

@@ -155,26 +155,44 @@ class DashboardView extends Observer{
      */
     private function checkForUpdate(){
     	$data = "";
-    	if(!isset($_SESSION['versionCheck'])){
-	    	include("core/lib/RemoteFiles.php");
-	    	
-	    	$rf = new RemoteFiles();
-	    	
-	    	//Get version of CMS
-	    	$v = $this->getView()->getController()->getVersion();
-	    	
-	    	$data = $rf->getURL("http://update.lotuscms.org/lcms-3-series/updateCheck.php?v=".$v."&lang=".$this->getView()->getLocale());
-	    	
-	    	$data = explode("%%", $data);
-	    	
-	    	$_SESSION['versionCheck'] = $data[1];
-	    	$_SESSION['vnumber'] = $data[0];
-	    	
-	    	
-    	}else{
-    		$data = array("",$_SESSION['versionCheck']);
-    	}
-    	return $data[1];
+    	
+    	if(file_exists("data/lcmscache/vnumber.dat") ){
+    		$_SESSION['vnumber'] = $this->getView()->getController()->getModel()->openFile("data/lcmscache/vnumber.dat");
+    		unlink("data/lcmscache/vnumber.dat");
+    	}   
+    	
+    	if(file_exists("data/lcmscache/vmessage.dat") ){
+    		$data = $this->getView()->getController()->getModel()->openFile("data/lcmscache/vmessage.dat");
+    		$_SESSION['versionCheck'] = $data;
+    		unlink("data/lcmscache/vmessage.dat");
+    		return $data;
+    	}                               
+    	
+    	if(empty($data)){
+    	
+		if(!isset($_SESSION['versionCheck'])){
+			include("core/lib/RemoteFiles.php");
+			
+			$rf = new RemoteFiles();
+			
+			//Get version of CMS
+			$v = $this->getView()->getController()->getVersion();
+			
+			$data = $rf->getURL("http://update.lotuscms.org/lcms-3-series/updateCheck.php?v=".$v."&lang=".$this->getView()->getLocale());
+			
+			$data = explode("%%", $data);
+			
+			$_SESSION['versionCheck'] = $data[1];
+			$_SESSION['vnumber'] = $data[0];
+			
+			
+		}else{
+			$data = array("",$_SESSION['versionCheck']);
+		}
+		return $data[1];
+	}else{
+		return $data;	
+	}
     }
     
     /**

@@ -12,7 +12,7 @@ class Login{
 	/**
 	 * Create the login form
 	 */
-	public function createLogin($p, $v = null, $infoLoad = false){
+	public function createLogin($p, $v = null){
 		
 		$out = $p->openFile("style/comps/admin/login.phtml");
 		
@@ -35,17 +35,8 @@ class Login{
 		$out = str_replace("%PASSWORD_LOCALE%", $v->localize("Password"), $out);
 		$out = str_replace("%LOGIN_LOCALE%", $v->localize("Login"), $out);
 		
-		//If LotusCMS should load information after killing the connection to speed up the panel.
-		if($infoLoad)
-		{
-			include_once("core/lib/Preload.php");
-					
-			new Preload($out); 
-					
-		}
-		
 		//This quits the normal login form,
-		$p->overridePaging("");
+		$p->overridePaging($out);
 		/******* freeze_all() called ********/
 		//Never Ever gets to Here
 	}
