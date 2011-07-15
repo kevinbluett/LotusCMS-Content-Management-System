@@ -73,8 +73,6 @@ class TemplateUpdateCheck{
 		    	//Get current version number
 		    	$cv = $this->getTemplateVersionNumber($getFull[0]);
 		    	
-		    	print $cv;
-		    	
 		    	//If new version is actually newer than installed.
 		    	if($cv<$nv){
 		    		$modArray[$getFull[0]] = true; 
