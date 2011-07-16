@@ -235,15 +235,13 @@ class ModulesModel extends Model{
 			// Set the state and tell plugins.
 			$this->setState('SUCCESS_DISABLED');
 			$this->notifyObservers();
-			
-			//Success
+
 			return true;
 		}else{
 			// Set the state and tell plugins.
 			$this->setState('FAILED_DISABLED');
 			$this->notifyObservers();
 			
-			//Failed
 			return false;
 		}
 

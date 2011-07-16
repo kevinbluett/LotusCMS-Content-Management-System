@@ -22,6 +22,25 @@ class TemplateModel extends Model{
 		return $this->getInputString("active", null, "G");	
 	}
 	
+	
+	/**
+	 * Destroys the files of a single template
+	 */
+	public function deleteTemplate(){
+		
+ 		// Set the state and tell plugins.
+		$this->setState('DELETEING_TEMPLATE');
+		$this->notifyObservers();
+		
+		$active = $this->getActiveRequest();
+		
+		//Step one - delete the main template file.
+		unlink("style/$active.php");
+		
+		//Step two, if supporting folder exists, delete it.
+		
+	}
+	
 	/**
 	 * Gets a template and installs it.
 	 */
