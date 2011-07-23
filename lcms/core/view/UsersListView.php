@@ -1,6 +1,4 @@
 <?php
-
-include("core/view/view.php");
 include("core/lib/table.php");
 
 class UsersListView extends View{

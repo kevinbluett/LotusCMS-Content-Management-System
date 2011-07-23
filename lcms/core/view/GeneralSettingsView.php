@@ -1,14 +1,8 @@
 <?php
-
-include("core/view/view.php");
 include("core/lib/table.php");
 
 class GeneralSettingsView extends View{
 	
-	
-	/**
-	 * Starts the controller of the classes system
-	 */
 	public function GeneralSettingsView(){
 		//Meta is usually not setup yet, so we manually do this before loading css file
 		$this->meta = new Meta();
@@ -16,15 +10,9 @@ class GeneralSettingsView extends View{
 		//This class requires an extra css file
 		$this->getMeta()->addExtra('<link href="core/fragments/css/admin.css" rel="stylesheet" type="text/css" />');
 	}	
-	
-	/**
-	 * Show the Dashboard
-	 */
+
 	public function createEditor($data){
-		
-		// Set the state and tell plugins.
 		$this->setState('LOADING_EDITOR');
-		$this->notifyObservers();
 		
 		//Change the content into a form
 		$content = $this->singleForm($data[0], $data[1]);
@@ -49,11 +37,8 @@ class GeneralSettingsView extends View{
 	 * Redirects after successfully saving the data
 	 */
 	public function setWebsiteRedirect(){
-		
-		// Set the state and tell plugins.
 		$this->setState('REDIRECTING');
-		$this->notifyObservers();
-		
+
 		//Show success message on redirected to page
 		$_SESSION['ERROR_TYPE'] = "success";
 		$_SESSION['ERROR_MESSAGE'] = "Website Data Saved Successfully";
@@ -66,15 +51,10 @@ class GeneralSettingsView extends View{
 	 * Create a form for the page.
 	 */
 	protected function singleForm($version, $title){
-		
-		// Set the state and tell plugins.
 		$this->setState('CREATING_SINGLE_FORM');
-		$this->notifyObservers();
-		
-		//
+
 		$listLocale = $this->getController()->getModel()->getListOfLocale();
 		$activeLocale = $this->getLocale();
-		
 		
 		//Get the form
 		$out = $this->openFile("core/fragments/settings/GeneralSettingsForm.phtml");

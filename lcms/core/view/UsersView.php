@@ -1,7 +1,4 @@
 <?php
-
-include("core/view/view.php");
-
 class UsersView extends View{
 	
 	

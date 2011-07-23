@@ -1,23 +1,8 @@
 <?php
-include("core/model/model.php");
-
 class ModulesInstallModel extends Model{
-	
-	public $t;
-	
-	/**
-	 * Starts the controller of the classes system
-	 */
+
 	public function ModulesInstallModel(){
-		//Allow Plugins.
 		Observable::Observable();
-	}
-	
-	/**
-	 * Returns the page requested by the system
-	 */
-	public function getActiveRequest(){
-		return $this->getInputString("active", null, "G");	
 	}
 	
 	/**
@@ -74,10 +59,7 @@ class ModulesInstallModel extends Model{
 	 * Activates a plugin
 	 */
 	public function activatePlugin(){
-		
-		// Set the state and tell plugins.
 		$this->setState('ACTIVATING_PLUGIN');
-		$this->notifyObservers();
 			
 		//Gets plugin under activation request
 		$plugin = $this->getActiveRequest();
@@ -99,17 +81,12 @@ class ModulesInstallModel extends Model{
 			//Starts the activation of the plugin
 			$ins->InstallStart();
 			
-			// Set the state and tell plugins.
 			$this->setState('ACTIVATING_PLUGIN_COMPLETE');
-			$this->notifyObservers();
 			
 			//Allows to return to the plugin information of the activated. plugin.
 			return $plugin;
 		}else{
-			
-			// Set the state and tell plugins.
 			$this->setState('PLUGIN_UNDEFINED');
-			$this->notifyObservers();
 		
 			exit("Plugin Undefined.");	
 		}
@@ -119,11 +96,8 @@ class ModulesInstallModel extends Model{
 	 * Allows download and install
 	 */
 	public function downloadInstall(){
-		
-		// Set the state and tell plugins.
 		$this->setState('DOWNLOADING_PLUGIN');
-		$this->notifyObservers();
-		
+
 		//Get plugin name
 		$plugin = $this->getActiveRequest();
 		
@@ -160,19 +134,14 @@ class ModulesInstallModel extends Model{
 		$list  =  $archive->extract(PCLZIP_OPT_PATH, "modules");
 			
 		if ($archive->extract() == 0) {
-			
-			// Set the state and tell plugins.
 			$this->setState('DOWNLOADING_PLUGIN_FAILED');
-			$this->notifyObservers();
 			
 			unlink("data/".$plugin.".zip");
 			
 			//Display Error Message
 			exit("<p><strong>Error</strong> : ".$archive->errorInfo(true)."</p><p>It may help to chmod (change write permissions) the 'modules' cms directory to 777.</p>");
 		}else{
-			// Set the state and tell plugins.
 			$this->setState('DOWNLOADING_PLUGIN_SUCCESS');
-			$this->notifyObservers();
 			
 			//Delete session varaibles detailing the info
 			unset($_SESSION['MOD_LCMS_ORG_RESPONSE']);
@@ -193,99 +162,6 @@ class ModulesInstallModel extends Model{
 			
 			return $plugin;
 		}
-	}
-	
-	/**
-	 * Save the set file, with the requested content.
-	 * $m = file
-	 * $n = file contents
-	 * $o = Error message.
-	 */
-	protected function saveFile($m, $n, $o = 0){
-    	
-		//Save to disk if the space is available
-		if($this->disk_space())
-		{
-			$n=trim($n);
-			if($n==''){$n=' ';}$n=str_replace("\n\n","\n",$n);$p=0;
-			do{$fd=fopen($m,"w+") or die($this->openFile("core/fragments/errors/error21.phtml")." - Via SEOModel.php");$fout=fwrite($fd,$n);
-			fclose($fd);$p++;}while(filesize($m)<5&&$p<5);
-		}
-		else
-		{
-			//Print Out of Space Error Message
-			die($this->openFile("core/fragments/errors/error22.phtml"));	
-		}
-	}
-    
-	/**
-	 * Checks that there is enough space left to save the file on the harddisk.
-	 */
-	protected function disk_space(){
-		$s = true;
-		
-		if(function_exists('disk_free_space'))
-		{
-			$a = disk_free_space("/");
-			if(is_int($a)&&$a<204800)
-			{
-				$s = false;
-			}
-		}
-		return $s;
-	}
-	
-   /**
-     * Destorys directory
-     */
-   	public function destroyDir($dir, $virtual = false)
-	{
-		$ds = DIRECTORY_SEPARATOR;
-		$dir = $virtual ? realpath($dir) : $dir;
-		$dir = substr($dir, -1) == $ds ? substr($dir, 0, -1) : $dir;
-		if (is_dir($dir) && $handle = opendir($dir))
-		{
-			while ($file = readdir($handle))
-			{
-				if ($file == '.' || $file == '..')
-				{
-					continue;
-				}
-				elseif (is_dir($dir.$ds.$file))
-				{
-					$this->destroyDir($dir.$ds.$file);
-				}
-				else
-				{
-					unlink($dir.$ds.$file);
-				}
-			}
-			closedir($handle);
-			rmdir($dir);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
-	/**
-	 * Returns a list of all the files in a specified directory (Not Recursive) - excluding confirguration files and 'index.php'.
-	 */
-	protected function listFiles($start_dir)
-	{
-		$files = array();
-		$dir = opendir($start_dir);
-		while(($myfile = readdir($dir)) !== false)
-			{
-			if($myfile != '.' && $myfile != '..' && !is_file($myfile) && $myfile != 'resource.frk' && $myfile != 'index.php' )
-				{
-				$files[] = $myfile;
-				}
-			}
-		closedir($dir);
-		return $files;
 	}
 }
 

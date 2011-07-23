@@ -1,24 +1,11 @@
 <?php
-
-include("core/model/model.php");
-
 class DashModel extends Model{
-	
-	public $t;
 	
 	/**
 	 * Starts the controller of the classes system
 	 */
 	public function DashModel(){
-		//Allow Plugins.
 		Observable::Observable();
-	}
-	
-	/**
-	 * Returns the page requested by the system
-	 */
-	public function getPageRequest(){
-		return $this->getInputString("page");	
 	}
 	
 	/**

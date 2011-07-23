@@ -128,43 +128,78 @@ class TemplateView extends View{
 		//Sets intial row as headings
 		$t->setHead(true);
 		
+		//Get update array
+		$u = $this->getController()->getModel()->getUpdateArray();
+		
 		//Add the heading row.
 		$t->addRow(
 				array(
 					$this->localize("Template"),
-					//"More Information",
-					//"Preview Option",
+					$this->localize("Preview Option"),
                                         $this->localize("Activation State"),
-					//"Delete Option"
+                                        $this->localize("Update"),
+					$this->localize("Delete Option")
 				)					
 			  );
 		
 		//Loop Through each page
 		for($i = 0; $i < count($data); $i++)
 		{
+		    
+		    $update = "<a href='?system=Template&page=check&active=".$data[$i]['unix']."'>".$this->localize("Check")."</a>";
+		    
+		    if($u[$data[$i]['unix']]){
+		    	    $update = "<a style='color:red;' href='?system=Template&page=check&active=".$data[$i]['unix']."'>".$this->localize("Updates Available")."</a>";
+		    }else{
+		    	$update = "<a style='color:green;' href='?system=Template&page=check&active=".$data[$i]['unix']."'>".$this->localize("Up to Date")."</a>";
+		    }
+			
                     if($active==$data[$i]['title'])
                     {
+			$view = "<a href='?system=Template&page=preview&template=".$data[$i]['unix']."'>".$this->localize("View")."</a>";
+			$localize = "<input type='radio' name='template' value=".$data[$i]['unix']." CHECKED/> ".$this->localize("Active");
+			$delete = $this->localize("Active");
+			
+			if(file_exists("style/comps/".$data[$i]['unix']."/noDisableStatus.dat")){
+				$view = "";
+				$localize = "";
+				$delete = "";
+			}
+                    	    
+                    	    
 			//Add Page data for each row.
 			$t->addRow(
 					array(
 						$data[$i]['title'],
-						//"<a href='?system=Editor&page=editor&active=".$data[$i]['unix']."'>More Info</a>",
-						//"<a href='?page=".$data[$i]['unix']."'>View</a>",
-                                                "<input type='radio' name='template' value=".$data[$i]['unix']." CHECKED/> ".$this->localize("Active"),
-						//"<a href='?system=Editor&page=delete&active=".$data[$i]['unix']."'>Delete</a>",					
+						$view,
+                                                $localize,
+                                                $update,
+						$delete,					
 					)
 				  );
                     }
                     else
                     {
+			
+			$view = "<a href='?system=Template&page=preview&template=".$data[$i]['unix']."'>".$this->localize("View")."</a>";
+			$localize = "<input type='radio' name='template' value=".$data[$i]['unix']." /> ".$this->localize("Inactive");
+			$delete = "<a href='?system=Template&page=delete&active=".$data[$i]['unix']."'>".$this->localize("Delete")."</a>";
+			
+			if(file_exists("style/comps/".$data[$i]['unix']."/noDisableStatus.dat")){
+				$view = "";
+				$localize = "";
+				$delete = "";
+			}
+                    	    
+                    	    
 			//Add Page data for each row.
 			$t->addRow(
 					array(
 						$data[$i]['title'],
-						//"<a href='?system=Editor&page=editor&active=".$data[$i]."'>More Info</a>",
-						//"<a href='?page=".$data[$i]."'>View</a>",
-                                                "<input type='radio' name='template' value=".$data[$i]['unix']." /> ".$this->localize("Inactive"),
-						//"<a href='?system=Editor&page=delete&active=".$data[$i]."'>Delete</a>",					
+						$view,
+                                                $localize,
+                                                $update,
+                                                $delete,					
 					)
 				  );
                     }
@@ -176,37 +211,23 @@ class TemplateView extends View{
 		//Return the out data
 		return $t->getTable();
 	}
-
+	
 	/**
-	 * A function for the settings file that sets which tab is active
-	 */ 
-	protected function setTabActive($active = 1, $tabs){
+	 * Shows a page to ask the user if they are sure if they really wish to delete the page.
+	 */
+	public function showSurePage($temp){
 		
-		if($active==1){
-			$tabs = str_replace("%ONE%", "active", $tabs);
-		}else{
-			$tabs = str_replace("%ONE%", "inactive", $tabs);
-		}
+	}
+	
+	/**
+	 * Previews a template
+	 */
+	public function previewRequest($temp){
 		
-		if($active==2){
-			$tabs = str_replace("%TWO%", "active", $tabs);
-		}else{
-			$tabs = str_replace("%TWO%", "inactive", $tabs);
-		}
+		$this->setTemplate($temp);
 		
-		if($active==3){
-			$tabs = str_replace("%THREE%", "active", $tabs);
-		}else{
-			$tabs = str_replace("%THREE%", "inactive", $tabs);
-		}
-		
-		if($active==4){
-			$tabs = str_replace("%FOUR%", "active", $tabs);
-		}else{
-			$tabs = str_replace("%FOUR%", "inactive", $tabs);
-		}
-		
-		return $tabs;
+		$this->setContentTitle("Previewing Template");
+		$this->setContent("<a href='index.php?system=Template&page=change'>Return to template list</a>");
 	}
 }
 

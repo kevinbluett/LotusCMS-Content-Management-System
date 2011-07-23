@@ -1,6 +1,4 @@
 <?php
-
-include("core/view/view.php");
 include("core/lib/table.php");
 
 class ModulesView extends View{
@@ -21,10 +19,7 @@ class ModulesView extends View{
 	 * Show the Dashboard
 	 */
 	public function createEditor($data){
-		
-		// Set the state and tell plugins.
 		$this->setState('CREATE_EDITOR');
-		$this->notifyObservers();
 		
 		//Change the content into a form
 		$content = $this->singleForm($data[0], $data[1]);
@@ -38,10 +33,7 @@ class ModulesView extends View{
 	 * Convert data into table
 	 */
 	protected function runModulesToTable($data){
-		
-		// Set the state and tell plugins.
 		$this->setState('MODULES_TO_TABLE');
-		$this->notifyObservers();
 		
 		//Create new Table item
 		$t = new Table();
@@ -99,10 +91,7 @@ class ModulesView extends View{
 	 * Creates the placeholder for a plugins administraion
 	 */ 
 	public function showModuleAdministration($data){
-		
-		// Set the state and tell plugins.
 		$this->setState('SHOW_MODULE_ADMIN');
-		$this->notifyObservers();
 		
 		//Get the top bit of the page
 		$out = $this->getController()->getModel()->openFile("core/fragments/moduleAdministration.phtml");
@@ -126,10 +115,7 @@ class ModulesView extends View{
 	 * Show Module Information
 	 */
 	public function showModuleInformation($modules){
-		
-		// Set the state and tell plugins.
 		$this->setState('SHOW_MODULE_INFO');
-		$this->notifyObservers();
 		
 		//Get Module Title
 		$title = $modules->getTitle();
@@ -220,8 +206,7 @@ class ModulesView extends View{
 	public function updateMessage($data){
 		
 		$this->setState('SHOWING_UPDATE_MESSAGE');
-		$this->notifyObservers();
-		
+
 		//Gets the input string
 		$req = $this->getController()->getModel()->getInputString("req", "", "G");
 	
@@ -246,17 +231,13 @@ class ModulesView extends View{
 		}
 		
 		$this->setState('FINISHED_UPDATE_MESSAGE');
-		$this->notifyObservers();
 	}
 	
 	/**
 	 * Shows installed plugins.
 	 */
 	public function showPlugins($data){
-		
-		// Set the state and tell plugins.
 		$this->setState('START_SHOWING_PLUGINS');
-		$this->notifyObservers();
 		
 		//Get the text for above the table of plugins
 		$out = $this->openFile("core/fragments/listTop.phtml");
@@ -276,11 +257,11 @@ class ModulesView extends View{
 		$t->setHead(true);
 		
 		$titles = array(
-							$this->localize("Module Name"),
-							$this->localize("Change Status"),
-							$this->localize("Updates"),
-							$this->localize("Uninstall")
-					   );
+					$this->localize("Module Name"),
+					$this->localize("Change Status"),
+					$this->localize("Updates"),
+					$this->localize("Uninstall")
+				);
 					   
 		//Adds a row as titles.
 		$t->addRow($titles);
@@ -335,10 +316,7 @@ class ModulesView extends View{
 		
 		//Localise Title
 		$this->setContentTitle($this->localize("Module Manager"));
-		
-		// Set the state and tell plugins.
 		$this->setState('END_SHOWING_PLUGINS');
-		$this->notifyObservers();
 	}
 	
 	/**
@@ -355,9 +333,7 @@ class ModulesView extends View{
 		
 		if($out){
 			//success - redirect to list with success message above.
-			// Set the state and tell plugins.
 			$this->setState('SUCCESS_REDIRECT');
-			$this->notifyObservers();
 		
 			//Show success message on redirected to page
 			$_SESSION['ERROR_TYPE'] = "success";
@@ -369,9 +345,7 @@ class ModulesView extends View{
 		}else{
 			
 			//success - redirect to list with success message above.
-			// Set the state and tell plugins.
 			$this->setState('FAIL_MESSAGE');
-			$this->notifyObservers();
 			
 			//Failed
 			$data .= $this->openFile("core/fragments/modules/failedUninstall.phtml");
@@ -388,9 +362,7 @@ class ModulesView extends View{
 				
 		if($out){
 			//success - redirect to list with success message above.
-			// Set the state and tell plugins.
 			$this->setState('SUCCESS_REDIRECT');
-			$this->notifyObservers();
 		
 			//Show success message on redirected to page
 			$_SESSION['ERROR_TYPE'] = "success";
@@ -402,9 +374,7 @@ class ModulesView extends View{
 		}else{
 			
 			//success - redirect to list with success message above.
-			// Set the state and tell plugins.
 			$this->setState('FAIL_MESSAGE');
-			$this->notifyObservers();
 			
 			//Failed
 			$data .= $this->openFile("core/fragments/modules/failedUninstall.phtml");
@@ -447,10 +417,7 @@ class ModulesView extends View{
 	 * Create a form for the page.
 	 */
 	public function showInstalledModules($data){
-		
-		// Set the state and tell plugins.
 		$this->setState('SHOW_INSTALLED_MODULES');
-		$this->notifyObservers();
 		
 		//Get the form
 		$out = $this->openFile("core/fragments/listTop.phtml");
@@ -464,9 +431,7 @@ class ModulesView extends View{
 		$this->setContent($out);
 		$this->setContentTitle($this->localize("Module Manager"));
 		
-		// Set the state and tell plugins.
 		$this->setState('GETTING_MODULE_INFO');
-		$this->notifyObservers();
 	}
 }
 

@@ -16,16 +16,8 @@ class AdminController extends Controller{
 		//Sets the name of the other classes
 		$this->setSystem("Admin");
 		
-		//Setup the page
-		$this->setup("LotusCMS Administration");
-		
-		//Set the requests accepted
-		$this->putRequests();
-		
-		//Process Request
-		$this->processRequest();
-		
-		$this->displayPage();
+		//Setup the page + [disabling authencation for this page]
+		$this->setup("LotusCMS Administration", "admin", "");
 	}
 	
 	/**
@@ -50,7 +42,7 @@ class AdminController extends Controller{
 	protected function defaultRequest(){
 		
 		//If the user is logged in
-		if($this->getModel()->checkLogin(true))
+		if($this->getModel()->checkLogin(true, true))
 		{
 			//Redirect to Dashboard
 			$this->getPaging()->setRedirect('?system=Dash&page=index');	
@@ -68,7 +60,7 @@ class AdminController extends Controller{
 	protected function loginRequest(){
 		
 		//If the user is logged in
-		if($this->getModel()->checkLogin(true))
+		if($this->getModel()->checkLogin(true, true))
 		{
 			//Redirect to Dashboard
 			$this->getPaging()->setRedirect('?system=Dash&page=index');	

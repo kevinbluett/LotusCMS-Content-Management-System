@@ -1,5 +1,7 @@
 <?php
 include_once("core/lib/Observable.php");
+include_once("core/view/view.php");
+include_once("core/model/model.php");
 
 class Controller extends Observable{
 	
@@ -15,10 +17,10 @@ class Controller extends Observable{
 	//The page setting system
 	protected $p;
 	
-	//Protecetd
+	//Request
 	protected $request;
 	
-	//Array of the 
+	//Array of the reqs
 	protected $req;
 	
 	//Controller ID
@@ -61,11 +63,22 @@ class Controller extends Observable{
 	
 	/**
 	 * Setup the required page
+	 * Kevin Bluett July 2011
+	 * @param $system 		=> Name of the Controller eg. DashController must be inputted as "Dash" 
+	 * @param $title 		=> Title of the page to be setup
+	 * @param $template 		=> The template to be loaded by the paging systems. Defaults to "admin"
+	 * @param $auth			=> The user level required to access page. Leave blank for no login, '*' for any user a/c, 'user_group' for a specific user group
 	 */
-	public function setup($title){
+	public function setup($system, $title, $template = "admin", $auth = "*"){
 		
+		//Sets the name of the other classes
+		$this->setSystem($system);
+
 		//Setup Classes
 		$this->setupClasses();
+		
+		//Setup basic variables
+		$this->varSetup();
 		
 		//Setup paging system
 		$this->setupPaging();
@@ -79,6 +92,24 @@ class Controller extends Observable{
 		//Set to two columns
 		$this->p->setTwoColumn();
 		
+		//Set to Administration template
+		$this->getView()->setTemplate($template);
+		
+		//Check for Plugins
+		$this->loadPlugins();
+		
+		//Set the requests accepted
+		$this->putRequests();
+		
+		if(!empty($auth)){
+			//Load the requirement for all pages to be password protected by user management
+			$this->requireAuth();
+		}
+		
+		//Process Request
+		$this->processRequest();
+		
+		$this->displayPage();
 	}
 	
 	/**
@@ -90,13 +121,15 @@ class Controller extends Observable{
 		$className = $this->getSystem();
 		
 		//View
-		include("core/view/".$className."View.php");
+		include_once("core/view/".$className."View.php");
 		
 		//Model
-		include("core/model/".$className."Model.php");
+		include_once("core/model/".$className."Model.php");
 		
+		$load = $className."View";
+
 		//Setup the classview
-		eval("\$this->cv = new ".$className."View();");
+		$this->cv = new $load();
 		
 		//Set this as controller
 		$this->cv->setController($this);
@@ -104,8 +137,10 @@ class Controller extends Observable{
 		//Set View
 		$this->cv->setView($this->cv);
 		
+		$load = $className."Model";
+		
 		//Setup the classmodel
-		eval("\$this->cm = new ".$className."Model();");
+		$this->cm = new $load();
 		
 		//Set this as controller
 		$this->cm->setController($this);
@@ -176,10 +211,9 @@ class Controller extends Observable{
 	 * Process the page request
 	 */
 	public function processRequest(){
-
 		$found = false;
 		
-		$reqy = (String)$this->request;
+		$localRequest = (String)$this->request;
 		
 		//Set the Locale
 		$this->getModel()->setLocale();
@@ -195,33 +229,23 @@ class Controller extends Observable{
 		}
 		
 		//Requests the default system
-		if(empty($reqy))
+		if(empty($localRequest))
 		{
-			//Run the default request
-			$this->defaultRequest();
-			
-			//This breaks processing of all the following requests
-			return false;
+			if(method_exists($this, "defaultRequest")){
+				$this->defaultRequest();
+			} else {
+				$this->cv->noPage();
+			}
 		}
 		
-		//Work through all the set request
-		for($i = 0;$i < count($this->req);$i++)
-		{	
-			//Process the request
-			if($this->req[$i]==$reqy)
-			{
-				//Create Request
-				$process = "\$this->".($this->req[$i])."Request();";
-				
-				//Process the request
-				eval($process);
-				
-				//Set processed
-				$found = true;
-				
-				//Stop the loop
-				break;
-			}	
+		//Process the request
+		if(in_array($localRequest, $this->req))
+		{
+			$load = $localRequest."Request";
+			
+			$this->$load();
+			
+			$found = true;
 		}
 		
 		//Page not found
@@ -232,108 +256,65 @@ class Controller extends Observable{
 		}
 	}
 	
-	/**
-	 * ID
-	 */
 	public function getID(){
 		return $this->id;	
 	}	
 	
-	/**
-	 * Page Request
-	 */
 	public function setPageRequest($req){
 		$this->request = $req;	
 	}
 
 	
-	/**
-	 * ID
-	 */
 	public function setID($id){
 		$this->id = $id;	
 	}
 	
-	/**
-	 * Get Model
-	 */
 	public function getModel(){
 		//Returns model
 		return $this->cm;
 	}
 	
-	/**
-	 * Get View
-	 */
 	public function getView(){
 		//Returns model
 		return $this->cv;
 	}
 	
-	
-	/**
-	 * Exit the system
-	 */
 	public function freeze_all(){
 		exit;	
 	}
 	
-	/**
-	 * Returns a global variable
-	 */
-	protected function getInputString($name, $default_value = "", $format = "GPCS")
-    {
 
-        //order of retrieve default GPCS (get, post, cookie, session);
-
-        $format_defines = array (
-        'G'=>'_GET',
-        'P'=>'_POST',
-        'C'=>'_COOKIE',
-        'S'=>'_SESSION',
-        'R'=>'_REQUEST',
-        'F'=>'_FILES',
-        );
-        preg_match_all("/[G|P|C|S|R|F]/", $format, $matches); //splitting to globals order
-        foreach ($matches[0] as $k=>$glb)
-        {
-            if ( isset ($GLOBALS[$format_defines[$glb]][$name]))
-            {   
-                return $GLOBALS[$format_defines[$glb]][$name];
-            }
-        }
-      
-        return $default_value;
-    } 
     
-    /**
-     * Sets up the basic variables
-     */
-    protected function varSetup(){
-    	//Setup ID
-		$this->setID($this->getInputString("id", -1, "G"));
+	/**
+	 * Sets up the basic variables
+	 */
+	protected function varSetup(){
+		Observable::Observable();
+		
+		//Setup ID
+		$this->setID($this->getModel()->getInputString("id", -1, "G"));
 		
 		//Set Page request
-		$this->setPageRequest($this->getInputString("page", "", "G")); 
-    }
+		$this->setPageRequest($this->getModel()->getInputString("page", "", "G")); 
+	}
     
-    /**
-     * Dumps a variable for better viewing and exits;
-     */
-    public function error_dump($var){
-    	
-    	//Print variable in preformatted method
-    	print "<pre>";
-    	
-    	//Dump Variable Out
-		var_dump($var);
+	/**
+      	 * Dumps a variable for better viewing and exits;
+     	 */
+     	public function error_dump($var){
 		
+		//Print variable in preformatted method
+		print "<pre>";
+		
+		//Dump Variable Out
+		var_dump($var);
+			
 		//Print End of the preformatted section
 		print "</pre>";
-		
-		//Stop Everything
+			
+		//Stop Everything	
 		$this->freeze_all();	
-    }
+	}
     
     /**
      * Returns the directory containing all the pages.
@@ -348,6 +329,77 @@ class Controller extends Observable{
     public function getVersion(){
     	return $this->getModel()->openFile("data/config/site_version.dat");
     }
+    
+    /**
+     * Restricted access to the pages via defined usergroup.
+     */
+    protected function requireAuth($user = "*"){
+    	
+	// Set the state and tell plugins.
+	$this->setState('REQUIRE_AUTH');
+    	
+    	if($user=="*"){
+			if(!$this->getModel()->checkLogin(true)){
+				//Login status check failed.
+				$this->freeze_all();
+			}
+    	}else{
+			if(!$this->getModel()->checkLogin(true)){
+				//Login status check failed.
+				$this->freeze_all();
+			}else{
+				//Success, but now be need to check usertype.
+				if(!$this->checkUserLevel($user)){
+					//Get Access Denied Page for his level
+					$cont = $this->openFile("core/fragments/users/access_denied.phtml");
+				
+					//Set the content
+					$this->getController()->getView()->setContentTitle("Access Denied");
+					
+					//Set the content
+					$this->getController()->getView()->setContent($cont);
+					
+					//Display page
+					$this->getController()->displayPage();
+					
+					//Stop All Processing
+					$this->getController()->freeze_all();
+				}
+			}
+    	}
+    }
+    
+   	/**
+	 * Requires logged in user to be administrator
+	 */
+	public function requireAdministrator(){
+		$this->setState('REQUIRE_ADMINISTRATOR');
+		
+		$this->requireAuth("administrator");
+	}
+    
+   	/**
+	 * Checks the user access level
+	 */
+	protected function checkUserLevel($lvl){
+		$this->setState('CHECKING_USER_LVL');
+		
+		//Get Access level (Force userage of Session variable - otherwise attack is possible)
+		$access = $this->getModel()->getInputString("access_lvl", "", "S");
+			
+		//Check Access Level
+		if($lvl!=$access)
+		{
+			//The User does not have the rights to access this area
+			return false;	
+		}
+		//Access Level OK
+		else
+		{
+			//Access OK
+			return true;	
+		}
+	}
     
     /**
      * Loads any plugins for for use in observation system.

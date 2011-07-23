@@ -1,11 +1,12 @@
 <?php
+
 /**
  * This class tests if any updates exist for the requested module.
  */
 class ModuleUpdateCheck{
 	
 	
-	public function getVersionArray($ap){
+	public function getVersionArray($ap, $saveInfo = false){
 		$req = "";
 			
 		for($i = 0;$i < count($ap); $i++){
@@ -17,13 +18,13 @@ class ModuleUpdateCheck{
 		}
 		
 		//Return the module update
-		return $this->checkForModuleUpdate($req);
+		return $this->checkForModuleUpdate($req, $saveInfo);
 	}
 	
 	/**
 	 * This function checks for an update for a particular module at the lotuscms website.
 	 */
-	protected function checkForModuleUpdate($req){
+	protected function checkForModuleUpdate($req, $saveInfo){
 		if(isset($_SESSION['MOD_LCMS_ORG_RESPONSE'])){
 			return $_SESSION['MOD_LCMS_ORG_RESPONSE'];
 		}else{
@@ -40,16 +41,32 @@ class ModuleUpdateCheck{
 		    
 		    $data = "";
 		    
-		    if(isset($_SESSION['MOD_LCMS_ORG_RESPONSE_URL'])){	  
+		    if(isset($_SESSION['MOD_LCMS_ORG_RESPONSE_URL'])&&(!$saveInfo)){	  
 		    	    if(!empty($_SESSION['MOD_LCMS_ORG_RESPONSE_URL'])){
 		    	    	    $data = $_SESSION['MOD_LCMS_ORG_RESPONSE_URL'];
 		    	    }
-		    }
-		    
-		    if(empty($data))
-		    {
+		    }else if(file_exists("data/lcmscache/mod_update.dat")){
+		    	    include_once("core/lib/io.php");
+		    	    $io = new InputOutput();
+		    	    	    
+		    	    $data = $io->openFile("data/lcmscache/mod_update.dat");
+		    	    $_SESSION['MOD_LCMS_ORG_RESPONSE_URL'] = $data;
+		    	    
+		    	    //Finally delete the cache
+		    	    unlink("data/lcmscache/mod_update.dat");
+		    }else{
 		    	    //Collect information on module updates.
 		    	    $data = $rf->getURL("http://cdn.modules.lotuscms.org/lcms-3-series/versioncontrol/allversioncheck.php?m=$req&v=$version");
+		   
+		    	    //If preloader is getting info, save it to file
+		    	    if($saveInfo){
+		    	    	    include_once("core/lib/io.php");
+		    	    	    $io = new InputOutput();
+		    	    	    
+		    	    	    $io->saveFile("data/lcmscache/mod_update.dat", $data);
+		    	    	    
+		    	    	    return null;
+		    	    }
 		    }
 		    	    
 		    //Output

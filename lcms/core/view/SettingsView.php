@@ -1,6 +1,4 @@
 <?php
-
-include("core/view/view.php");
 include("core/lib/table.php");
 
 class SettingsView extends View{
@@ -18,10 +16,7 @@ class SettingsView extends View{
 	}	
 	
 	public function showSettingsDash(){
-	
-		// Set the state and tell plugins.
 		$this->setState('SHOW_SETTINGS_DASH');
-		$this->notifyObservers();
 	
 		//Redirect to General Settings
 		$this->setRedirect("index.php?system=GeneralSettings&page=edit");

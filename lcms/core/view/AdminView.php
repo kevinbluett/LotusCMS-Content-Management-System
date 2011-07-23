@@ -1,21 +1,10 @@
 <?php
-
-include("core/view/view.php");
 include("core/lib/table.php");
 
 class AdminView extends View{
 	
+	public function AdminView(){}	
 	
-	/**
-	 * Starts the controller of the classes system
-	 */
-	public function AdminView(){
-			
-	}	
-	
-	/**
-	 * Starts the controller of the classes system
-	 */
 	public function missingDetails(){
 		
 		//Change ID after incorrect logn
@@ -35,9 +24,6 @@ class AdminView extends View{
 		/******* freeze_all() called ********/
 	}	
 	
-	/**
-	 * Show wrong login details
-	 */
 	public function setWrongLogin(){
 		
 		//Change ID after incorrect logn
@@ -56,7 +42,5 @@ class AdminView extends View{
 		$this->overridePaging($out);
 		/******* freeze_all() called ********/
 	}
-
 }
-
 ?>

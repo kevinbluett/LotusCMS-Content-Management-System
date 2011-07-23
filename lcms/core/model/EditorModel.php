@@ -1,16 +1,7 @@
 <?php
-include("core/model/model.php");
-
 class EditorModel extends Model{
-	
-	public $t;
-	
-	/**
-	 * Starts the controller of the classes system
-	 */
+
 	public function EditorModel(){
-		
-		//Allow Plugins to join in.
 		Observable::Observable();
 	}
 	
@@ -19,9 +10,7 @@ class EditorModel extends Model{
 	 */
 	public function createNewPage($data)
 	{
-		// Set the state and tell plugins.
 		$this->setState('STARTING_NEWPAGE_SAVING');
-		$this->notifyObservers();
 		
 		//Set unix pagename as full pagename.
 		$data[0] = $data[1];
@@ -53,20 +42,12 @@ class EditorModel extends Model{
 	}
 	
 	/**
-	 * Returns the page requested by the system
-	 */
-	public function getActiveRequest(){
-		return $this->getInputString("active", null, "G");	
-	}
-	
-	/**
 	 * Returns the contents of the page as an array
 	 */
 	public function getPageData($page)
 	{
 		// Set the state and tell plugins.
 		$this->setState('GETTING_PAGEDATA');
-		$this->notifyObservers();
 		
 		//Open the page file
 		$data = $this->openFile("data/pages/".$page.".dat");
@@ -85,8 +66,7 @@ class EditorModel extends Model{
 		
 		// Set the state and tell plugins.
 		$this->setState('GETTING_TEMPLATEOPTIONS');
-		$this->notifyObservers();
-		
+
 		//Avialable templates
 		$data = $this->getAllTemplates();
 		
@@ -131,58 +111,52 @@ class EditorModel extends Model{
 		return $temps;		
 	}
     
-    /**
-     * Deletes a page
-     */
-    public function deletePage(){
-    	
-	// Set the state and tell plugins.
-	$this->setState('DELETING_PAGE');
-	$this->notifyObservers();
-	
-    	//Active Request
-    	$active = $this->getActiveRequest();
-    	
-    	//Delete the page
-    	if(file_exists("data/pages/".$active.".dat"))
-    	{
-    		//Actually delete the file or die due to permissions
-    		unlink("data/pages/".$active.".dat") or die($this->openFile("core/fragments/errors/error32.phtml"));
-    	}
-    	
-    	//Delete cached page if cached
-    	if(file_exists("cache/".$active.".html"))
-    	{
-    		//Actually delete the file or die due to permissions
-    		unlink("cache/".$active.".html") or die($this->openFile("core/fragments/errors/error33.phtml"));
-    	}
-    }
-    
-    /**
-     * Saves the contents of a page
-     */
-    public function savePage($unix, $title, $template, $content)
-    {
-		// Set the state and tell plugins.
-		$this->setState('SAVING_PAGE');
-		$this->notifyObservers();
+	/**
+	* Deletes a page
+	*/
+	public function deletePage(){
+		$this->setState('DELETING_PAGE');
 		
+		$active = $this->getActiveRequest();
+		
+		//Delete the page
+		if(file_exists("data/pages/".$active.".dat"))
+		{
+			//Actually delete the file or die due to permissions
+			unlink("data/pages/".$active.".dat") or die($this->openFile("core/fragments/errors/error32.phtml"));
+		}
+		
+		//Delete cached page if cached
+		if(file_exists("cache/".$active.".html"))
+		{
+			//Actually delete the file or die due to permissions
+			unlink("cache/".$active.".html") or die($this->openFile("core/fragments/errors/error33.phtml"));
+		}
+	}
+    
+	/**
+	* Saves the contents of a page
+	*/
+	public function savePage($unix, $title, $template, $content)
+	{
+		$this->setState('SAVING_PAGE');
+			
 		$content = str_replace('\"','"', $content);
 		$content = str_replace("\'","'", $content);
-	
-    	//Deletes the cached version of the page.
-    	$this->deleteCached($unix);
-    	
-    	//The file to save a page
-    	$data = $title."|<*div*>|".$template."|<*div*>|".$content;
-    	
-    	//Save the edited page.
-    	$this->saveFile(
-    					$this->getController()->getPageDirectory()."/".$unix.".dat", 
-    					$this->utf8_urldecode($data), 
-    					$this->openFile("core/fragments/errors/error31.phtml")
-    				   );
-    }
+		
+		//Deletes the cached version of the page.
+		$this->deleteCached($unix);
+		
+		//The file to save a page
+		$data = $title."|<*div*>|".$template."|<*div*>|".$content;
+		
+		//Save the edited page.
+		$this->saveFile(
+					$this->getController()->getPageDirectory()."/".$unix.".dat", 
+					$this->utf8_urldecode($data), 
+					$this->openFile("core/fragments/errors/error31.phtml")
+				);
+	}
     
     /**
      * Fixes escaped content
@@ -210,23 +184,7 @@ class EditorModel extends Model{
     public function fixPageName($text){
     	
     	//Special Characters to be removed
-    	$sp = array(
-    						" ",
-    						"--",
-    						"!",
-    						"'",
-    						'"',
-    						"<",
-    						"\\",
-    						"/",
-    						"?",
-    						"*",
-    						"&",
-    						"%",
-    						";",
-    						":",
-    						"~"
-    					);
+    	$sp = array(" ", "--", "!", "'", '"', "<", "\\", "/", "?", "*", "&", "%", ";", ":", "~");
     	
     	//loop through specified characters
     	for($i = 0; $i < count($sp); $i++)
@@ -242,14 +200,10 @@ class EditorModel extends Model{
     	return $text;
     }
     
-    /**
-     *
-     */
     public function getSubmitData(){
 	
 	// Set the state and tell plugins.
 	$this->setState('GETTING_SUBMISSION_DATA');
-	$this->notifyObservers();
     	
     	$data = array();
     	
@@ -272,12 +226,9 @@ class EditorModel extends Model{
     /**
      * Deletes a certain cached page is it is cached, may it be
      */
-    protected function deleteCached($page)
-    {
-	
-	// Set the state and tell plugins.
+    protected function deleteCached($page){
+
 	$this->setState('DELETING_CACHED_PAGE');
-	$this->notifyObservers();
 	
     	//Check if cached version exists
     	if(file_exists("cache/".$page.".html"))
@@ -318,10 +269,7 @@ class EditorModel extends Model{
 	 * Clears all the page files in the cache.
 	 */
 	public function clearCache(){
-		
-		// Set the state and tell plugins.
 		$this->setState('EMPTYING_CACHE');
-		$this->notifyObservers();
 		
 		//Include the file operations class
 		include("core/lib/FileOperations.php");
@@ -334,69 +282,6 @@ class EditorModel extends Model{
 		
 		//Clear the contents of the cache - and show progress.
 		$this->getController()->getPaging()->setContent($fop->emptyDir("cache"));
-	}
-	
-    /**
-     * Save the set file, with the requested content.
-     * $m = file
-     * $n = file contents
-     * $o = Error message.
-     */
-    protected function saveFile($m, $n, $o = 0){
-    	
-    	//Save to disk if the space is available
-    	if($this->disk_space())
-    	{
-			$n=trim($n);
-			if($n==''){$n=' ';}$n=str_replace("\n\n","\n",$n);$p=0;
-			do{$fd=fopen($m,"w+") or die("Save file failed - ".$m." - ".$o);$fout=fwrite($fd,$n);
-			fclose($fd);$p++;}while(filesize($m)<5&&$p<5);
-		}
-		else
-		{
-			//Print Out of Space Error Message
-			die($this->openFile("core/fragments/errors/error22.phtml"));	
-		}
-    }
-    
-	/**
-	 * Returns a list of all the files in a specified directory (Not Recursive) - excluding confirguration files and 'index.php'.
-	 */
-	protected function listFiles($start_dir)
-	{
-		
-		/*
-		returns an array of files in $start_dir (not recursive)
-		*/
-			
-		$files = array();
-		$dir = opendir($start_dir);
-		while(($myfile = readdir($dir)) !== false)
-			{
-			if($myfile != '.' && $myfile != '..' && !is_file($myfile) && $myfile != 'resource.frk' && $myfile != 'comps' && $myfile != 'index.php' && $myfile != 'admin.php' && !eregi('^Icon',$myfile) )
-				{
-				$files[] = $myfile;
-				}
-			}
-		closedir($dir);
-		return $files;
-	}
-    
-    /**
-     * Checks that there is enough space left to save the file on the harddisk.
-     */
-    protected function disk_space(){
-		$s = true;
-		
-		if(function_exists('disk_free_space'))
-		{
-			$a = disk_free_space("/");
-			if(is_int($a)&&$a<204800)
-			{
-				$s = false;
-			}
-		}
-		return $s;
 	}
 }
 

@@ -1,14 +1,8 @@
 <?php
-
-include("core/view/view.php");
 include("core/lib/table.php");
 
 class PageListView extends View{
 	
-	
-	/**
-	 * Starts the controller of the classes system
-	 */
 	public function PageListView(){
 		//Meta is usually not setup yet, so we manually do this before loading css file
 		$this->meta = new Meta();
@@ -22,10 +16,7 @@ class PageListView extends View{
 	 * Shows a list of the pages 
 	 */
 	public function showPageList($pages){
-		
-		// Set the state and tell plugins.
 		$this->setState('SHOWING_PAGE_LIST');
-		$this->notifyObservers();
 		
 		//Get Top of pagelist
 		$content = $this->openFile("core/fragments/admin_pagelist.phtml");
@@ -54,10 +45,7 @@ class PageListView extends View{
 	 * Changes an array of pagenames into a table with "edit", "view" and "delete" options
 	 */
 	protected function createPageList($data){
-		
-		// Set the state and tell plugins.
 		$this->setState('CREATING_PAGE_LIST_TABLE');
-		$this->notifyObservers();
 		
 		//Create new Table item
 		$t = new Table();

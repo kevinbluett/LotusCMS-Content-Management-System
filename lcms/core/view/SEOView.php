@@ -1,14 +1,8 @@
 <?php
-
-include("core/view/view.php");
 include("core/lib/table.php");
 
 class SEOView extends View{
 	
-	
-	/**
-	 * Starts the controller of the classes system
-	 */
 	public function SEOView(){
 		//Meta is usually not setup yet, so we manually do this before loading css file
 		$this->meta = new Meta();
@@ -21,10 +15,7 @@ class SEOView extends View{
 	 * Show the Dashboard
 	 */
 	public function createEditor($data){
-		
-		// Set the state and tell plugins.
 		$this->setState('CREATING_EDITOR');
-		$this->notifyObservers();
 		
 		//Change the content into a form
 		$content = $this->singleForm($data[0], $data[1]);
@@ -49,10 +40,7 @@ class SEOView extends View{
 	 * Redirects after successfully saving the data
 	 */
 	public function setSEORedirect(){
-		
-		// Set the state and tell plugins.
 		$this->setState('SEO_REDIRECT');
-		$this->notifyObservers();
 		
 		//Show success message on redirected to page
 		$_SESSION['ERROR_TYPE'] = "success";
@@ -66,10 +54,7 @@ class SEOView extends View{
 	 * Create a form for the page.
 	 */
 	protected function singleForm($keywords, $description){
-		
-		// Set the state and tell plugins.
 		$this->setState('SINGLE_FORM_CREATING');
-		$this->notifyObservers();
 		
 		//Get the form
 		$out = $this->openFile("core/fragments/settings/SEOSettings.phtml");

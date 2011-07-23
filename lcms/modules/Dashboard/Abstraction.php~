@@ -24,8 +24,26 @@ class Abstraction{
 		    //Get site version
 		    $version = file_get_contents("data/config/site_version.dat");
 		    
-		    //Collect information on module updates.
-		    $data = $rf->getURL("http://cdn.modules.lotuscms.org/lcms-3-series/versioncontrol/allversioncheck.php?m=$req&v=$version");
+		    $data = "";
+		    
+		    if(isset($_SESSION['MOD_LCMS_ORG_RESPONSE_URL'])){
+		    	$data = $_SESSION['MOD_LCMS_ORG_RESPONSE_URL'];		    
+		    }
+		    
+		    if(file_exists("data/lcmscache/mod_update.dat")&&empty($data)){
+		    	    include_once("core/lib/io.php");
+		    	    $io = new InputOutput();
+		    	    	    
+		    	    $data = $io->openFile("data/lcmscache/mod_update.dat");
+		    	    $_SESSION['MOD_LCMS_ORG_RESPONSE_URL'] = $data;
+		    	    
+		    	    //Finally delete the cache
+		    	    unlink("data/lcmscache/mod_update.dat");
+		    }else{
+		    
+		    	    //Collect information on module updates.
+		    	$data = $rf->getURL("http://cdn.modules.lotuscms.org/lcms-3-series/versioncontrol/allversioncheck.php?m=$req&v=$version");
+		    }
 		    
 		    //Save response in session in case it is required later
 		    $_SESSION['MOD_LCMS_ORG_RESPONSE_URL'] = $data;

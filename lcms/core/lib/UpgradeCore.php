@@ -26,7 +26,7 @@ class UpgradeCore extends InputOutput{
 		$rf->downloadRemoteFile("http://cdn.lotuscms.org/lcms-3-series/coreupgrade/latest.zip", "", "latest.zip");
 		
 		if(!file_exists("latest.zip")){
-			die("<p>Fatal Error: Download failed.</p>");		
+			die("<p>Fatal Error: Download failed. LotusCMS installation is untouched.</p>");		
 		}else{
 			print "<p>File downloaded.</p>";
 		}
@@ -49,7 +49,7 @@ class UpgradeCore extends InputOutput{
 		if ($archive->extract() == 0) {
 			
 			//Display Error Message
-			print("<p><strong>Error Occurred.</strong> : ".$archive->errorInfo(true)."</p><p>Download failed and core lost. Please copy the 'core' folder from a new edition downloaded from lotuscms.org.</p>");
+			print("<p><strong>Error Occurred.</strong> : ".$archive->errorInfo(true)."</p><p>Download/Extraction failed and core lost. Please copy the 'core' folder from a new edition downloaded from lotuscms.org.</p>");
 		}else{
 			
 			print "<p>Success... Tidying up folders...</p>";
@@ -70,6 +70,14 @@ class UpgradeCore extends InputOutput{
 			print "<p><b>Complete</b>. <a href='../../../index.php'>Website Home</a></p>";
 			
 			session_destroy();
+		}
+		
+		public function checkForModuleUpdates(){
+			
+		}
+		
+		public function checkForTemplateUpdates(){
+			
 		}
 	}	
 	

@@ -1,4 +1,5 @@
 <?php
+include("core/lib/io.php");
 
 class Model extends Observable{
 	
@@ -16,11 +17,17 @@ class Model extends Observable{
 	//The form values
 	public $formValues;
 	
+	public $io;
+	
 	/**
 	 * Set the local Controller
 	 */
 	public function setController($con){
 		$this->con = $con;
+		
+		if(!isset($this->io)){
+			$this->io = new InputOutput();	
+		}
 	}
 	
 	/**
@@ -100,9 +107,39 @@ class Model extends Observable{
 	}
 	
 	/**
+	 * Returns the page requested by the system
+	 */
+	public function getPageRequest(){
+		return $this->getInputString("page");	
+	}
+	
+	/**
+	 * Returns the page requested by the system
+	 */
+	public function getActiveRequest(){
+		return $this->getInputString("active", null, "G");	
+	}
+	
+	/**
+	 * Returns the active locale
+	 * Kevin Bluett July 2011
+	 */
+	public function getActiveLocale(){
+		return $this->getController()->getView()->getLocale();	
+	}
+	
+	/**
 	 * Returns the username of the logged in User
 	 */
 	protected function getCurrentUser()
+	{
+		//TODO
+	}
+	
+	/**
+	 * Returns the group of the logged in User
+	 */
+	protected function getCurrentUserGroup()
 	{
 		//TODO
 	}
@@ -117,18 +154,12 @@ class Model extends Observable{
 			//Gets the saved Locale
 			$_SESSION['locale'] = $this->openFile("data/config/locale.dat");
 		}else{
-			/******* START TO BE REMOVED IN 4.0 MILESTONE *******/
-			//Create the locale file
-			include("core/lib/io.php");
-			$io = new InputOutput();
+			/******* START TO BE REMOVED IN 4.0 MILESTONE - ADDED 3.5 *******/
 			
 			//Create new default Locale
-			$io->saveFile("data/config/locale.dat", "EN");
+			$this->saveFile("data/config/locale.dat", "en");
 			
-			//Unset the variable.
-			unset($io);
-			
-			/******* END TO BE REMOVED IN 4.0 MILESTONE *******/
+			/******* END TO BE REMOVED IN 4.0 MILESTONE - ADDED 3.5 *******/
 		}
 	}
 	
@@ -161,21 +192,34 @@ class Model extends Observable{
 	    return $default_value;
 	} 
 	
+	
+	/**
+	 * Save the set file, with the requested content.
+	 */
+	public function saveFile($m, $n, $o = 0){
+		$this->io->saveFile($m, $n, $o = 0);
+	}
+	
 	/**
 	 * Allows direct from function exception throwing.
 	 */	
 	function throwException($message = null,$code = null) {
 	    throw new Exception($message,$code);
 	}
-  
-	/**
-	 * Returns the contents of the requested page
-	 */
+
 	public function openFile($n){
 	    $fd=fopen($n,"r") or die('Error 11: File Cannot be opened, '.$n);
-		    $fs=fread($fd,filesize($n));
-		    fclose($fd);
-		    return $fs;
+	    $fs=fread($fd,filesize($n));
+	    fclose($fd);
+	    return $fs;
+	}
+	
+	public function listFiles($start_dir){
+		return $this->io->listFiles($start_dir);
+	}
+	
+   	public function destroyDir($dir, $virtual = false){
+		return $this->io->destroyDir($dir, $virtual);
 	}
 }
 

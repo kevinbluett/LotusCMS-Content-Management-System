@@ -1,14 +1,8 @@
 <?php
-
-include("core/view/view.php");
 include("core/lib/table.php");
 
 class TemplateView extends View{
 	
-	
-	/**
-	 * Starts the controller of the classes system
-	 */
 	public function TemplateView(){
 		//Meta is usually not setup yet, so we manually do this before loading css file
 		$this->meta = new Meta();
@@ -49,9 +43,7 @@ class TemplateView extends View{
 	 */
 	public function createTable($active, $data){
 		
-		// Set the state and tell plugins.
 		$this->setState('CREATE_TABLE');
-		$this->notifyObservers();
                 
                 $content = '<form method="post" class="jNice" action="?system=Template&page=change" name="edit">' ;
                 
@@ -60,7 +52,6 @@ class TemplateView extends View{
                 
                 $content .= '<input type="submit" value="'.$this->localize("Save").'" /></form>';
                 
- 		//Tabs above settings
 		//Tabs above settings
 		$tabs = $this->openFile("core/fragments/settings/SettingsDash.phtml");	
 		
@@ -111,13 +102,7 @@ class TemplateView extends View{
 	 * Create a form for the page.
 	 */
 	protected function singleTable($active, $data){
-            
-		// Set the state and tell plugins.
 		$this->setState('CREATE_SINGLE_TABLE');
-		$this->notifyObservers();
-		
-		//Get the form
-		//$out = $this->openFile("core/fragments/settings/SEOSettings.phtml");
 		
 		//Create new Table item
 		$t = new Table();
@@ -213,46 +198,17 @@ class TemplateView extends View{
 	}
 	
 	/**
+	 * Shows a page to ask the user if they are sure if they really wish to delete the page.
+	 */
+	public function showSurePage($temp){}
+	
+	/**
 	 * Previews a template
 	 */
 	public function previewRequest($temp){
-		
 		$this->setTemplate($temp);
-		
 		$this->setContentTitle("Previewing Template");
 		$this->setContent("<a href='index.php?system=Template&page=change'>Return to template list</a>");
-	}
-
-	/**
-	 * A function for the settings file that sets which tab is active
-	 */ 
-	protected function setTabActive($active = 1, $tabs){
-		
-		if($active==1){
-			$tabs = str_replace("%ONE%", "active", $tabs);
-		}else{
-			$tabs = str_replace("%ONE%", "inactive", $tabs);
-		}
-		
-		if($active==2){
-			$tabs = str_replace("%TWO%", "active", $tabs);
-		}else{
-			$tabs = str_replace("%TWO%", "inactive", $tabs);
-		}
-		
-		if($active==3){
-			$tabs = str_replace("%THREE%", "active", $tabs);
-		}else{
-			$tabs = str_replace("%THREE%", "inactive", $tabs);
-		}
-		
-		if($active==4){
-			$tabs = str_replace("%FOUR%", "active", $tabs);
-		}else{
-			$tabs = str_replace("%FOUR%", "inactive", $tabs);
-		}
-		
-		return $tabs;
 	}
 }
 

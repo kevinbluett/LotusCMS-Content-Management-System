@@ -1,14 +1,8 @@
 <?php
-include("core/model/model.php");
-
+include_once("core/lib/User.php");	
 class UsersModel extends Model{
 	
-	/**
-	 * Starts the controller of the classes system
-	 */
 	public function UsersModel(){
-		
-		//Allow Plugins.
 		Observable::Observable();
 	}
 	
@@ -16,10 +10,7 @@ class UsersModel extends Model{
 	 * Delete a user
 	 */
 	public function delete(){
-		
-		// Set the state and tell plugins.
 		$this->setState('DELETING_USER');
-		$this->notifyObservers();
 		
 		//Get Username
 		$username = $this->getActiveRequest();
@@ -34,22 +25,24 @@ class UsersModel extends Model{
 		$u->delete($username);
 	}
 	
+	protected function checkUserLevel($lvl){
+		$u = new User();
+		return $u->checkUserLevel($lvl);
+	}
+	
 	/**
 	 * Saves the user from form whatever type
 	 */
 	public function saveUser($new){
-		
-		// Set the state and tell plugins.
 		$this->setState('SAVE_USER');
-		$this->notifyObservers();
-		
+
 		//Create Strings
-		$username = "";
-		$fullname = $this->getInputString("name", null, "P");
-		$email = $this->getInputString("email", null, "P");
-		$password1 = $this->getInputString("password1", null, "P");
-		$password2 = $this->getInputString("password2", null, "P");
-		$accesslvl = $this->getInputString("access", null, "P");
+		$username 	= "";
+		$fullname 	= $this->getInputString("name", null, "P");
+		$email 		= $this->getInputString("email", null, "P");
+		$password1 	= $this->getInputString("password1", null, "P");
+		$password2 	= $this->getInputString("password2", null, "P");
+		$accesslvl 	= $this->getInputString("access", null, "P");
 		
 		//If loading from post data
 		if($new)
@@ -102,27 +95,10 @@ class UsersModel extends Model{
 	}
 	
 	/**
-	 * Returns the page requested by the system
-	 */
-	public function getPageRequest(){
-		return $this->getInputString("page");	
-	}
-	
-	/**
-	 * Returns the page requested by the system
-	 */
-	public function getActiveRequest(){
-		return $this->getInputString("active", null, "G");	
-	}
-	
-	/**
 	 * Collects User details through available library
 	 */
 	public function getUserDetails(){
-		
-		// Set the state and tell plugins.
 		$this->setState('GETTING_USER_DETAIL');
-		$this->notifyObservers();
 		
 		//Get the username request
 		$username = $this->getActiveRequest();
@@ -172,16 +148,15 @@ class UsersModel extends Model{
 	 * Requires logged in user to be administrator
 	 */
 	public function requireAdministrator(){
-		
-		// Set the state and tell plugins.
 		$this->setState('REQUIRE_ADMINISTRATOR');
-		$this->notifyObservers();
 		
 		//Required Level
 		$lvl = "administrator";
 		
+		$u = new User();
+		
 		//If level is not ok force quick stop of processing
-		if(!$this->checkUserLevel($lvl))
+		if(!$u->checkUserLevel($lvl))
 		{
 			//Get Access Denied Page for his level
 			$cont = $this->openFile("core/fragments/users/access_denied.phtml");
@@ -199,33 +174,6 @@ class UsersModel extends Model{
 			$this->getController()->freeze_all();
 		}	
 	}
-	
-	/**
-	 * Checks the user access level
-	 */
-	protected function checkUserLevel($lvl){
-		
-		// Set the state and tell plugins.
-		$this->setState('CHECKING_USER_LVL');
-		$this->notifyObservers();
-		
-		//Get Access level (Force userage of Session variable - otherwise attack is possible)
-		$access = $this->getInputString("access_lvl", "", "S");
-			
-		//Check Access Level
-		if($lvl!=$access)
-		{
-			//The User does not have the rights to access this area
-			return false;	
-		}
-		//Access Level OK
-		else
-		{
-			//Access OK
-			return true;	
-		}
-	}
-	
 }
 
 ?>

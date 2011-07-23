@@ -1,6 +1,6 @@
 <?php
 
-include("core/lib/page.php");
+include_once("core/lib/page.php");
 
 class View extends Page{
 

@@ -1,14 +1,8 @@
 <?php
-
-include("core/view/view.php");
 include("core/lib/table.php");
 
 class EditorView extends View{
-	
-	
-	/**
-	 * Starts the controller of the classes system
-	 */
+
 	public function EditorView(){
 		//Meta is usually not setup yet, so we manually do this before loading css file
 		$this->meta = new Meta();
@@ -17,14 +11,8 @@ class EditorView extends View{
 		$this->getMeta()->addExtra('<link href="core/fragments/css/admin.css" rel="stylesheet" type="text/css" />');	
 	}	
 	
-	/**
-	 * Show the Dashboard
-	 */
 	public function createEditor($data, $unix){
-		
-		// Set the state and tell plugins.
 		$this->setState('CREATING_EDITOR');
-		$this->notifyObservers();
 		
 		//Get Top of the Editor
 		$content = $this->openFile("core/fragments/admin_editor_top.phtml");
@@ -44,10 +32,7 @@ class EditorView extends View{
 	 * Create a form for the page.
 	 */
 	protected function singleForm($title, $template, $content, $unix){
-		
-		// Set the state and tell plugins.
 		$this->setState('CREATING_PAGE_FORM');
-		$this->notifyObservers();
 		
 		//Get the form
 		$out = $this->openFile("core/fragments/editor/editPageForm.phtml");
@@ -106,10 +91,7 @@ class EditorView extends View{
 	 * Displays a form for users to set the unixname of a page.
 	 */
 	public function showCreateForm(){
-		
-		// Set the state and tell plugins.
 		$this->setState('CREATING_NEWPAGE_EDITOR');
-		$this->notifyObservers();
 		
 		//Create the form
 		$out = $this->getController()->getModel()->openFile("core/fragments/editor/newPage.phtml");
@@ -133,10 +115,7 @@ class EditorView extends View{
 	 * Displays the delete active system
 	 */
 	public function showDelete($name){
-		
-		// Set the state and tell plugins.
 		$this->setState('SHOW_DELETE_PAGE');
-		$this->notifyObservers();
 		
 		//Create the form
 		$out = $this->getController()->getModel()->openFile("core/fragments/editor/deleteCheck.phtml");
@@ -161,10 +140,7 @@ class EditorView extends View{
 	 * Redirects to a page with a success message
 	 */
 	public function redirectSuccess($message){
-		
-		// Set the state and tell plugins.
 		$this->setState('SUCCESS_REDIRECT');
-		$this->notifyObservers();
 		
 		//Show success message on redirected to page
 		$_SESSION['ERROR_TYPE'] = "success";
@@ -178,10 +154,7 @@ class EditorView extends View{
 	 * Redirects to a page with an error message
 	 */
 	public function redirectError($message){
-		
-		// Set the state and tell plugins.
 		$this->setState('ERROR_REDIRECT');
-		$this->notifyObservers();
 		
 		//Show error message on redirected to page
 		$_SESSION['ERROR_TYPE'] = "error";

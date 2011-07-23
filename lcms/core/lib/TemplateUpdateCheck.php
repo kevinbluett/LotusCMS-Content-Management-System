@@ -16,13 +16,13 @@ class TemplateUpdateCheck{
 		}
 		
 		//Return the module update
-		return $this->checkForModuleUpdate($req);
+		return $this->checkForTemplateUpdate($req);
 	}
 	
 	/**
 	 * This function checks for an update for a particular module at the lotuscms website.
 	 */
-	protected function checkForModuleUpdate($req){
+	protected function checkForTemplateUpdate($req){
 		if(isset($_SESSION['TEM_LCMS_ORG_RESPONSE'])){
 			return $_SESSION['TEM_LCMS_ORG_RESPONSE'];
 		}else{

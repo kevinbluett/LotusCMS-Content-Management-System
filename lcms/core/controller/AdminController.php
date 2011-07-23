@@ -1,46 +1,13 @@
 <?php
-
-//Default Controller
-include("core/controller/controller.php");
-
 class AdminController extends Controller{
 	
-	/**
-	 * Starts the controller of the classes system
-	 */
 	public function AdminController($page){
-		
-		//Setup basic variables
-		$this->varSetup();
-		
-		//Sets the name of the other classes
-		$this->setSystem("Admin");
-		
-		//Setup the page
-		$this->setup("LotusCMS Administration");
-		
-		//Set the requests accepted
-		$this->putRequests();
-		
-		//Process Request
-		$this->processRequest();
-		
-		$this->displayPage();
+		//Setup the page + [disabling authencation for this page]
+		$this->setup("Admin", "LotusCMS Administration", "admin", "");
 	}
-	
-	/**
-	 * Sets the requests of the system
-	 */
+
 	protected function putRequests(){
-		
-		//Create the array of request
-		$requests = array(
-							"login",
-							"loginSubmit",
-							"logout"
-						);
-		
-		//Set all the request
+		$requests = array("login","loginSubmit","logout");
 		$this->setRequests($requests);
 	}
 	
@@ -122,6 +89,7 @@ class AdminController extends Controller{
 		if($this->getModel()->checkLogin(true))
 		{
 			$this->getModel()->unsetLoginToken();
+			$this->getView()->setRedirect("index.php");
 		}
 	}
 }

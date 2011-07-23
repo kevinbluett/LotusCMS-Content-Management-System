@@ -235,15 +235,13 @@ class ModulesModel extends Model{
 			// Set the state and tell plugins.
 			$this->setState('SUCCESS_DISABLED');
 			$this->notifyObservers();
-			
-			//Success
+
 			return true;
 		}else{
 			// Set the state and tell plugins.
 			$this->setState('FAILED_DISABLED');
 			$this->notifyObservers();
 			
-			//Failed
 			return false;
 		}
 
@@ -268,20 +266,23 @@ class ModulesModel extends Model{
 		
 		$mod = new $classname();
 	    	
-	    $rf = new RemoteFiles();
+		$rf = new RemoteFiles();
 	    	
-	    //Get version of Module
-	    $v = $mod->getVersion();
-	    	
-	    $data = $rf->getURL("http://cdn.modules.lotuscms.org/lcms-3-series/versioncontrol/versioncheck.php?module=".$req);
+		$version = file_get_contents("data/config/site_version.dat");
+		
+		//Get version of Module
+		$v = $mod->getVersion();
 	    
-	    if(!empty($data)){
-	    	if($data!=$v){
-	    		return true;	
-	    	}
-	    }else{
-	    	return false;	
-	    }
+	    	
+		$data = $rf->getURL("http://cdn.modules.lotuscms.org/lcms-3-series/versioncontrol/versioncheck.php?module=$req&v=$version");
+	    
+		if(!empty($data)){
+			if($data!=$v){
+				return true;	
+			}	
+		}else{
+			return false;	
+		}
 	}
 	
 	/**

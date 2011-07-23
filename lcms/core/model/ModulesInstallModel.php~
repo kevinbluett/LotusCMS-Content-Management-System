@@ -38,13 +38,36 @@ class ModulesInstallModel extends Model{
 		
 		$id = $this->getInputString("id", "1", "G");
 		
-		$out1 = $rf->getURL("http://cdn.modules.lotuscms.org/lcms-3-series/infoloader/modules.php?id=".$id."&lang=".$this->getController()->getView()->getLocale());
+		//Get LCMS Version
+		$version = $this->openFile("data/config/site_version.dat");
+		
+		$out1 = $rf->getURL("http://cdn.modules.lotuscms.org/lcms-3-series/infoloader/modules.php?id=".$id."&lang=".$this->getController()->getView()->getLocale()."&v=".$version."&m=".$this->getModuleArray());
 		
 		if(empty($out1)){
 			exit("<br /><br /><strong>Data retrieval failed</strong> - LotusCMS probably unavailable, please try again later.");	
 		}
 		
 		return $out.$out1;
+	}
+	
+	/**
+	 * Generates Mod array
+	 */
+	public function getModuleArray(){
+		$ap = $this->listFiles("modules");
+		
+		$req = "";
+			
+		for($i = 0;$i < count($ap); $i++){
+			
+			if($i!=0)
+				$req .= "|";
+				
+			$req .= $ap[$i];
+		}
+		
+		//Return the module update
+		return $req;
 	}
 	
 	/**
@@ -115,9 +138,18 @@ class ModulesInstallModel extends Model{
 		//Create new remote file connector.
 		$rf = new RemoteFiles();
 		
+		//Get LCMS Version to select repository
+		$version = $this->openFile("data/config/site_version.dat");
+		
+		//Explode the version number
+		$v = explode(".", $version);
+		
+		//Create subversion number
+		$version = $v[0].".".$v[1];
+		
 		
 		//Save this zip
-		$rf->downloadRemoteFile("http://cdn.modules.lotuscms.org/lcms-3-series/zips/".$plugin.".zip", "data", $plugin.".zip");
+		$rf->downloadRemoteFile("http://cdn.modules.lotuscms.org/lcms-3-series/zips/$version/$plugin.zip", "data", "$plugin.zip");
 		
 		include_once('modules/Backup/pclzip.lib.php');
 			
@@ -141,6 +173,10 @@ class ModulesInstallModel extends Model{
 			// Set the state and tell plugins.
 			$this->setState('DOWNLOADING_PLUGIN_SUCCESS');
 			$this->notifyObservers();
+			
+			//Delete session varaibles detailing the info
+			unset($_SESSION['MOD_LCMS_ORG_RESPONSE']);
+			unset($_SESSION['MOD_LCMS_ORG_RESPONSE_URL']);
 			
 			//If the original plugin folder is also there remove it
 			if(is_dir($plugin)){

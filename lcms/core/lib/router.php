@@ -1,7 +1,8 @@
 <?php
+include_once("core/controller/controller.php");
 /**
  * GPL v4 
- * LotusCMS 2010.
+ * LotusCMS 2011.
  * Written by Kevin Bluett
  * This Class routes any request from an external source into the LotusCMS systems.
  */
@@ -18,12 +19,14 @@ class Router{
 		$plugin = $this->getInputString("system", "Page");
 		
 		//If there is a request for a plugin
-		if(file_exists("core/plugs/".$plugin."Starter.php")){
+		if(file_exists("core/controller/".$plugin."Controller.php")){
 			//Include Page fetcher
-			include("core/plugs/".$plugin."Starter.php");
+			include("core/controller/".$plugin."Controller.php");
+
+			$name = $plugin."Controller";
 
 			//Fetch the page and get over loading cache etc...
-			eval("new ".$plugin."Starter('".$page."');");
+			new $name($page);
 			
 		}else if(file_exists("data/modules/".$plugin."/starter.dat")){
 			//Include Module Fetching System

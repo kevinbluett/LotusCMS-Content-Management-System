@@ -51,6 +51,11 @@ class Abstraction{
 		    //Output
 		    $out = "";
 		    
+		    if(empty($data)){
+		    	    print "<p class='msg error'><strong>Error:</strong> cannot connect to lotuscms.org</p>";
+		    	    exit;
+		    }
+		    
 		    //Get list of plugins
 		    $m = explode("|", $data);
 		    

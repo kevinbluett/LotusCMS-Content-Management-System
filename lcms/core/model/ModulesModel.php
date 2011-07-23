@@ -1,33 +1,16 @@
 <?php
-include("core/model/model.php");
-
 class ModulesModel extends Model{
 	
-	public $t;
-	
-	/**
-	 * Starts the controller of the classes system
-	 */
 	public function ModulesModel(){
-		//Allow Plugins.
 		Observable::Observable();
 	}
 	
-	/**
-	 * Returns the page requested by the system
-	 */
-	public function getActiveRequest(){
-		return $this->getInputString("active", null, "G");	
-	}
-	
+
 	/**
 	 * Get the module information for one module.
 	 */ 
 	public function getModuleInformation($name = null){
-		
-		// Set the state and tell plugins.
 		$this->setState('GETTING_MODULE_INFO');
-		$this->notifyObservers();
 		
 		//Get the module request
 		$module = $this->getActiveRequest();
@@ -59,10 +42,7 @@ class ModulesModel extends Model{
 	 * Gets plugins activated and installed.
 	 */
 	public function getPlugins(){
-		
-		// Set the state and tell plugins.
 		$this->setState('LISTING_ALL_PLUGINS_START');
-		$this->notifyObservers();
 		
 		//Gets all directory info inside modules i.e. activated and unactivated plugins
 		$allPlugins = $this->listFiles("modules");
@@ -100,9 +80,7 @@ class ModulesModel extends Model{
 							 );		
 		}//End of data creation loop
 		
-		// Set the state and tell plugins.
 		$this->setState('LISTING_ALL_PLUGINS_IN');
-		$this->notifyObservers();
 		
 		//Returns all plugins with activity status.
 		return $data;
@@ -112,10 +90,7 @@ class ModulesModel extends Model{
 	 * Gets the administraion of the request
 	 */ 
 	public function getAdministration(){
-		
-		// Set the state and tell plugins.
 		$this->setState('LOADING_MODULE_ADMIN');
-		$this->notifyObservers();
 		
 		//Get in admin request
 		$request = $this->getInputString("req", "", "G");
@@ -148,9 +123,7 @@ class ModulesModel extends Model{
 		//Module Misreported Existance of Administration
 		else
 		{
-			// Set the state and tell plugins.
 			$this->setState('NO_MODULE_MODULE_ADMIN');
-			$this->notifyObservers();
 			//Report Error
 			die("Error: No Module Administration Exists. Please report to developer and stop using this module until it is fixed.");
 		}
@@ -161,9 +134,7 @@ class ModulesModel extends Model{
 	 */
 	public function getInstalledModules()
 	{
-		// Set the state and tell plugins.
-		$this->setState('GET_ACTIVE_PLUGINS');
-		$this->notifyObservers();	
+		$this->setState('GET_ACTIVE_PLUGINS');	
 		
 		//Setup Array
 		$data = array();
@@ -188,9 +159,7 @@ class ModulesModel extends Model{
 			}
 		}
 		
-		// Set the state and tell plugins.
-		$this->setState('GET_ACTIVE_PLUGINS_FINISHED');
-		$this->notifyObservers();	
+		$this->setState('GET_ACTIVE_PLUGINS_FINISHED');	
 		
 		//Return the collected data
 		return $data;
@@ -200,9 +169,7 @@ class ModulesModel extends Model{
 	 * Disables the module
 	 */
 	public function disableModule(){
-		// Set the state and tell plugins.
 		$this->setState('DISABLING_PLUGIN');
-		$this->notifyObservers();
 		
 		$plugin = $this->getInputString("req", "", "G");
 		
@@ -231,16 +198,12 @@ class ModulesModel extends Model{
 			
 			//Removes all possible remaining parts of this plugin
 			$this->removeAllPlugs($plugin);
-			
-			// Set the state and tell plugins.
+
 			$this->setState('SUCCESS_DISABLED');
-			$this->notifyObservers();
 
 			return true;
 		}else{
-			// Set the state and tell plugins.
 			$this->setState('FAILED_DISABLED');
-			$this->notifyObservers();
 			
 			return false;
 		}
@@ -253,8 +216,7 @@ class ModulesModel extends Model{
 	public function checkForUpdate(){
 
 		$this->setState('STARTING_UPDATE_CHECK');
-		$this->notifyObservers();
-		
+
 		//Gets the module in question
 		$req = $this->getInputString("req", "", "G");
 		
@@ -266,20 +228,23 @@ class ModulesModel extends Model{
 		
 		$mod = new $classname();
 	    	
-	    $rf = new RemoteFiles();
+		$rf = new RemoteFiles();
 	    	
-	    //Get version of Module
-	    $v = $mod->getVersion();
-	    	
-	    $data = $rf->getURL("http://cdn.modules.lotuscms.org/lcms-3-series/versioncontrol/versioncheck.php?module=".$req);
+		$version = file_get_contents("data/config/site_version.dat");
+		
+		//Get version of Module
+		$v = $mod->getVersion();
 	    
-	    if(!empty($data)){
-	    	if($data!=$v){
-	    		return true;	
-	    	}
-	    }else{
-	    	return false;	
-	    }
+	    	
+		$data = $rf->getURL("http://cdn.modules.lotuscms.org/lcms-3-series/versioncontrol/versioncheck.php?module=$req&v=$version");
+	    
+		if(!empty($data)){
+			if($data!=$v){
+				return true;	
+			}	
+		}else{
+			return false;	
+		}
 	}
 	
 	/**
@@ -287,10 +252,7 @@ class ModulesModel extends Model{
 	 * This function requires existance of backup plugin
 	 */
 	public function backup(){
-		
-		// Set the state and tell plugins.
 		$this->setState('BACKING_UP_CMS');
-		$this->notifyObservers();
 		
 		if(is_dir("modules/Backup")){
 			date_default_timezone_set("GMT");
@@ -307,10 +269,7 @@ class ModulesModel extends Model{
 	 * Completely removes a plugin from the CMS.
 	 */
 	public function uninstall(){
-		
-		// Set the state and tell plugins.
 		$this->setState('UNINSTALLING_PLUGIN');
-		$this->notifyObservers();
 		
 		$plugin = $this->getInputString("req", "", "G");
 		
@@ -345,17 +304,13 @@ class ModulesModel extends Model{
 			
 			//Removes all possible remaining parts of this plugin
 			$this->removeAllPlugs($plugin);
-			
-			// Set the state and tell plugins.
+
 			$this->setState('SUCCESS_UNINSTALLED');
-			$this->notifyObservers();
 			
 			//Success
 			return true;
 		}else{
-			// Set the state and tell plugins.
 			$this->setState('FAILED_UNINSTALL');
-			$this->notifyObservers();
 			
 			//Failed
 			return false;
@@ -385,11 +340,8 @@ class ModulesModel extends Model{
 	 * Removes the plugins from a defined plugin.
 	 */
 	protected function removeAllPlugs($plugin){
-		
-		// Set the state and tell plugins.
 		$this->setState('REMOVE_ALL_PLUGS');
-		$this->notifyObservers();
-		
+
 		//The Observing plugins.
 		$plugged = $this->listFiles("data/config/Modules");
 		
@@ -481,99 +433,6 @@ class ModulesModel extends Model{
 			//Save file
 			$this->saveFile("data/config/modules/".$system.".dat", $out);
 		}
-	}
-	
-	/**
-	 * Save the set file, with the requested content.
-	 * $m = file
-	 * $n = file contents
-	 * $o = Error message.
-	 */
-	protected function saveFile($m, $n, $o = 0){
-    	
-		//Save to disk if the space is available
-		if($this->disk_space())
-		{
-			$n=trim($n);
-			if($n==''){$n=' ';}$n=str_replace("\n\n","\n",$n);$p=0;
-			do{$fd=fopen($m,"w+") or die($this->openFile("core/fragments/errors/error21.phtml")." - Via SEOModel.php");$fout=fwrite($fd,$n);
-			fclose($fd);$p++;}while(filesize($m)<5&&$p<5);
-		}
-		else
-		{
-			//Print Out of Space Error Message
-			die($this->openFile("core/fragments/errors/error22.phtml"));	
-		}
-	}
-    
-	/**
-	 * Checks that there is enough space left to save the file on the harddisk.
-	 */
-	protected function disk_space(){
-		$s = true;
-		
-		if(function_exists('disk_free_space'))
-		{
-			$a = disk_free_space("/");
-			if(is_int($a)&&$a<204800)
-			{
-				$s = false;
-			}
-		}
-		return $s;
-	}
-	
-   /**
-     * Destorys directory
-     */
-   	public function destroyDir($dir, $virtual = false)
-	{
-		$ds = DIRECTORY_SEPARATOR;
-		$dir = $virtual ? realpath($dir) : $dir;
-		$dir = substr($dir, -1) == $ds ? substr($dir, 0, -1) : $dir;
-		if (is_dir($dir) && $handle = opendir($dir))
-		{
-			while ($file = readdir($handle))
-			{
-				if ($file == '.' || $file == '..')
-				{
-					continue;
-				}
-				elseif (is_dir($dir.$ds.$file))
-				{
-					$this->destroyDir($dir.$ds.$file);
-				}
-				else
-				{
-					unlink($dir.$ds.$file);
-				}
-			}
-			closedir($handle);
-			rmdir($dir);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
-	/**
-	 * Returns a list of all the files in a specified directory (Not Recursive) - excluding confirguration files and 'index.php'.
-	 */
-	protected function listFiles($start_dir)
-	{
-		$files = array();
-		$dir = opendir($start_dir);
-		while(($myfile = readdir($dir)) !== false)
-			{
-			if($myfile != '.' && $myfile != '..' && !is_file($myfile) && $myfile != 'resource.frk' && $myfile != 'index.php' && $myfile != '.htaccess' )
-				{
-				$files[] = $myfile;
-				}
-			}
-		closedir($dir);
-		return $files;
 	}
 }
 

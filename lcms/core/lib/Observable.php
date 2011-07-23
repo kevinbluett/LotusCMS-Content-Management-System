@@ -60,8 +60,12 @@ class Observable {
     * @param $state mixed variable to store
     * @return void
     */ 
-    function setState ($state) {
+    function setState ($state, $notify = true) {
         $this->state=$state;
+        
+        if($notify){
+			$this->notifyObservers();
+        }
     }
 }
 ?>

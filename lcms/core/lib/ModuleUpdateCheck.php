@@ -59,7 +59,7 @@ class ModuleUpdateCheck{
 		    	    $data = $rf->getURL("http://cdn.modules.lotuscms.org/lcms-3-series/versioncontrol/allversioncheck.php?m=$req&v=$version");
 		   
 		    	    //If preloader is getting info, save it to file
-		    	    if($saveInfo){
+		    	    if($saveInfo&&(!empty($data))){
 		    	    	    include_once("core/lib/io.php");
 		    	    	    $io = new InputOutput();
 		    	    	    
@@ -71,6 +71,13 @@ class ModuleUpdateCheck{
 		    	    
 		    //Output
 		    $out = "";
+		    
+		    if(empty($data)){
+		    	    if(file_exists("data/lcmscache/mod_update.dat")){
+		    	    	    unlink("data/lcmscache/mod_update.dat");
+		    	    }
+		    	    return false;
+		    }
 		    
 		    $modArray = array();
 		    

@@ -115,6 +115,53 @@ class User extends InputOutput{
 	}
 	
 	/**
+	 * Checks if the user detailsare correct
+	 */
+	public function checkUserDetails($username, $password){
+		
+		//Encrypt the password
+		$password = $this->encryptPass($password);
+		
+		$data = $this->getDetails($username);
+		
+		//If the user doesn't exist return false, incorrect details
+		if(empty($data))
+		{
+			//Return false
+			return false;	
+		}
+		//If the password is correct the user details are correct
+		else if($password==$data[1])
+		{
+			//The details are correct
+			return true;
+		}
+	}
+	
+	/**
+	 * Checks the user access level
+	 */
+	public function checkUserLevel($lvl){
+		
+		//Get Access level (Force userage of Session variable - otherwise attack is possible)
+		$access = $this->getInputString("access_lvl", "", "S");
+			
+		//Check Access Level
+		if($lvl!=$access)
+		{
+			//The User does not have the rights to access this area
+			return false;	
+		}
+		//Access Level OK
+		else
+		{
+			//Access OK
+			return true;	
+		}
+	}
+	
+	
+	/**
 	 * Filter the username, dying if hacking attemp suspected
 	 */
 	protected function filterUsername($user){
@@ -261,17 +308,6 @@ class User extends InputOutput{
 	protected function hookLogger($msg){
 		//Unsupported	
 	}
-	
-    /**
-     * Returns the contents of the requested page
-     */
-    public function openFile($n){
-    	$fd=fopen($n,"r") or die('Error 11: User File Cannot be opened, '.$n);
-		$fs=fread($fd,filesize($n));
-		fclose($fd);
-		return $fs;
-    }
-	
 }
 
 ?>

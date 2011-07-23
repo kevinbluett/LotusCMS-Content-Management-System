@@ -1,8 +1,6 @@
 <?php
-
-//Default Controller
-include("core/controller/controller.php");
-
+include_once("core/model/model.php");
+include_once("core/view/view.php");
 class ModuleLoaderController extends Controller{
 	
 	//Module In which requests are processed.
@@ -18,14 +16,20 @@ class ModuleLoaderController extends Controller{
 		$this->setModule($module);
 		$this->page = $page;
 		
-		//Setup basic variables
-		$this->varSetup();
-		
 		//Sets the name of the other classes
 		$this->setSystem("ModuleLoader");
 		
+		//Setup Classes
+		$this->setupClasses();
+		
+		//Setup basic variables
+		$this->varSetup();
+		
+		//Setup paging system
+		$this->setupPaging();
+		
 		//Setup the page
-		$this->setup("External Module");
+		$this->p->setContentTitle("External Module");
 		
 		//Give module access to view model and controller
 		$this->getModule()->setView($this->getView());

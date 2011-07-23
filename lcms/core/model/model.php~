@@ -34,7 +34,7 @@ class Model extends Observable{
 	 * Check login and create login page if requested otherwise say access deinied.
 	 * param $login boolean, true - display login form if not logged in, otherwise display access denied message.
 	 */
-	public function checkLogin($login){
+	public function checkLogin($login, $infoLoad = false){
 
 		//if not logged in
 		if(!$this->loggedIn())
@@ -49,11 +49,13 @@ class Model extends Observable{
 				$l = new Login();
 				
 				//Create a login form for this anonymous user
-				$l->createLogin($p, $this->getController()->getView());
+				$l->createLogin($p, $this->getController()->getView(), true);
+				
+				//NEVER GETS HERE LOGIN CLASS EXITS
 				
 				//Display the page.
 				$p->displayPage();
-
+				
 				//Quit the system
 				$this->getController()->freeze_all();	
 			}
@@ -101,6 +103,14 @@ class Model extends Observable{
 	 * Returns the username of the logged in User
 	 */
 	protected function getCurrentUser()
+	{
+		//TODO
+	}
+	
+	/**
+	 * Returns the group of the logged in User
+	 */
+	protected function getCurrentUserGroup()
 	{
 		//TODO
 	}
