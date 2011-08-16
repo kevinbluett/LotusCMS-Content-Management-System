@@ -6,11 +6,20 @@ class TemplateModel extends Model{
 	}
 	
 	/**
+	 * Delete the selected template and then downloads the latest replacement.
+	 */
+	public function updateTemplate(){
+		$this->setState('UPDATING_TEMPLATE');
+		$this->deleteTemplate();
+		$this->getAndInstall();
+		$this->setState('UPDATE_TEMPLATE_COMPLETE');
+	}
+	
+	/**
 	 * Destroys the files of a single template
 	 */
 	public function deleteTemplate(){
 		$this->setState('DELETEING_TEMPLATE');
-		
 		$active = $this->getActiveRequest();
 		
 		//Step one - delete the main template file.
@@ -42,7 +51,6 @@ class TemplateModel extends Model{
 		//Create new remote file connector.
 		$rf = new RemoteFiles();
 		
-		
 		//Save this zip
 		$rf->downloadRemoteFile("http://styles.lotuscms.org/zips/".$template.".zip", "data", $template.".zip");
 		
@@ -62,9 +70,9 @@ class TemplateModel extends Model{
 			//Display Error Message
 			exit("<p><strong>Error</strong> : ".$archive->errorInfo(true)."</p><p>It may help to chmod (change write permissions) the 'modules' cms directory to 777.</p>");
 		}else{
-			$this->setState('DOWNLOADING_PLUGIN_SUCCESS');
+			$this->setState('DOWNLOADING_TEMPLATE_SUCCESS');
 			
-			//If the original plugin folder is also there remove it
+			//If the original template folder is also there remove it
 			if(is_dir("comps")){
 				
 				//Destroys the secondary folder before copy.
@@ -91,11 +99,6 @@ class TemplateModel extends Model{
 	 * Gets featured templates from lotuscms.org
 	 */
 	public function getFeaturedTemplates(){
-		
-		//Get ID
-		$id = 1;
-		
-		//Get remote files collector
 		include_once("core/lib/RemoteFiles.php");
 		
 		//Create new remote file connector.
@@ -105,13 +108,13 @@ class TemplateModel extends Model{
 		
 		$version = $this->openFile("data/config/site_version.dat");
 		
-		$out1 = $rf->getURL("http://styles.lotuscms.org/lcms-3-styles/infoloader.php?id=".$id."&lang=".$this->getController()->getView()->getLocale()."&t=".$this->getAllTemplatesAsString()."&v=$version");
+		$out = $rf->getURL("http://styles.lotuscms.org/lcms-3-styles/infoloader.php?id=".$id."&lang=".$this->getController()->getView()->getLocale()."&t=".$this->getAllTemplatesAsString()."&v=$version");
 		
-		if(empty($out1)){
-			exit("<br /><br /><strong>Data retrieval failed</strong> - LotusCMS probably unavailable, please try again later.");	
+		if(empty($out)){
+			exit("<br /><br /><strong>Data retrieval failed</strong> - LotusCMS.org probably unavailable, please try again later.");	
 		}
 		
-		return $out.$out1;
+		return $out1;
 	}
 	
 	/**
@@ -136,12 +139,12 @@ class TemplateModel extends Model{
 		
 		$req = "";
 			
-		for($i = 0;$i < count($ap); $i++){
+		for($i = 0;$i < count($temps); $i++){
 			
 			if($i!=0)
 				$req .= "|";
-				
-			$req . $ap[$i];
+
+			$req .= $temps[$i]['unix'];
 		}
 		
 		return $req;
@@ -162,14 +165,19 @@ class TemplateModel extends Model{
 		//Create new array
 		$templates = array();
 		
+		$i = 0;
+		
 		//Loops through all page listings to remove the extension of .dat
-		for($i = 0; $i < count($temps); $i++)
-		{
-			//Removes the .dat from an item in the array
-			$templates[$i]['unix'] = str_replace(".php", "", $temps[$i]);
-			
-			//Removes the .dat from an item in the array
-			$templates[$i]['title'] = str_replace(".php", "", $temps[$i]);	
+		for($y = 0; $y < count($temps); $y++){
+			if($temps[$y]!="comps"){
+				//Removes the .dat from an item in the array
+				$templates[$i]['unix'] = str_replace(".php", "", $temps[$y]);
+				
+				//Removes the .dat from an item in the array
+				$templates[$i]['title'] = str_replace(".php", "", $temps[$y]);
+
+				$i++;
+			}
 		}
 		
 		return $templates;		
@@ -196,13 +204,12 @@ class TemplateModel extends Model{
 	 */
 	public function getUpdateArray(){
 		$a = $this->listFiles("style");
-		
 		include_once("core/lib/TemplateUpdateCheck.php");
 		
 		$t = new TemplateUpdateCheck();
 		
 		//Get version array
-		return $t->getVersionArray($a);
+		return $t->getVersionArray($a, $this->getController()->getView());
 	}
 	
 	/**
@@ -230,6 +237,4 @@ class TemplateModel extends Model{
 		//Returns the required posted string
 		return $this->getInputString("template", null, "P");
 	}
-}
-
-?>
+} ?>

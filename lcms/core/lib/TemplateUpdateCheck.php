@@ -4,7 +4,7 @@
  */
 class TemplateUpdateCheck{
 	
-	public function getVersionArray($ap){
+	public function getVersionArray($ap, $page = null){
 		$req = "";
 			
 		for($i = 0;$i < count($ap); $i++){
@@ -16,13 +16,13 @@ class TemplateUpdateCheck{
 		}
 		
 		//Return the module update
-		return $this->checkForTemplateUpdate($req);
+		return $this->checkForTemplateUpdate($req, $page);
 	}
 	
 	/**
 	 * This function checks for an update for a particular module at the lotuscms website.
 	 */
-	protected function checkForTemplateUpdate($req){
+	protected function checkForTemplateUpdate($req, $page = null){
 		if(isset($_SESSION['TEM_LCMS_ORG_RESPONSE'])){
 			return $_SESSION['TEM_LCMS_ORG_RESPONSE'];
 		}else{
@@ -48,7 +48,7 @@ class TemplateUpdateCheck{
 		    if(empty($data))
 		    {
 		    	    //Collect information on module updates.
-		    	    $data = $rf->getURL("http://styles.lotuscms.org/lcms-3-styles/checkTempString.php?t=$req&v=$version");
+		    	    $data = $rf->getURL("http://styles.lotuscms.org/lcms-3-styles/checkTempString.php?t=$req&v=$version", $page);
 		    }
 
 		    $_SESSION['TEM_LCMS_ORG_RESPONSE_URL'] = $data;

@@ -9,6 +9,7 @@ class TemplateController extends Controller{
 		$requests = array(
 					"change",
 					"install",
+					"update",
 					"getTemplates",
 					"preview",
 					"delete"
@@ -38,15 +39,21 @@ class TemplateController extends Controller{
 		
 		$d = $this->getModel()->getInputString("sure", null, "G");
 		
-		if(empty($d))
-		{
-			//Get the page content request
+		if(empty($d)){
 			$this->getView()->showSurePage($this->getModel()->getInputString("active", "", "G"));
+		}else{
+			$this->getModel()->deleteTemplate();
+			$this->getView()->deleteMessage();
 		}
-		else
-		{
-
-		}
+	}
+	
+	/**
+	 * The user has requested to update the selected template
+	 */
+	protected function updateRequest(){
+		$this->setState('STARTING_UPDATE_SEQUENCE');		
+		$this->getModel()->updateTemplate();
+		$this->getView()->updateMessage();
 	}
 	
 	/** 

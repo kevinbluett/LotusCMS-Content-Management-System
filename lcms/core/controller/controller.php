@@ -384,10 +384,9 @@ class Controller extends Observable{
 	protected function checkUserLevel($lvl){
 		$this->setState('CHECKING_USER_LVL');
 		
-		//Get Access level (Force userage of Session variable - otherwise attack is possible)
+		//Get Access level (Force userage of Session variable - otherwise attack is possible via GET/POST)
 		$access = $this->getModel()->getInputString("access_lvl", "", "S");
 			
-		//Check Access Level
 		if($lvl!=$access)
 		{
 			//The User does not have the rights to access this area
@@ -438,7 +437,9 @@ class Controller extends Observable{
 					$c = $plugs[$i]."Model";
 					$c = new $c;
 					
-					$c->setupObserver($this->getModel());
+					$model = $this->getModel();
+					
+					$c->setupObserver($model);
 				}
 				
 				if(file_exists("modules/".$plugs[$i]."/".$system."ViewPlugin.php")){
@@ -447,7 +448,9 @@ class Controller extends Observable{
 					$c = $plugs[$i]."View";
 					$c = new $c;
 					
-					$c->setupObserver($this->getView());
+					$view = $this->getView();
+					
+					$c->setupObserver($view);
 				}
 			}
 		}

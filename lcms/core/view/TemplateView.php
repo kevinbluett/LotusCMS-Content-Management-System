@@ -84,6 +84,32 @@ class TemplateView extends View{
 		//Go Redirect
 		$this->setRedirect("index.php?system=GeneralSettings&page=edit");
 	}
+
+	/**
+	 * Redirects after successfully saving the data
+	 */
+	public function deleteMessage(){
+		
+		//Show success message on redirected to page
+		$_SESSION['ERROR_TYPE'] = "success";
+		$_SESSION['ERROR_MESSAGE'] = $this->localize("Template successfully deleted.");
+		
+		//Go Redirect
+		$this->setRedirect("index.php?system=Template&page=change");	
+	}
+	
+	/**
+	 * Redirects after successfully saving the data
+	 */
+	public function updateMesssage(){
+		
+		//Show success message on redirected to page
+		$_SESSION['ERROR_TYPE'] = "success";
+		$_SESSION['ERROR_MESSAGE'] = $this->localize("Template successfully updated.");
+		
+		//Go Redirect
+		$this->setRedirect("index.php?system=Template&page=change");	
+	}
 	
 	/**
 	 * Redirects after successfully saving the data
@@ -133,9 +159,13 @@ class TemplateView extends View{
 		    
 		    $update = "<a href='?system=Template&page=check&active=".$data[$i]['unix']."'>".$this->localize("Check")."</a>";
 		    
-		    if($u[$data[$i]['unix']]){
-		    	    $update = "<a style='color:red;' href='?system=Template&page=check&active=".$data[$i]['unix']."'>".$this->localize("Updates Available")."</a>";
-		    }else{
+		    if(isset($u[$data[$i]['unix']])){
+					if($u[$data[$i]['unix']]){
+						$update = "<a style='color:red;' href='?system=Template&page=update&active=".$data[$i]['unix']."'>".$this->localize("Updates Available")."</a>";
+					}else{
+						$update = "<a style='color:green;' href='?system=Template&page=check&active=".$data[$i]['unix']."'>".$this->localize("Up to Date")."</a>";
+					}
+			}else{
 		    	$update = "<a style='color:green;' href='?system=Template&page=check&active=".$data[$i]['unix']."'>".$this->localize("Up to Date")."</a>";
 		    }
 			
@@ -200,7 +230,27 @@ class TemplateView extends View{
 	/**
 	 * Shows a page to ask the user if they are sure if they really wish to delete the page.
 	 */
-	public function showSurePage($temp){}
+	public function showSurePage($temp){
+		$this->setState('SHOW_DELETE_PAGE');
+		
+		//Create the form
+		$out = $this->getController()->getModel()->openFile("core/fragments/templateDeleteCheck.phtml");
+		
+		//Set Locales
+		$out = str_replace("%SURE_DELETE_LOCALE%", $this->localize("Are you sure you want to delete"), $out);
+		$out = str_replace("%YES_LOCALE%", $this->localize("Yes"),$out);
+		$out = str_replace("%NO_LOCALE%", $this->localize("No"),$out);
+		
+		//Loads the css required to have buttons yes and no.
+		$this->getMeta()->appendExtra('<link href="core/fragments/css/admin.css" rel="stylesheet" type="text/css">');
+		
+		//Set the page name inside the template
+		$out = str_replace("%PAGE_NAME%", $temp, $out);
+		
+		//Set output content
+		$this->setContent($out);
+		$this->setContentTitle($this->localize("Template"));
+	}
 	
 	/**
 	 * Previews a template

@@ -55,14 +55,14 @@ class RemoteFiles{
 	/**
 	 * Tries to retrieve the contents of a remote url
 	 */
-	public function getURL($url){
+	public function getURL($url, $page = null){
 		
-		$data = $this->getRemoteFile($url);
+		$data = $this->getRemoteFile($url, $page);
 		
 		return $data;
 	}
 	
-	private function getRemoteFile($url)
+	private function getRemoteFile($url, $page = null)
 	{
 	   // get the host name and url path
 	   $parsedUrl = parse_url($url);
@@ -92,7 +92,11 @@ class RemoteFiles{
 	   $fp = @fsockopen($host, $port, $errno, $errstr, $timeout );
 	
 	   if( !$fp ) {
-	      echo "Cannot retrieve $url";
+			if(!empty($page)){
+				$page->setErrorData('error', 'LotusCMS.org is unavailable, which makes some material inaccessible.');
+			}else{
+				print "Cannot access: lotuscms.org".$path;
+			}
 	   } else {
 	      // send the necessary headers to get the file
 	      fputs($fp, "GET $path HTTP/1.0\r\n" .

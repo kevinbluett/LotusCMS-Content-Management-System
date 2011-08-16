@@ -41,7 +41,10 @@ $pathRegEx = AllowPathInjection ? '//' : '/\.\.|\/\/|\/$|^\/|^$/';
 $path = preg_match($pathRegEx, $_GET['path']) ? '.' : $_GET['path'];
 $pathURL = escape($path);
 $pathHTML = htmlspecialchars($path);
-$do = $_GET['do'];
+$do = "";
+if(isset($_GET['do'])){
+	$do = $_GET['do'];
+}
 $pafm = basename($_SERVER['SCRIPT_NAME']);
 $redir = $pafm . '?path=' . $pathURL; //$pafm is prefixed for safari
 $maxUpload = min(return_bytes(ini_get('post_max_size')), return_bytes(ini_get('upload_max_filesize')), MaxUploadSize*1048576);
@@ -70,12 +73,24 @@ if(!is_readable($path)) {
 		exit('path (' . $pathHTML . ') can\'t be read');
 }
 
-if (!isNull($_GET['subject'])) {
+$subject = null;
+
+if(isset($_GET['subject'])){
+	$subject = $_GET['subject'];
+}
+
+$to = null;
+
+if(isset($_GET['to'])){
+	$subject = $_GET['to'];
+}
+
+if (!isNull($subject)) {
 	$subject = str_replace('/', null, $_GET['subject']);
 	$subjectURL = escape($subject);
 	$subjectHTML = htmlspecialchars($subject);
 }
-if (!isNull($_GET['to'])) {
+if (!isNull($to)) {
 	$to = preg_match($pathRegEx, $_GET['to']) ? null : $_GET['to'];
 	$toHTML = htmlspecialchars($to);
 	$toURL = escape($to);
@@ -190,6 +205,8 @@ function pathCrumbs(){
 	global $pathHTML, $pathURL;
 	$crumbs = split('/', $pathHTML);
 	$crumbsLink = split('/', $pathURL);
+	$pathSplit = "";
+	$crumb = "";
 	for ($i = 0; $i < count($crumbs); $i++) {
 		$slash = $i ? '/' : null;
 		$pathSplit .= $slash . escape($crumbs[$i]);

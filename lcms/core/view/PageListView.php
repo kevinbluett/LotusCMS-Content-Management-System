@@ -9,6 +9,8 @@ class PageListView extends View{
 		
 		//This class requires an extra css file
 		$this->getMeta()->addExtra('<link href="core/fragments/css/admin.css" rel="stylesheet" type="text/css" />');
+		
+		//This js is for the filtering of the pagelist
 		$this->getMeta()->addExtra('<script type="text/javascript" src="core/fragments/js/application.js"></script>');
 	}	
 	
@@ -29,7 +31,10 @@ class PageListView extends View{
 		$content = str_replace("%PAGE_TITLE_LOCALE%", $this->localize("LotusCMS Pages"), $content);
 		$content = str_replace("%TYPE_FILTER_LOCALE%", $this->localize("Type here to filter results..."), $content);
 		$content = str_replace("%NO_RESULTS_LOCALE%", $this->localize("No Results"), $content);
-		
+		$content = str_replace("%VIEW_LOCALE%", $this->localize("View"), $content);
+		$content = str_replace("%EDIT_LOCALE%", $this->localize("Edit"), $content);
+		$content = str_replace("%DELETE_LOCALE%", $this->localize("Delete"), $content);
+
 		//Creates a list from the supplied data
 		$content .= $this->createPageList($pages);
 		

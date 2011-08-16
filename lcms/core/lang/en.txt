@@ -166,5 +166,7 @@
 	"Update": "Update",
 	"Updates Available": "Updates Available",
 	"Up to Date": "Up to Date",
-	"Preview Option": "Preview Option"
+	"Preview Option": "Preview Option",
+	"Template successfully updated.": "Template successfully updated.",
+	"Template successfully deleted.": "Template successfully deleted."
 }

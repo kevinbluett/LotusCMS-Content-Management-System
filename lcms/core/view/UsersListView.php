@@ -36,6 +36,8 @@ class UsersListView extends View{
 		$content = str_replace("%USER_TITLE_LOCALE%", $this->localize("LotusCMS Users"), $content);
 		$content = str_replace("%USER_TYPE_FILTER_LOCALE%", $this->localize("Type here to filter results..."), $content);
 		$content = str_replace("%NO_RESULTS_LOCALE%", $this->localize("No Results"), $content);
+		$content = str_replace("%EDIT_LOCALE%", $this->localize("Edit"), $content);
+		$content = str_replace("%DELETE_LOCALE%", $this->localize("Delete"), $content);
 		
 		//Creates a list from the supplied data
 		$content .= $this->createUsersList($pages);

@@ -165,5 +165,7 @@
 	"Update": "Updaten",
 	"Updates Available": "Updates verfügbar",
 	"Up to Date": "Aktuell",
-	"Preview Option": "Stil Vorschau"
+	"Preview Option": "Stil Vorschau",
+	"Template successfully updated.": "Stil erfolgreich erneuert.",
+	"Template successfully deleted.": "Stil erfolgreich gelöscht."
 }

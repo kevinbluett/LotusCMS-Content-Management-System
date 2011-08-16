@@ -115,7 +115,7 @@ function filter(selector, query) {
     var anyVis = false;
   
   $(selector).each(function() {
-    ($(this).text().replace('Edit', "").replace('Delete', "").replace('View', "").search(new RegExp(query, "i")) < 0) ? $(this).hide().removeClass('visible') : $(this).show().addClass('visible');
+    ($(this).text().replace($("#editText").val(), "").replace($("#deleteText").val(), "").replace($("#viewText").val(), "").search(new RegExp(query, "i")) < 0) ? $(this).hide().removeClass('visible') : $(this).show().addClass('visible');
     if($(this).hasClass('visible')){
     	anyVis = true;
     }
