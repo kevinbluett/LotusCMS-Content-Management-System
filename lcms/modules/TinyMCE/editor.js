@@ -16,5 +16,22 @@ tinyMCE.init({
 	theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",
 	theme_advanced_statusbar_location : "bottom",
-	theme_advanced_resizing : true
+	theme_advanced_resizing : true,
+	file_browser_callback : MadFileBrowser
 });
+
+function MadFileBrowser(field_name, url, type, win) {
+	  tinyMCE.activeEditor.windowManager.open({
+	      file : "modules/TinyMCE/tiny_mce/plugins/mfm_013/mfm.php?field=" + field_name + "&url=" + url + "",
+	      title : 'File Manager',
+	      width : 640,
+	      height : 450,
+	      resizable : "no",
+	      inline : "yes",
+	      close_previous : "no"
+	  }, {
+	      window : win,
+	      input : field_name
+	  });
+	  return false;
+}
