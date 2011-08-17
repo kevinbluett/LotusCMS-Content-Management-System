@@ -3,8 +3,8 @@ include_once("core/lib/io.php");
 
 class MenuRender {
 	
-	public function compileMenu($request = null, $d = null){
-      
+	public function compileMenu($request = null, $d = null, $system = null){
+
       //Allow compiling menu from inputted menu
       if(empty($d)){
       	$d = $this->getMenuItems();
@@ -18,8 +18,10 @@ class MenuRender {
                
          //Avoids occasional parse error
          $link = str_replace("|*int", "", $link);
-         
-      	if(empty($request)){
+
+         if($system==$d[$i][0]){
+               $out .= "<li class='active'>";
+         }else if(empty($request)){
          	$out .= "<li>";
       	}else{
       		if($request==$link){

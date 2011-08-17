@@ -9,7 +9,7 @@
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    (at your option) any later version
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -145,13 +145,13 @@ function print_files($c = '.') {
 				} else {
 					$imagetype = "image";
 				}
-				echo '<td><a class="file thumbnail ' . $imagetype . '" href="#" onclick="submit_url(\'' . $root_path . '/' . $ff . '\');">' . $f . '<span><img' . $resize . ' src="' . $root_path . '/' . $ff . '" /></span></a>'; echo '</td>';
+				echo '<td><a class="file thumbnail ' . $imagetype . '" href="#" onclick="submit_url(\'' . $root_path . '' .str_replace("../../../../../", "", $ff) . '\');">' . $f . '<span><img' . $resize . ' src="' . $root_path . '' . $ff . '" /></span></a>'; echo '</td>';
 			//known file types
 			} elseif(in_array($ext,$file_class)) {
-				echo '<td><a class="file file_' . $ext . '" href="#" onclick="submit_url(\'' . $root_path . '/' . $ff . '\');">' . $f . '</a>'; echo '</td>';
+				echo '<td><a class="file file_' . $ext . '" href="#" onclick="submit_url(\'' . $root_path . '' . $ff . '\');">' . $f . '</a>'; echo '</td>';
 			//all other files
 			} else {
-				echo '<td><a class="file unknown" href="#" onclick="submit_url(\'' . $root_path . '/' . $ff . '\');">' . $f . '</a>'; echo '</td>';
+				echo '<td><a class="file unknown" href="#" onclick="submit_url(\'' . $root_path . '' . $ff . '\');">' . $f . '</a>'; echo '</td>';
 	    }
 			echo '<td>' . byte_convert(filesize($ff)) . '</td>';
 			echo '<td class="delete"><a href="#" title="' . $lng['delete_title'] . '" onclick="delete_file(\'' . $c . '\',\'' . $f . '\');">' . $lng['delete'] . '</a></td>';
@@ -246,7 +246,7 @@ if(isset($_GET['deletefolder'])) {
 if(isset($_GET['viewtree'])) {
 ?>
 		<ul class="dirlist">
-			<li><a href="<?php echo $root_path . '/' . $file_root; ?>/" onclick="load('mfm.php?viewdir=<?php echo $file_root; ?>','view-files'); return false;"><?php echo $file_root; ?></a> <a href="#" onclick="load('mfm.php?viewtree=true','view-tree'); return false;" id="refresh-tree"><?php echo $lng['refresh']; ?></a>
+			<li><a href="<?php echo $root_path . '' . $file_root; ?>/" onclick="load('mfm.php?viewdir=<?php echo $file_root; ?>','view-files'); return false;"><?php echo $file_root; ?></a> <a href="#" onclick="load('mfm.php?viewtree=true','view-tree'); return false;" id="refresh-tree"><?php echo $lng['refresh']; ?></a>
 			<?php print_tree($file_root); ?>
 			</li>
 		</ul>
@@ -265,7 +265,7 @@ if(isset($_GET['viewdir'])) {
 		</ul>
 		
 		<div id="current-loction">
-		  <?php echo htmlspecialchars($root_path . '/' . $_GET['viewdir'] . '/'); ?>
+		  <?php echo htmlspecialchars($root_path . '' . $_GET['viewdir'] . '/'); ?>
 		</div>
 		
 		<form style="display: none;" id="load-file" action="" class="load-file" method="post" enctype="multipart/form-data">
@@ -367,7 +367,7 @@ if(isset($_GET['viewdir'])) {
   <title><?php echo $lng['window_title']; ?></title>
   <link rel="stylesheet" href="mfm/style.css" type="text/css" />
   <link rel="stylesheet" href="<?php echo $root_path; ?>/tiny_mce/themes/advanced/skins/default/dialog.css" type="text/css" />
-  <script type="text/javascript" src="<?php echo $root_path; ?>/tiny_mce/tiny_mce_popup.js"></script>
+  <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
   <script type="text/javascript">
 		//<![CDATA[
 		
@@ -427,7 +427,7 @@ if(isset($_GET['viewdir'])) {
 		<?php
 			} else {
 		?>
-			function submit_url(URL) {
+		function submit_url(URL) {
 			var win = tinyMCEPopup.getWindowArg("window");
 			win.document.getElementById(tinyMCEPopup.getWindowArg("input")).value = URL;
 			if (win.ImageDialog.getImageData) win.ImageDialog.getImageData();
@@ -476,7 +476,7 @@ if(isset($_GET['viewdir'])) {
 	<div id="browser-wrapper">
     <div id="view-tree">
 			<ul class="dirlist">
-				<li><a href="<?php echo $root_path . '/' . $file_root; ?>/" onclick="load('mfm.php?viewdir=<?php echo $file_root; ?>','view-files'); return false;"><?php echo $file_root; ?></a> <a href="#" title="<?php echo $lng['refresh_tree_title']; ?>" onclick="load('mfm.php?viewtree=true','view-tree'); return false;" id="refresh-tree"><?php echo $lng['refresh']; ?></a>
+				<li><a href="<?php echo $root_path . '' . $file_root; ?>/" onclick="load('mfm.php?viewdir=<?php echo $file_root; ?>','view-files'); return false;"><?php echo $file_root; ?></a> <a href="#" title="<?php echo $lng['refresh_tree_title']; ?>" onclick="load('mfm.php?viewtree=true','view-tree'); return false;" id="refresh-tree"><?php echo $lng['refresh']; ?></a>
 				  <?php print_tree($file_root); ?>
 				</li>
 			</ul>

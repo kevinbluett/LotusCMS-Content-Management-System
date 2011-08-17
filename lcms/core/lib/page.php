@@ -374,7 +374,7 @@ class Page extends Observable{
     	
     	$mr = new MenuRender();
     	
-    	return $mr->compileMenu($this->getInputString("page"));
+    	return $mr->compileMenu($this->getInputString("page"), null, $this->getInputString("system"));
     }
     
     /**

@@ -16,7 +16,7 @@ body
 a:link, a:active, a:visited 
 { 
 	text-decoration: none; 
-	color: #9999FF;
+	color: #339933;
 }
 
 a:hover
@@ -27,15 +27,19 @@ a:hover
 #main
 { 
 	width: 730px; 
+	margin-top: 20px;
 	padding: 25px 15px; 
 	background: #FFF; 
 	margin-left: auto; 
 	margin-right: auto; 
+	-moz-border-radius: 20px;
+	border-radius: 20px;
 }
 
 #header 
 { 
-	height: 60px;
+	height: 80px;
+	font-family: 'Raleway', Arial;
 }
 
 #header #right 
@@ -47,7 +51,7 @@ a:hover
 
 .companyname 
 {	
-	font-size: 20px;
+	font-size: 50px;
 	float: left;
 }
 
@@ -92,19 +96,19 @@ ul
 h1
 {
 	font-size: 200%;
-	color: #9999FF;	
+	color: #339933;	
 }
 
 h2 
 { 
 	font-size: 170%; 
-	color: #9999FF;	
+	color: #339933;	
 }
 
 h3
 {
 	font-size: 140%;
-	color: #9999FF;
+	color: #339933;
 }
 
 #navbar 
@@ -112,25 +116,31 @@ h3
 	background-color: #CDCDCD; 
 	height: 30px; 
 	margin-bottom: 1px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 }
 
 #navbar li
 {  	
-	padding: 8px 14px 2px 14px;
-	border-right: 1px solid #FFF;
+	padding: 5px 14px 2px 14px;
 	float: left; 
-	font-weight: bold;
-	height: 20px;
+	font-size:20px;
+	font-family: 'Raleway', Arial;
+	height: 23px;
 }
 
 #navbar li.active
 { 
-	background-color: #9999FF;
+	background-color: #339933;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 }
 
 #navbar li:hover
 {
-	background-color: #9999FF;
+	background-color: #339933;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 }
 
 #navbar a:link, #navbar a:active, #navbar a:visited
@@ -144,9 +154,12 @@ h3
 { 	
 	border-top: 1px solid #CDCDCD;
 	height: 15px;			
-	padding: 15px 25px 25px;		
+	padding: 0px 25px 25px;		
 	font-size: 11px; 
-	text-align: center;
+	text-align: right;
+	width: 730px;
+	margin-left: auto; 
+	margin-right: auto; 
 }
 
 #sidebar {
@@ -160,9 +173,19 @@ h3
 	color: #777; 
 	font-size: 11px; 
 	padding-top: 5px;
+	text-shadow: 1px 1px 1px #fff;
 }
 
 #footer  #bottomnavbar a
 {
 	padding-left: 15px;
+}
+
+#footer a {
+	color: #777;
+	text-decoration: underline;
+}
+
+#footer a:hover {
+	color: #339933;
 }

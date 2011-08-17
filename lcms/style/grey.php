@@ -5,6 +5,7 @@
   		<meta name="description" content="<?php print $p->getMetaDescription(); ?>" />
   		<meta name="keywords" content="<?php print $p->getMetaKeywords(); ?>" />
 		<meta name="author" content="name of author - Manjeet Singh Sawhney   www.manjeetss.com" />
+		<link href='http://fonts.googleapis.com/css?family=Raleway:100' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="style/comps/grey/css/style.css" media="screen" />
 		<title><?php print $p->getSiteTitle(); ?> - <?php print $p->getContentTitle();  ?></title>
 		<?php $p->getExtraMeta(); ?>
@@ -34,12 +35,11 @@
 					<?php print $p->getContent(); ?>
 				</div>
 			</div>
-			<div id="footer">
-				<p>
-					<!-- Leaving in my name and website link will be greatly appreciated in return for offering you this template for free. Thanking you in advance. -->
-					&copy; <?php date_default_timezone_set("GMT");echo(date("Y")); ?> <?php print $p->getSiteTitle(); ?>. Powered by: <a href="http://www.lotuscms.org">LotusCMS</a> - Designed By: <a href="http://www.manjeetss.com">MSS</a>				
-				</p>
-			</div>
+		</div>
+		<div id="footer">
+			<p>
+				&copy; <?php date_default_timezone_set("GMT");echo(date("Y")); ?> <?php print $p->getSiteTitle(); ?>. Powered by: <a href="http://www.lotuscms.org">LotusCMS</a>.			
+			</p>
 		</div>
 	</body>
 </html>
