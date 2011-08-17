@@ -33,34 +33,26 @@ class EditorView extends View{
 	 */
 	protected function singleForm($title, $template, $content, $unix){
 		$this->setState('CREATING_PAGE_FORM');
-		
-		//Get the form
+
 		$out = $this->openFile("core/fragments/editor/editPageForm.phtml");
 		
-		//Replace Title in File
 		$out = str_replace("%TITLE%", $title, $out);
-		
-		//Locale
+	
 		$out = str_replace("%YOU_ARE_EDITING_LOCALE%", $this->localize("You are editing"), $out);
 		$out = str_replace("%TITLE_LOCALE%", $this->localize("Title"), $out);
 		$out = str_replace("%TEMPLATE_LOCALE%", $this->localize("Template"), $out);
 		$out = str_replace("%CONTENT_LOCALE%", $this->localize("Content"), $out);
 		$out = str_replace("%SAVE_LOCALE%", $this->localize("Save"), $out);
-		
-		//Replace Unix in File
+
 		$out = str_replace("%UNIX%", $unix, $out);
 		
-		//Replace current template options
 		$out = str_replace("%CURRENT_TEMPLATE%", "<option>".$template."</option>", $out);
-		
-		//Template
-		$temp = $this->getController()->getModel()->getTemplateOptions($template);
-		
-		//Replace template options
-		$out = str_replace("%TEMPLATE_OPTIONS%", $temp, $out);
 
-		//Replace Content in File
+		$temp = $this->getController()->getModel()->getTemplateOptions($template);
+
+		$out = str_replace("%TEMPLATE_OPTIONS%", $temp, $out);
 		$out = str_replace("%CONTENT%", $content, $out);
+		$out = str_replace("%LOCALE%", $this->getLocale(), $out);
 		
 		//Return the out data
 		return $out;
@@ -104,6 +96,7 @@ class EditorView extends View{
 		$out = str_replace("%TEMPLATE_LOCALE%", $this->localize("Template"), $out);
 		$out = str_replace("%CONTENT_LOCALE%", $this->localize("Content"), $out);
 		$out = str_replace("%SAVE_LOCALE%", $this->localize("Save"), $out);
+		$out = str_replace("%LOCALE%", $this->getLocale(), $out);
 		
 		$out = str_replace("%TEMPLATE_OPTIONS%", $this->getController()->getModel()->getTemplateOptions(), $out);
 		

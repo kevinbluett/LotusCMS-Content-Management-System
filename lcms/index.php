@@ -10,6 +10,9 @@
 //Start the session.
 session_start();
 
+//DEV
+error_reporting(E_ALL);
+
 //Failsafe to install
 if(file_exists("install.php")){
 	//header("Location: install.php");	
