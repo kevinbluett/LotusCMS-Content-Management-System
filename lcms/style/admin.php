@@ -7,6 +7,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="description" content="<?php print $p->getMetaDescription(); ?>" />
   <meta name="keywords" content="<?php print $p->getMetaKeywords(); ?>" />
+  <link href='http://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
   <link href="style/comps/admin/css/global.css" rel="stylesheet" type="text/css" />
   <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
   <script src="style/comps/admin/js/jquery.js"></script>

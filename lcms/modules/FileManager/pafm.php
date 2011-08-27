@@ -203,8 +203,8 @@ function rrd($dir){
 }
 function pathCrumbs(){
 	global $pathHTML, $pathURL;
-	$crumbs = split('/', $pathHTML);
-	$crumbsLink = split('/', $pathURL);
+	$crumbs = explode('/', $pathHTML);
+	$crumbsLink = explode('/', $pathURL);
 	$pathSplit = "";
 	$crumb = "";
 	for ($i = 0; $i < count($crumbs); $i++) {
@@ -567,6 +567,7 @@ function getDirContents($path){
 //list directory contents functions
 function getDirs($path){
 	global $dirContents, $pathURL;
+	if(!isset($dirContents['folders'])){$dirContents['folders'] = array();}
 	for ($i = 0, $l = count($dirContents['folders']); $i < $l; $i++){
 		$dirItem = $dirContents['folders'][$i];
 		$dirItemURL = escape($dirItem);

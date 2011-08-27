@@ -6,40 +6,22 @@ class EditorController extends Controller{
 	}
 	
 	protected function putRequests(){
-		
-		//Create the array of request
 		$requests = array(
-					"index",
 					"clearCache",
 					"editor",
 					"createPage",
 					"delete"
 				 );
-		
-		//Set all the request
 		$this->setRequests($requests);
 	}
 
-	/**
-	 * Show default index
-	 */
-	protected function indexRequest(){
-		// Set the state and tell plugins.
-		$this->setState('LOADING_DASH');
-		
-		//Print the Dash
-		$this->getView()->showDash();
-	}
-
-	/**
-	 * Show default index
-	 */
 	protected function deleteRequest(){
+		$this->setState('DELETE_REQUEST');
 		//If no data has been submitted
 		if($this->getModel()->getInputString("acc", null, "G")==null)
 		{
 			//Print the Dash
-			$this->getView()->showDelete($this->getModel()->getInputString("active"));
+			$this->getView()->showDelete($this->getModel()->getActiveRequest);
 		}
 		//Data has been submitted to be processed
 		else
@@ -54,11 +36,8 @@ class EditorController extends Controller{
 		}
 	}
 	
-	/**
-	 * Show default classes
-	 */
 	protected function clearCacheRequest(){
-		//Redirect to Dashboard
+		$this->setState('CLEARING_CACHE');
 		$this->getModel()->clearCache();	
 	}
 	
@@ -66,7 +45,7 @@ class EditorController extends Controller{
 	 * Editor Request to get a page.
 	 */
 	protected function editorRequest(){
-		//If no data has been submitted
+		$this->setState('EDITOR_REQUEST');
 		if($this->getModel()->getInputString("pagedata", null, "P")==null)
 		{
 			//Get the page content request
@@ -85,10 +64,10 @@ class EditorController extends Controller{
 			$data = $this->getModel()->getSubmitData();
 			
 			//Fix the tags in the page data - incase it was somehow forced to be different.
-			$data[0] = $this->getModel()->fixPageName($data[0]);
+			$data['unix'] = $this->getModel()->fixPageName($data['unix']);
 			
 			//Save page into the page directly
-			$this->getModel()->savePage($data[0], $data[1], $data[2], $data[3]);
+			$this->getModel()->savePage($data['unix'], $data['title'], $data['template'], $data['published'], $data['content']);
 			
 			//Show the saved successfully yoke.
 			$this->getView()->redirectSuccess($this->getView()->localize("The page was successfully saved."));
@@ -99,15 +78,12 @@ class EditorController extends Controller{
 	 * Editor Request to get a page.
 	 */
 	protected function createPageRequest(){
-		//If no data has been submitted
+		$this->setState('CREATE_PAGE_REQUEST');
 		if($this->getModel()->getInputString("title", null, "P")==null)
 		{
 			//Shows a form to create a new page
 			$this->getView()->showCreateForm();
-		}
-		//If data has been submitted
-		else
-		{
+		}else{
 			//Collects submission data
 			$data = $this->getModel()->getSubmitData();
 			
@@ -122,5 +98,4 @@ class EditorController extends Controller{
 		}
 	}
 }
-
 ?>

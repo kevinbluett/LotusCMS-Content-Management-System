@@ -167,5 +167,8 @@
 	"Up to Date": "Aktuell",
 	"Preview Option": "Stil Vorschau",
 	"Template successfully updated.": "Stil erfolgreich erneuert.",
-	"Template successfully deleted.": "Stil erfolgreich gelöscht."
+	"Template successfully deleted.": "Stil erfolgreich gelöscht.",
+	"Page Visibility": "Seite Sichtbarkeit",
+	"Published": "Seite Sichtbar",
+	"Unpublished": "Seite Unsichtbar"
 }

@@ -32,8 +32,11 @@ class Cacher{
 		}
 		
 		//Set the page content
-		$pager->setContent($data[2]);
+		$pager->setContent($data[3]);
 		
+		//Page not published. Cache 404 page.
+		if($data[2]=="true"){ $pager->noPage(); }
+
 		//Generate the page
 		$toCache = $pager->softDisplayPage();
 		

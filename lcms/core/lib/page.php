@@ -162,7 +162,7 @@ class Page extends Observable{
 	 * Get the number of columns in this page
 	 */
 	public function getColumns(){
-		return $this->column;	
+		return $this->columns;	
 	}
 	
 	/**

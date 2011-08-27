@@ -44,9 +44,7 @@ class EditorModel extends Model{
 	/**
 	 * Returns the contents of the page as an array
 	 */
-	public function getPageData($page)
-	{
-		// Set the state and tell plugins.
+	public function getPageData($page){
 		$this->setState('GETTING_PAGEDATA');
 		
 		//Open the page file
@@ -54,6 +52,15 @@ class EditorModel extends Model{
 		
 		//Explode the available data
 		$data = explode("|<*div*>|",$data);
+
+		//Ensure that the paging system is directly compatible with old page types
+		if(count($data)==3){
+			//Copy over page in 3 content
+			$data[3] = $data[2];
+			
+			//Set published status to true.
+			$data[2] = "true";
+		}
 		
 		//Return the collected data
 		return $data;
@@ -137,18 +144,18 @@ class EditorModel extends Model{
 	/**
 	* Saves the contents of a page
 	*/
-	public function savePage($unix, $title, $template, $content)
+	public function savePage($unix, $title, $template, $published, $content)
 	{
 		$this->setState('SAVING_PAGE');
 			
 		$content = str_replace('\"','"', $content);
 		$content = str_replace("\'","'", $content);
 		
-		//Deletes the cached version of the page.
-		$this->deleteCached($unix);
+		//Caches this version of the page to reduce load times.
+		$this->recache($unix);
 		
 		//The file to save a page
-		$data = $title."|<*div*>|".$template."|<*div*>|".$content;
+		$data = $title."|<*div*>|".$template."|<*div*>|".$published."|<*div*>|".$content;
 		
 		//Save the edited page.
 		$this->saveFile(
@@ -201,23 +208,15 @@ class EditorModel extends Model{
     }
     
     public function getSubmitData(){
-	
-	// Set the state and tell plugins.
-	$this->setState('GETTING_SUBMISSION_DATA');
+		$this->setState('GETTING_SUBMISSION_DATA');
     	
-    	$data = array();
-    	
-    	//Gets the unix name of page (GET)
-    	$data[0] = $this->getInputString("active", null);
-    	
-    	//Gets the submited title (POST)
-    	$data[1] = $this->getInputString("title");
-
-	//Gets the Template (POST)
-    	$data[2] = $this->getInputString("template");
-	
-    	//Gets the page data (POST)
-    	$data[3] = $this->getInputString("pagedata");
+    	$data = array(
+    					'unix' 		=>  	$this->getInputString("active", null),
+    					'title' 	=>	  	$this->getInputString("title", null),
+    					'template' 	=>		$this->getInputString("template", null),
+    					'content' 	=>		$this->getInputString("pagedata", null),
+    					'published' =>		$this->getInputString("published", "true")
+    				);
     	
     	//Returns the data array
     	return $data;	
@@ -226,16 +225,16 @@ class EditorModel extends Model{
     /**
      * Deletes a certain cached page is it is cached, may it be
      */
-    protected function deleteCached($page){
+    protected function recache($page){
+		$this->setState('RECACHING_PAGE');
 
-	$this->setState('DELETING_CACHED_PAGE');
-	
-    	//Check if cached version exists
     	if(file_exists("cache/".$page.".html"))
     	{
-    		//Delete cached page or show uncaching error.
     		unlink("cache/".$page.".html") or die($this->openFile("core/fragments/errors/error29.phtml"));	
     	}
+
+		include("core/lib/cacher.php");	
+		$cacher = new Cacher($page);
     }
     
 	/**
@@ -250,8 +249,6 @@ class EditorModel extends Model{
 	    {
 		    //Error 23 - missing page title
 		    print $this->openFile("core/fragments/errors/error23.phtml");
-		    
-		    //Stop Everything
 		    $this->getController()->freeze_all();
 	    }
 	    //If the pagedata is empty
@@ -259,8 +256,6 @@ class EditorModel extends Model{
 	    {
 		    //Error 24 - missing page content
 		    print $this->openFile("core/fragments/errors/error24.phtml");
-		    
-		    //Stop Everything
 		    $this->getController()->freeze_all();
 	    }
 	}

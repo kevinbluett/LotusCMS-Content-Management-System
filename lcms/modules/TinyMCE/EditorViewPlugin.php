@@ -35,7 +35,13 @@ class TinyMCEView extends Observer{
     
     public function addEditor(){
     	//The actual Script
-    	$script = '<script type="text/javascript" src="modules/TinyMCE/tiny_mce/tiny_mce.js"></script><script type="text/javascript" src="modules/TinyMCE/editor.js"></script>';
+    	$script = '<script type="text/javascript" src="modules/TinyMCE/tiny_mce/tiny_mce.js"></script>';
+    	
+    	if(!file_exists("data/modules/TinyMCE/simple.dat")){
+    		$script .= '<script type="text/javascript" src="modules/TinyMCE/editor.js"></script>';
+    	}else{
+    		$script .= '<script type="text/javascript" src="modules/TinyMCE/simple_editor.js"></script>';	
+    	}
     	
     	//Add this script to the page
     	$this->view->getMeta()->addExtra($script);					

@@ -64,7 +64,7 @@ class Pager{
 	public function Pager($siteTitle = "Untitled"){
 		
 		//Setup login variable
-		$this->login = $login;
+		$this->login = "";
 		
 		//Initial value for each variable
 		$this->titlePage = $siteTitle;
@@ -88,7 +88,7 @@ class Pager{
 		$this->base = "";
 		
 		//Setup current user variable
-		$this->user = $user;
+		$this->user = "";
 		
 		//Check if any error messages are to be displayed
 		$this->checkError();
@@ -153,7 +153,7 @@ class Pager{
 	 * Get the number of columns in this page
 	 */
 	public function getColumns(){
-		return $this->column;	
+		return $this->columns;	
 	}
 	
 	/**
@@ -368,13 +368,27 @@ class Pager{
     }
 	
 	/**
+	 * Process Blank Request
+	 */
+	public function noPage(){
+		
+		//Get the not exist page
+		$not_exist = file_get_contents("core/fragments/404.phtml");
+		
+		//Set the Title
+		$this->setContentTitle("404 - Page does not Exist");
+				
+		//Set the 404 page
+		$this->setContent($not_exist);
+	}
+
+	/**
 	 * Returns a global variable
 	 */
 	public function getInputString($name, $default_value = "", $format = "GPCS")
     {
 
         //order of retrieve default GPCS (get, post, cookie, session);
-
         $format_defines = array (
         'G'=>'_GET',
         'P'=>'_POST',

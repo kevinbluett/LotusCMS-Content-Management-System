@@ -13,17 +13,10 @@ class EditorView extends View{
 	
 	public function createEditor($data, $unix){
 		$this->setState('CREATING_EDITOR');
-		
-		//Get Top of the Editor
 		$content = $this->openFile("core/fragments/admin_editor_top.phtml");
-		
-		//Change the content into a form
-		$content .= $this->singleForm($data[0], $data[1], $data[2], $unix);
-		
-		//Get the bottom of the editor
+		$content .= $this->singleForm($data[0], $data[1], $data[2], $data[3], $unix);
 		$content .= $this->openFile("core/fragments/admin_editor_bottom.phtml");
 		
-		//Print this dashboard
 		$this->setContent($content);	
 		$this->setContentTitle($this->localize("Editor"));
 	}
@@ -31,7 +24,7 @@ class EditorView extends View{
 	/**
 	 * Create a form for the page.
 	 */
-	protected function singleForm($title, $template, $content, $unix){
+	protected function singleForm($title, $template, $visibility, $content, $unix){
 		$this->setState('CREATING_PAGE_FORM');
 
 		$out = $this->openFile("core/fragments/editor/editPageForm.phtml");
@@ -43,6 +36,17 @@ class EditorView extends View{
 		$out = str_replace("%TEMPLATE_LOCALE%", $this->localize("Template"), $out);
 		$out = str_replace("%CONTENT_LOCALE%", $this->localize("Content"), $out);
 		$out = str_replace("%SAVE_LOCALE%", $this->localize("Save"), $out);
+		$out = str_replace("%PAGE_VISIBILITY_LOCALE%", $this->localize("Page Visibility"), $out);
+		$out = str_replace("%PUBLISHED_LOCALE%", $this->localize("Published"), $out);
+		$out = str_replace("%UNPUBLISHED_LOCALE%", $this->localize("Unpublished"), $out);
+
+		if($visibility=="true"){
+			$out = str_replace("%CHECKED_PUB%", "CHECKED", $out);
+			$out = str_replace("%CHECKED_UNPUB%", "", $out);
+		}else{
+			$out = str_replace("%CHECKED_PUB%", "", $out);
+			$out = str_replace("%CHECKED_UNPUB%", "CHECKED", $out);
+		}
 
 		$out = str_replace("%UNIX%", $unix, $out);
 		
@@ -96,10 +100,15 @@ class EditorView extends View{
 		$out = str_replace("%TEMPLATE_LOCALE%", $this->localize("Template"), $out);
 		$out = str_replace("%CONTENT_LOCALE%", $this->localize("Content"), $out);
 		$out = str_replace("%SAVE_LOCALE%", $this->localize("Save"), $out);
+		$out = str_replace("%PAGE_VISIBILITY_LOCALE%", $this->localize("Page Visibility"), $out);
+		$out = str_replace("%PUBLISHED_LOCALE%", $this->localize("Published"), $out);
+		$out = str_replace("%UNPUBLISHED_LOCALE%", $this->localize("Unpublished"), $out);
 		$out = str_replace("%LOCALE%", $this->getLocale(), $out);
 		
 		$out = str_replace("%TEMPLATE_OPTIONS%", $this->getController()->getModel()->getTemplateOptions(), $out);
-		
+		$out = str_replace("%CHECKED_PUB%", "CHECKED", $out);
+		$out = str_replace("%CHECKED_UNPUB%", "", $out);
+
 		$this->setContent($out);
 		$this->setContentTitle($this->localize("Create New Page"));
 	}

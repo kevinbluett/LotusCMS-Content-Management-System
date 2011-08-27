@@ -285,7 +285,7 @@ h
 .logged {
 	width: 245px;
 	height: 30px;
-	font-size: 22px;	
+	font-size: 30px;	
 }
 
 .loggedIn {
@@ -294,4 +294,8 @@ h
 	font-size: 20px;
 	width: 120px;
 	display: block;	
+}
+
+input {
+	font-family: 'Lato', arial;	
 }

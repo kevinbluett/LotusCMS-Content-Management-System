@@ -7,7 +7,14 @@
 						%TEMPLATE_OPTIONS%
 				</select>
 		</fieldset>
-                
+        <h4>%PAGE_VISIBILITY_LOCALE%</h4>
+        <div id="visibility">
+            <fieldset>
+            	<input name="published" value="false" type="radio" id="radio1" name="visibility" %CHECKED_UNPUB%/><label for="radio1">%UNPUBLISHED_LOCALE%</label>
+            	<input name="published" value="true" type="radio" id="radio2" name="visibility" %CHECKED_PUB%/><label for="radio2">%PUBLISHED_LOCALE%</label>
+            </fieldset>
+        </div>
+           
         <h4>%CONTENT_LOCALE%</h4><br />
                     </div><div id="textarea">
                         <textarea cols="60" rows="18" id="pagedata" name="pagedata">%CONTENT%</textarea>
@@ -19,6 +26,7 @@
     $(function() {
         $( "input:submit" ).button();
         $( ".buttonBit" ).button();
+        $("#visibility").buttonset();
     });
 </script> 
 <input type="hidden" name="lang" id="lang" value="%LOCALE%" />

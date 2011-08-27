@@ -29,7 +29,9 @@ class ModulesInstallModel extends Model{
 		$out1 = $rf->getURL("http://cdn.modules.lotuscms.org/lcms-3-series/infoloader/modules.php?id=".$id."&lang=".$this->getController()->getView()->getLocale()."&v=".$version."&m=".$this->getModuleArray());
 		
 		if(empty($out1)){
-			exit("<br /><br /><strong>Data retrieval failed</strong> - LotusCMS probably unavailable, please try again later.");	
+			$this->getController()->getView()->setContent("<p class='error message'>LotusCMS.org is unreachable, please try again later.</p>");
+			$this->getController()->getView()->displayPage();
+			exit;
 		}
 		
 		return $out.$out1;

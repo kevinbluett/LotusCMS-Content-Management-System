@@ -1,25 +1,38 @@
 <p>%UNIX_NAME_TEXT_GENERATED_LOCALE%</p><br /><form method="post" class="jNice" action="?system=Editor&page=createPage" name="edit">%YOU_EDITING_UNTITLED_LOCALE%<br />
-                <h4>%TITLE_LOCALE%</h4><br /> <fieldset><input name="title" class="text-long" value=""><br /><a href="#" onclick="javascript:$('#unix').show();">%DEFINE_UNIX_NAME_MANUALLY_LOCALE%</a></fieldset>
+                <h4>%TITLE_LOCALE%</h4><br /> <fieldset><input name="title" class="text-long" value=""><br /><a href="#" onclick="javascript:$('#unix').slideDown(600,function(){$('#unix').animate({opacity:'1'},600);});">%DEFINE_UNIX_NAME_MANUALLY_LOCALE%</a></fieldset>
                 
                 
-                <div id="unix" style="display: none;"><h3>%UNIX_NAME_LOCALE%</h3><br /> <fieldset><input name="unix" class="text-long" value=""></fieldset></div>
+                <div id="unix" style="display: none;"><h4>%UNIX_NAME_LOCALE%</h4><br /> <fieldset><input name="unix" class="text-long" value=""></fieldset></div>
 				<br />
-		<h4>%TEMPLATE_LOCALE%</h4><br />
-		<fieldset>	<select name="template">
-						%TEMPLATE_OPTIONS%
-				</select>
-		</fieldset>
-        
-		<h4>%CONTENT_LOCALE%</h4><br />
-                    </div><div id="textarea">
-                        <textarea cols="60" rows="18" id="pagedata" name="pagedata"></textarea>
-                    </div><div id="main">
-                <br />
-                
+	
+    <div style="float:left;width:50%height: 40px;">
+        <h4>%TEMPLATE_LOCALE%</h4><br />
+    	<fieldset>	<select name="template">
+    					%TEMPLATE_OPTIONS%
+    			</select>
+    	</fieldset>
+    </div>
+     <div style="float:left;width:50%;height: 40px;padding-left: 15px;">
+        <h4>%PAGE_VISIBILITY_LOCALE%</h4><br />
+        <div id="visibility">
+            <fieldset>
+    				<input name="published" value="false" type="radio" id="radio1" name="visibility" /><label for="radio1">%UNPUBLISHED_LOCALE%</label>
+                	<input name="published" value="true" type="radio" id="radio2" name="visibility" checked="checked"/><label for="radio2">%PUBLISHED_LOCALE%</label>
+            </fieldset>
+        </div>
+    </div>
+    <div style="height: 1px; display: block; clear: both;">&nbsp;</div>
+	<h4 style="margin-bottom: 0px; padding-bottom: 0px;">%CONTENT_LOCALE%</h4>
+                <!--</div><div id="textarea">-->
+                    <textarea cols="60" rows="18" id="pagedata" name="pagedata"></textarea>
+               <!-- </div><div id="main">-->
+            <br />
 <input type="submit" value="%SAVE_LOCALE%"><br /><br /></form>
 <script> 
     $(function() {
         $( "input:submit" ).button();
+        $("#visibility").buttonset();
+        $('#unix').css({ 'opacity' : 0 });
     });
 </script> 
 <input type="hidden" name="lang" id="lang" value="%LOCALE%" />
