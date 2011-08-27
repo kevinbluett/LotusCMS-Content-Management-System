@@ -26,7 +26,7 @@ class ModulesModel extends Model{
 		//Include Module Information
 		include_once("modules/".$module."/".$module."ModuleInfo.php");
 		
-		$mod = $module.ModuleInfo;
+		$mod = $module."ModuleInfo";
 		
 		//Create Module Information
 		$m = new $mod();
