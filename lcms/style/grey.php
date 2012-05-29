@@ -5,7 +5,6 @@
   		<meta name="description" content="<?php print $p->getMetaDescription(); ?>" />
   		<meta name="keywords" content="<?php print $p->getMetaKeywords(); ?>" />
 		<meta name="author" content="name of author - Manjeet Singh Sawhney   www.manjeetss.com" />
-		<link href='http://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="style/comps/grey/css/style.css" media="screen" />
 		<title><?php print $p->getSiteTitle(); ?> - <?php print $p->getContentTitle();  ?></title>
 		<?php $p->getExtraMeta(); ?>

@@ -9,12 +9,14 @@ class PageModel{
     
 	public function checkInCacheAndCreate($page){
 	    if(!file_exists("cache/".$page.".html")){
+
 			if(!file_exists("data/pages/".$page.".dat")){
+				
 				$this->getController()->getView()->noPage();
 				$this->getController()->getView()->displayPage();
 				exit;
 			}else{
-				include("core/lib/cacher.php");	
+				include_once("core/lib/cacher.php");	
 				$cacher = new Cacher($page);
 			}
 	    }
