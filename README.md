@@ -1,5 +1,7 @@
-Deprecated Project: LotusCMS-Content-Management-System
+# Deprecated Project: LotusCMS
 ==================================
+## Flat file Content-Management-System
+
 
 LotusCMS was an early experiment of myself learning PHP, with initial first non-public versions being written in 2007/2008.
 
